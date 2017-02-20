@@ -33,6 +33,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
+	private static final String SQL_GET_BY_ID = "SELECT id, nombre, gluten FROM ingrediente WHERE id = ?;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -51,8 +52,16 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	@Override
 	public Ingrediente getById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Ingrediente i = null;
+		try {
+			i = this.jdbctemplate.queryForObject(SQL_GET_BY_ID, new Object[] { id }, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return i;
 	}
 
 	@Override

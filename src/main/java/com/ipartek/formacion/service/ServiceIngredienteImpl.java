@@ -26,8 +26,8 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 
 	@Override
 	public Ingrediente buscarPorId(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.trace("Buscamos ingrediente id: " + id);
+		return daoIngrediente.getById(id);
 	}
 
 	@Override

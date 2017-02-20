@@ -7,11 +7,11 @@
 <form:form action="ingrediente/crear" modelAttribute="ingrediente">
 
 	<form:input path="id"/><br>
-	<form:input path="nombre"/><br>
+	<form:input path="nombre"/><br>	
 	
-	<!-- 
-	<form:input path="gluten"/><br>
-	 -->
+	<form:label path="gluten">¿ Contiene Glutten ?</form:label>
+	<form:checkbox path="gluten"/><br>
+	
 	
 	<form:button type="submit">Crear</form:button>
 
