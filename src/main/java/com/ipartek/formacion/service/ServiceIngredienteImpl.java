@@ -38,8 +38,8 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 
 	@Override
 	public boolean modificar(Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.trace("Modificando ingrediente: " + i);
+		return daoIngrediente.update(i);
 	}
 
 	@Override

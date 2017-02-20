@@ -44,6 +44,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
+	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -105,8 +106,22 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	@Override
 	public boolean update(Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.trace("update " + i);
+		boolean resul = false;
+		int affectedRows = -1;
+		try {
+
+			Object[] argumentos = { i.getNombre(), i.isGluten(), i.getId() };
+			affectedRows = this.jdbctemplate.update(SQL_UPDATE, argumentos);
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+		return resul;
 	}
 
 	@Override
