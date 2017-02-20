@@ -1,11 +1,10 @@
 package com.ipartek.formacion.controller;
 
-import java.util.ArrayList;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,24 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ipartek.formacion.domain.Ingrediente;
+import com.ipartek.formacion.service.ServiceIngrediente;
 
 @Controller
 public class IngredienteController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IngredienteController.class);
 
-	ArrayList<Ingrediente> list = null;
+	@Autowired
+	ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
 	public String listar(Model model) {
 
-		list = new ArrayList<Ingrediente>();
-		list.add(new Ingrediente(0, "Sal", false));
-		list.add(new Ingrediente(1, "Patatas", false));
-		list.add(new Ingrediente(2, "Huevos", false));
-		list.add(new Ingrediente(3, "Pan", true));
-
-		model.addAttribute("ingredientes", list);
+		model.addAttribute("ingredientes", serviceIngrediente.listar());
 
 		return "ingrediente/index";
 	}
@@ -46,7 +41,7 @@ public class IngredienteController {
 	@RequestMapping(value = "/ingrediente/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
-		model.addAttribute("ingrediente", list.get(id));
+		model.addAttribute("ingrediente", serviceIngrediente.buscarPorId(id));
 		return "ingrediente/form";
 	}
 

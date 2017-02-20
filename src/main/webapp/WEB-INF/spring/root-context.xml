@@ -5,4 +5,18 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+	<!-- Definir el DataSource -->
+	<bean id="databaseProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:/database.properties" />
+	</bean>
+	
+	<bean name="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${mysql.driver}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.user}" />
+		<property name="password" value="${mysql.pass}" />
+	</bean>	
+		
 </beans>
