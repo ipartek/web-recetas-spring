@@ -32,8 +32,8 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 
 	@Override
 	public boolean crear(Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.trace("Creando ingrediente: " + i);
+		return daoIngrediente.insert(i);
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 
 	@Override
 	public boolean eliminar(long id) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.trace("eliminar " + id);
+		return daoIngrediente.delete(id);
 	}
 
 }

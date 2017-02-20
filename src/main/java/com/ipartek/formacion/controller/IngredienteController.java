@@ -50,7 +50,29 @@ public class IngredienteController {
 
 		logger.info("recibimos datos del formulario " + ingrediente);
 
+		// TODO comprobar si es valido
+
+		if (ingrediente.getId() == -1) {
+			serviceIngrediente.crear(ingrediente);
+		} else {
+			serviceIngrediente.modificar(ingrediente);
+		}
+
 		return "ingrediente/form";
+	}
+
+	@RequestMapping(value = "/ingrediente/delete/{id}", method = RequestMethod.GET)
+	public String eliminar(@PathVariable int id, Model model) {
+
+		logger.info("eliminar ingrediente " + id);
+		String msg = "Ingrediente no eliminado, posiblemente exista en una receta";
+
+		if (serviceIngrediente.eliminar(id)) {
+			msg = "Ingrediente Eliminado con exito";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		return "ingrediente/index";
 	}
 
 }

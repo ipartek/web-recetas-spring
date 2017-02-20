@@ -17,4 +17,10 @@
 
 </form:form>
 
+<c:if test="${ingrediente.id != -1}">
+	<br>
+	<a style="color:red;" href="ingrediente/delete/${ingrediente.id}">Eliminar</a>
+
+</c:if>
+
 <%@ include file="../includes/footer.jsp" %> 

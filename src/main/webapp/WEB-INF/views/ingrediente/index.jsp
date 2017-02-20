@@ -4,6 +4,7 @@
 
 <a href="ingrediente/edit">Crear Nuevo</a>
 
+<p>${msg}</p>
 
 <ul>
 <c:forEach items="${ingredientes}" var="i">
