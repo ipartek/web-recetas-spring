@@ -1,9 +1,14 @@
 package com.ipartek.formacion.domain;
 
+import javax.validation.constraints.Size;
+
 public class Ingrediente {
 
 	private long id;
+
+	@Size(min = 3, max = 255)
 	private String nombre;
+
 	private boolean gluten;
 
 	public Ingrediente() {

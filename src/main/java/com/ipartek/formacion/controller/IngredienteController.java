@@ -50,12 +50,16 @@ public class IngredienteController {
 
 		logger.info("recibimos datos del formulario " + ingrediente);
 
-		// TODO comprobar si es valido
+		// validar datos del formulario
+		if (!bindingResult.hasErrors()) {
 
-		if (ingrediente.getId() == -1) {
-			serviceIngrediente.crear(ingrediente);
+			if (ingrediente.getId() == -1) {
+				serviceIngrediente.crear(ingrediente);
+			} else {
+				serviceIngrediente.modificar(ingrediente);
+			}
 		} else {
-			serviceIngrediente.modificar(ingrediente);
+			logger.info("formulario con datos no validos");
 		}
 
 		return "ingrediente/form";

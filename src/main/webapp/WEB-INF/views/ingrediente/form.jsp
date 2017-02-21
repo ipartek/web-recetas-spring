@@ -6,11 +6,14 @@
 
 <form:form action="ingrediente/crear" modelAttribute="ingrediente">
 
-	<form:input path="id"/><br>
+	<form:input path="id" readonly="true"/><br>
 	<form:input path="nombre"/><br>	
+	<form:errors path="nombre" cssStyle="color:red;"/>
+	<br>
+	
 	
 	<form:label path="gluten">¿ Contiene Glutten ?</form:label>
-	<form:checkbox path="gluten"/><br>
+	<form:checkbox path="gluten"/><br>	
 	
 	
 	<form:button type="submit">Crear</form:button>
