@@ -50,8 +50,8 @@ ${msg}
 
 <h2>Listado Ingredientes</h2>
 <ol>
-<c:forEach items="${receta.ingredientes}" var="receta">
-	<li>${receta.nombre} - ${receta.cantidad}</li>
+<c:forEach items="${receta.ingredientes}" var="ingrediente">
+	<li>${ingrediente.nombre} - ${ingrediente.cantidad} <span style="color:red;"><a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a></span></li>
 </c:forEach>
 </ol>
 

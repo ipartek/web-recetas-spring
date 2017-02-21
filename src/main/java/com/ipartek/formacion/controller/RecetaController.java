@@ -93,4 +93,17 @@ public class RecetaController {
 		return "receta/index";
 	}
 
+	@RequestMapping(value = "/receta/{idReceta}/delete/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	public String eliminarIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
+
+		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
+		String msg = null;
+
+		msg = "Elimnado ingrediente X";
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("msg", msg);
+		return "receta/form";
+	}
+
 }
