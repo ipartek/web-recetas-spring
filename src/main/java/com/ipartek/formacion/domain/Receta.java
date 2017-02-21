@@ -1,5 +1,7 @@
 package com.ipartek.formacion.domain;
 
+import java.util.ArrayList;
+
 import javax.validation.constraints.Size;
 
 public class Receta {
@@ -12,8 +14,10 @@ public class Receta {
 	@Size(min = 4, max = 255)
 	private String imagen;
 
-	@Size(min = 5, max = 65535)
+	@Size(min = 100, max = 65535)
 	private String descripcion;
+
+	private ArrayList<Ingrediente> ingredientes;
 
 	public Receta() {
 		super();
@@ -21,6 +25,7 @@ public class Receta {
 		this.nombre = "";
 		this.imagen = "";
 		this.descripcion = "";
+		this.ingredientes = new ArrayList<Ingrediente>();
 	}
 
 	public long getId() {
@@ -53,6 +58,14 @@ public class Receta {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public ArrayList<Ingrediente> getIngredientes() {
+		return ingredientes;
+	}
+
+	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
+		this.ingredientes = ingredientes;
 	}
 
 	@Override

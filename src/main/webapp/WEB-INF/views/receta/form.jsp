@@ -4,6 +4,8 @@
 
 <h1>Formulario Receta</h1>
 
+${msg}
+
 <form:form action="receta/crear" modelAttribute="receta">
 
 	<form:input path="id" readonly="true"/><br>
@@ -19,7 +21,7 @@
 	<br>
 	
 	<form:label path="descripcion">Descripcion</form:label>
-	<form:textarea rows="20" cols="100" path="descripcion"/><br>	
+	<form:textarea rows="8" cols="80" path="descripcion"/><br>	
 	<form:errors path="descripcion" cssStyle="color:red;"/>
 	<br>
 	
@@ -45,4 +47,12 @@
 
 </c:if>
 
+
+<h2>Listado Ingredientes</h2>
+
+<ol>
+	<c:forEach items="${receta.ingredientes}" var="ingrediente">
+		<li>${ingrediente.nombre} - ${ingrediente.cantidad} <span style="color:red;"><a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a></span></li>
+	</c:forEach>
+</ol>
 <%@ include file="../includes/footer.jsp" %> 

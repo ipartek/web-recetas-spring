@@ -48,9 +48,10 @@ public class RecetaController {
 	}
 
 	@RequestMapping(value = "/receta/crear", method = RequestMethod.POST)
-	public String crear(@Valid Receta receta, BindingResult bindingResult) {
+	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + receta);
+		String msg = null;
 
 		// validar datos del formulario
 		if (!bindingResult.hasErrors()) {
@@ -58,10 +59,12 @@ public class RecetaController {
 			if (receta.getId() == -1) {
 
 				serviceReceta.crear(receta);
+				msg = "Creada nueva Receta";
 
 			} else {
 
 				serviceReceta.modificar(receta);
+				msg = "Modificada Receta";
 
 			}
 
@@ -71,6 +74,7 @@ public class RecetaController {
 
 		}
 
+		model.addAttribute("msg", msg);
 		return "receta/form";
 	}
 
@@ -87,6 +91,19 @@ public class RecetaController {
 		model.addAttribute("recetas", serviceReceta.listar());
 
 		return "receta/index";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/delete/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	public String eliminarIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
+
+		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
+		String msg = null;
+
+		msg = "Elimnado ingrediente X";
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("msg", msg);
+		return "receta/form";
 	}
 
 }

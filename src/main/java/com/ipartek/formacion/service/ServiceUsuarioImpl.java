@@ -1,4 +1,4 @@
-package com.ipartek.formacion.service;
+/*package com.ipartek.formacion.service;
 
 import java.util.List;
 
@@ -32,14 +32,14 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public boolean crear(Usuario u) {
-		logger.trace("Creando receta: " + r);
-		return daoUsuario.insert(r);
+		logger.trace("Creando receta: " + u);
+		return daoUsuario.insert(u);
 	}
 
 	@Override
 	public boolean modificar(Usuario u) {
-		logger.trace("Modificando receta: " + r);
-		return daoUsuario.update(r);
+		logger.trace("Modificando receta: " + u);
+		return daoUsuario.update(u);
 	}
 
 	@Override
@@ -49,3 +49,4 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	}
 
 }
+*/

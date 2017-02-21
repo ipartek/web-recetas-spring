@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 
 public interface DAOReceta {
@@ -19,5 +20,11 @@ public interface DAOReceta {
 	boolean update(Receta r);
 
 	boolean delete(long id);
+
+	boolean deleteIngrediente(long idReceta, long idIngrediente);
+
+	boolean updateIngrediente(long idReceta, Ingrediente i);
+
+	boolean addIngrediente(long idReceta, Ingrediente i);
 
 }
