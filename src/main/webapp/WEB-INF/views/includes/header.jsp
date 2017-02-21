@@ -10,6 +10,10 @@
 <head>
 	<title>Web Recetas</title>
 	<base href="/formacion/" />
+	
+	<!-- Custom -->
+	<link href="resources/css/custom.css" rel="stylesheet">
+	
 </head>
 <body>
 
