@@ -22,4 +22,6 @@ public interface DAOIngrediente {
 
 	boolean delete(long id);
 
+	boolean deleteByReceta(long idReceta, long idIngrediente);
+
 }

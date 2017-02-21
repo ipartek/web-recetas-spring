@@ -101,7 +101,7 @@ public class RecetaController {
 
 		msg = "Elimnado ingrediente X";
 
-		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("receta", serviceReceta.eliminarIngrediente(idReceta, idIngrediente));
 		model.addAttribute("msg", msg);
 		return "receta/form";
 	}

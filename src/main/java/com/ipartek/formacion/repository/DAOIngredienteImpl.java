@@ -46,6 +46,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
+	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` AS ri WHERE `receta_id` = ? AND `ingrediente_id`=?;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -155,6 +156,24 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		}
 
 		return lista;
+	}
+
+	@Override
+	public boolean deleteByReceta(long idReceta, long idIngrediente) {
+		boolean resul = false;
+		logger.trace("eliminar ingrediente" + idIngrediente + "de una receta " + idReceta);
+		try {
+			int affectedRows = this.jdbctemplate.update(SQL_DELETE, idReceta, idIngrediente);
+			if (affectedRows == 1) {
+				resul = true;
+			}
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return resul;
 	}
 
 }

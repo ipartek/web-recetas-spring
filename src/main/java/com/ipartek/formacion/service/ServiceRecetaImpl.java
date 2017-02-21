@@ -57,4 +57,22 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return daoReceta.delete(id);
 	}
 
+	@Override
+	public boolean eliminarIngrediente(long idReceta, long idIngrediente) {
+		logger.trace("eliminar ingrediente" + idIngrediente + "de una receta " + idReceta);
+		return daoIngrediente.deleteByReceta(idReceta, idIngrediente);
+	}
+
+	@Override
+	public boolean modificarIngrediente(long idReceta, Ingrediente i) {
+
+		return false;
+	}
+
+	@Override
+	public boolean addIngrediente(long idReceta, Ingrediente i) {
+
+		return false;
+	}
+
 }
