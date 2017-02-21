@@ -42,6 +42,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
+	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
@@ -139,6 +140,21 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			this.logger.error(e.getMessage());
 		}
 		return resul;
+	}
+
+	@Override
+	public List<Ingrediente> getAllByReceta(long idReceta) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+		try {
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_RECETA_ID, new Object[] { idReceta },
+					new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
 	}
 
 }

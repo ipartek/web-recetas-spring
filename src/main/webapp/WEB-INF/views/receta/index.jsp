@@ -8,7 +8,11 @@
 
 <ul>
 <c:forEach items="${recetas}" var="r">
-	<li><a href="receta/edit/${r.id}">${r.id} </a> <img class="tamImg"  alt="imagen ${r.nombre}" src="${r.imagen}"> ${r.nombre}</li>
+	<li>
+		<a href="receta/edit/${r.id}">${r.id} </a> 
+		<img class="tamImg"  alt="imagen ${r.nombre}" src="${r.imagen}"> 
+		<a href="receta/edit/${r.id}">${r.nombre}</a>
+	</li>
 </c:forEach>
 </ul>
 

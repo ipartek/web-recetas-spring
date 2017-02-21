@@ -11,11 +11,14 @@ public class Ingrediente {
 
 	private boolean gluten;
 
+	private String cantidad;
+
 	public Ingrediente() {
 		super();
 		this.id = -1;
 		this.nombre = "";
 		this.gluten = true;
+		this.cantidad = "";
 	}
 
 	public Ingrediente(long id, String nombre, boolean gluten) {
@@ -49,9 +52,17 @@ public class Ingrediente {
 		this.gluten = gluten;
 	}
 
+	public String getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(String cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	@Override
 	public String toString() {
-		return "Ingrediente [id=" + id + ", nombre=" + nombre + ", gluten=" + gluten + "]";
+		return "Ingrediente [id=" + id + ", nombre=" + nombre + ", gluten=" + gluten + ", cantidad=" + cantidad + "]";
 	}
 
 }

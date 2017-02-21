@@ -12,6 +12,8 @@ public interface DAOIngrediente {
 
 	List<Ingrediente> getAll();
 
+	List<Ingrediente> getAllByReceta(long idReceta);
+
 	Ingrediente getById(long id);
 
 	boolean insert(Ingrediente i);

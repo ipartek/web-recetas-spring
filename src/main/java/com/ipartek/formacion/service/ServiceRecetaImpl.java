@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -7,7 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.repository.DAOIngrediente;
 import com.ipartek.formacion.repository.DAOReceta;
 
 @Service("serviceReceta")
@@ -18,6 +21,9 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Autowired
 	private DAOReceta daoReceta;
 
+	@Autowired
+	private DAOIngrediente daoIngrediente;
+
 	@Override
 	public List<Receta> listar() {
 		logger.trace("listar recetas");
@@ -27,7 +33,10 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public Receta buscarPorID(long id) {
 		logger.trace("Buscamos receta por id: " + id);
-		return daoReceta.getById(id);
+		Receta receta = daoReceta.getById(id);
+		ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) daoIngrediente.getAllByReceta(id);
+		receta.setIngredientes(ingredientes);
+		return receta;
 	}
 
 	@Override

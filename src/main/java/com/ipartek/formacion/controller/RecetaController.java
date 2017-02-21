@@ -48,9 +48,10 @@ public class RecetaController {
 	}
 
 	@RequestMapping(value = "/receta/crear", method = RequestMethod.POST)
-	public String crear(@Valid Receta receta, BindingResult bindingResult) {
+	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + receta);
+		String msg = null;
 
 		// validar datos del formulario
 		if (!bindingResult.hasErrors()) {
@@ -58,10 +59,12 @@ public class RecetaController {
 			if (receta.getId() == -1) {
 
 				serviceReceta.crear(receta);
+				msg = "Creada nueva Receta";
 
 			} else {
 
 				serviceReceta.modificar(receta);
+				msg = "Modificada Receta";
 
 			}
 
@@ -71,6 +74,7 @@ public class RecetaController {
 
 		}
 
+		model.addAttribute("msg", msg);
 		return "receta/form";
 	}
 
