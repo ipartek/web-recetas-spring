@@ -43,10 +43,11 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
+	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND ri.receta_id = ? AND i.id = ? ;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
-	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` AS ri WHERE `receta_id` = ? AND `ingrediente_id`=?;";
+	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` WHERE `receta_id`=? AND `ingrediente_id`=?;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -163,7 +164,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		boolean resul = false;
 		logger.trace("eliminar ingrediente" + idIngrediente + "de una receta " + idReceta);
 		try {
-			int affectedRows = this.jdbctemplate.update(SQL_DELETE, idReceta, idIngrediente);
+			int affectedRows = this.jdbctemplate.update(SQL_DELETE_BY_RECETA, idReceta, idIngrediente);
 			if (affectedRows == 1) {
 				resul = true;
 			}
@@ -174,6 +175,21 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		}
 
 		return resul;
+	}
+
+	@Override
+	public Ingrediente getByReceta(long idReceta, long idIngrediente) {
+		Ingrediente i = null;
+		try {
+			i = this.jdbctemplate.queryForObject(SQL_GET_INGREDIENTE_BY_RECETA,
+					new Object[] { idReceta, idIngrediente }, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return i;
 	}
 
 }

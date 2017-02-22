@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
 
 @Controller
@@ -22,6 +23,9 @@ public class RecetaController {
 
 	@Autowired
 	private ServiceReceta serviceReceta;
+
+	@Autowired
+	private ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -97,13 +101,24 @@ public class RecetaController {
 	public String eliminarIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
 
 		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
-		String msg = null;
+		String msg = "No se pudo eliminar ingrediente";
 
-		msg = "Elimnado ingrediente X";
+		if (serviceReceta.eliminarIngrediente(idReceta, idIngrediente)) {
+			msg = "Ingrediente eliminado con exito";
+		}
 
-		model.addAttribute("receta", serviceReceta.eliminarIngrediente(idReceta, idIngrediente));
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 		model.addAttribute("msg", msg);
 		return "receta/form";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	public String irIngredienteModificar(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
+
+		logger.info("Ir a Mostrar formulario " + idIngrediente + " de Receta " + idReceta);
+		model.addAttribute("recetaNombre", serviceReceta.buscarPorID(idReceta).getNombre());
+		model.addAttribute("ingrediente", serviceReceta.recuperarIngrediente(idReceta, idIngrediente));
+		return "receta/formIngrediente";
 	}
 
 }

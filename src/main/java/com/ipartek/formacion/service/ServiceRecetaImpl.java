@@ -75,4 +75,10 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return false;
 	}
 
+	@Override
+	public Ingrediente recuperarIngrediente(long idReceta, long idIngrediente) {
+		logger.trace("recuperando Ingrediente" + idIngrediente + "de una receta " + idReceta);
+		return daoIngrediente.getByReceta(idReceta, idIngrediente);
+	}
+
 }
