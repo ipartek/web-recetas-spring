@@ -2,16 +2,19 @@
 
 <a href="receta">Volver</a>
 
-<h1>Modificar ${ingrediente.nombre} de ${recetaNombre}</h1>
+<h1>Modificar ${ingrediente.nombre} de ${receta.nombre}</h1>
 
 ${msg}
 
 <c:if test="${!ingrediente.gluten}">Gluten Free</c:if>
 <c:if test="${ingrediente.gluten}">*Atención contiene Gluten</c:if>
 
-<form:form action=""  modelAttribute="ingrediente">
+<form:form 
+           action="receta/${receta.id}/edit/ingrediente"  
+           modelAttribute="ingrediente">
 
 	<form:hidden path="id"/>	
+	<form:hidden path="gluten"/>	
 	<form:label path="cantidad">Cantidad:</form:label>
 	<form:input path="cantidad"/>	
 	<br>

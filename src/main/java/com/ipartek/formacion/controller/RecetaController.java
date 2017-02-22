@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
@@ -116,8 +117,23 @@ public class RecetaController {
 	public String irIngredienteModificar(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
 
 		logger.info("Ir a Mostrar formulario " + idIngrediente + " de Receta " + idReceta);
-		model.addAttribute("recetaNombre", serviceReceta.buscarPorID(idReceta).getNombre());
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 		model.addAttribute("ingrediente", serviceReceta.recuperarIngrediente(idReceta, idIngrediente));
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente", method = RequestMethod.POST)
+	public String editarIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
+			BindingResult bindingResult, Model model) {
+
+		logger.info("Modificando ingrediente " + ingrediente + " de Receta " + idReceta);
+		String msg = "No se pudo cambiar ingrediente";
+
+		if (serviceReceta.modificarIngrediente(idReceta, ingrediente)) {
+			msg = "Ingrediente cambiado";
+		}
+
+		model.addAttribute("msg", msg);
 		return "receta/formIngrediente";
 	}
 

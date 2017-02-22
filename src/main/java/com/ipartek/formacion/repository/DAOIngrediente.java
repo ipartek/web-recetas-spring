@@ -41,4 +41,6 @@ public interface DAOIngrediente {
 	 */
 	Ingrediente getByReceta(long idReceta, long idIngrediente);
 
+	boolean updateByReceta(long idReceta, Ingrediente i);
+
 }

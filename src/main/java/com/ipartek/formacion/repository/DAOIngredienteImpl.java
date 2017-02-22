@@ -48,6 +48,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
 	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` WHERE `receta_id`=? AND `ingrediente_id`=?;";
+	private static final String SQL_UPDATE_BY_RECETA = "UPDATE `receta_ingrediente` SET `cantidad`=? WHERE `receta_id`=? and`ingrediente_id`=?;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -190,6 +191,26 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		}
 
 		return i;
+	}
+
+	@Override
+	public boolean updateByReceta(long idReceta, Ingrediente i) {
+		logger.trace("update " + i + " para Receta " + idReceta);
+		boolean resul = false;
+		int affectedRows = -1;
+		try {
+
+			Object[] argumentos = { i.getCantidad(), idReceta, i.getId() };
+			affectedRows = this.jdbctemplate.update(SQL_UPDATE_BY_RECETA, argumentos);
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+		return resul;
 	}
 
 }

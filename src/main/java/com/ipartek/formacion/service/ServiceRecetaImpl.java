@@ -65,8 +65,8 @@ public class ServiceRecetaImpl implements ServiceReceta {
 
 	@Override
 	public boolean modificarIngrediente(long idReceta, Ingrediente i) {
-
-		return false;
+		logger.trace("Modificacando Ingrediente" + i + "de una receta " + idReceta);
+		return daoIngrediente.updateByReceta(idReceta, i);
 	}
 
 	@Override
