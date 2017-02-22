@@ -61,19 +61,31 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public boolean eliminarIngrediente(long idReceta, long idIngrediente) {
 		logger.trace("Eliminando por id: " + idIngrediente + "de la receta " + idReceta);
-		return daoReceta.deleteIngrediente(idReceta, idIngrediente);
+		return daoIngrediente.deleteByReceta(idReceta, idIngrediente);
 	}
 
 	@Override
 	public boolean modificarIngrediente(long idReceta, Ingrediente i) {
 		logger.trace("Modificar ingrediente: " + i + "de la receta " + idReceta);
-		return daoReceta.updateIngrediente(idReceta, i);
+		return daoIngrediente.updateByReceta(idReceta, i);
+	}
+
+	@Override
+	public Ingrediente recuperarIngrediente(long idReceta, long idIngrediente) {
+		logger.trace("Recuperar ingrediente: " + idIngrediente + "de la receta " + idReceta);
+		return daoIngrediente.getByReceta(idReceta, idIngrediente);
 	}
 
 	@Override
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
-		return daoReceta.addIngrediente(idReceta, i);
+		return daoIngrediente.addIngrediente(idReceta, i);
+	}
+
+	@Override
+	public List<Ingrediente> listarIngredientesNoIncluidas(long idReceta) {
+		logger.trace("Listar ingredientes no incluidos en la receta " + idReceta);
+		return daoIngrediente.getAllByNotInReceta(idReceta);
 	}
 
 }

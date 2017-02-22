@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.repository.mapper.IngredienteMapper;
+import com.ipartek.formacion.repository.mapper.IngredienteRecetaMapper;
 
 @Repository("daoIngrediente")
 public class DAOIngredienteImpl implements DAOIngrediente {
@@ -43,9 +44,14 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
+	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND i.id = ? AND ri.receta_id = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
+	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` WHERE `receta_id` = ? AND `ingrediente_id` = ?;";
+	private static final String SQL_UPDATE_BY_RECETA = "UPDATE `receta_ingrediente` SET `cantidad`= ? WHERE `receta_id` = ? AND `ingrediente_id` = ?;";
+	private static final String SQL_INSERT_BY_RECETA = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`, `cantidad` VALUES (?, ?, ?);";
+	private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id, i.nombre FROM ingrediente AS i WHERE i.id NOT IN (SELECT i.id FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND ri.receta_id = ?);";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -150,7 +156,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		try {
 
 			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_RECETA_ID, new Object[] { idReceta },
-					new IngredienteMapper());
+					new IngredienteRecetaMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -162,6 +168,123 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 		}
 
+		return lista;
+	}
+
+	@Override
+	public boolean deleteByReceta(long idReceta, long idIngrediente) {
+
+		logger.trace("Eliminar por id: " + idIngrediente + "de la receta " + idReceta);
+		boolean resul = false;
+		int affectedRows = -1;
+
+		try {
+
+			affectedRows = this.jdbctemplate.update(SQL_DELETE_BY_RECETA, new Object[] { idReceta, idIngrediente });
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+		return resul;
+	}
+
+	@Override
+	public boolean updateByReceta(long idReceta, Ingrediente i) {
+
+		logger.trace("Modificar ingrediente: " + i + "para receta " + idReceta);
+		boolean resul = false;
+		int affectedRows = -1;
+
+		try {
+
+			affectedRows = this.jdbctemplate.update(SQL_UPDATE_BY_RECETA,
+					new Object[] { i.getCantidad(), idReceta, i.getId() });
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return resul;
+	}
+
+	@Override
+	public Ingrediente getByReceta(long idReceta, long idIngrediente) {
+
+		Ingrediente i = null;
+
+		logger.trace("Recuperando ingrediente: " + idIngrediente + "de la receta " + idReceta);
+
+		try {
+
+			i = this.jdbctemplate.queryForObject(SQL_GET_INGREDIENTE_BY_RECETA,
+					new Object[] { idIngrediente, idReceta }, new IngredienteRecetaMapper());
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return i;
+	}
+
+	@Override
+	public boolean addIngrediente(long idReceta, Ingrediente i) {
+
+		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
+		boolean resul = false;
+		int affectedRows = -1;
+
+		try {
+
+			affectedRows = this.jdbctemplate.update(SQL_INSERT_BY_RECETA,
+					new Object[] { idReceta, i.getId(), i.getCantidad() });
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return resul;
+	}
+
+	@Override
+	public List<Ingrediente> getAllByNotInReceta(long idReceta) {
+		logger.trace("Listando ingredientes que no se encuentran en la receta " + idReceta);
+
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_NOT_IN_RECETA,
+					new Object[] { idReceta }, new IngredienteRecetaMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No hay ingredientes");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
 		return lista;
 	}
 

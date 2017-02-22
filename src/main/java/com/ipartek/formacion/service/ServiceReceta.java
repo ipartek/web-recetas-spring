@@ -23,4 +23,8 @@ public interface ServiceReceta {
 
 	boolean addIngrediente(long idReceta, Ingrediente i);
 
+	List<Ingrediente> listarIngredientesNoIncluidas(long idReceta);
+
+	Ingrediente recuperarIngrediente(long idReceta, long idIngrediente);
+
 }

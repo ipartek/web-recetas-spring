@@ -1,5 +1,7 @@
 package com.ipartek.formacion.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
 
 @Controller
@@ -22,6 +26,9 @@ public class RecetaController {
 
 	@Autowired
 	private ServiceReceta serviceReceta;
+
+	@Autowired
+	private ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -99,11 +106,71 @@ public class RecetaController {
 		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
 		String msg = null;
 
-		msg = "Elimnado ingrediente X";
+		if (serviceReceta.eliminarIngrediente(idReceta, idIngrediente)) {
+			msg = "Elimnado ingrediente: " + idIngrediente;
+		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 		model.addAttribute("msg", msg);
 		return "receta/form";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	public String irIngredienteModificar(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
+
+		logger.info("Ir a mostrar formulario " + idIngrediente + " de Receta " + idReceta);
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("ingrediente", serviceReceta.recuperarIngrediente(idReceta, idIngrediente));
+
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente", method = RequestMethod.POST)
+	public String editarIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
+			BindingResult bindingResult, Model model) {
+
+		logger.info("Modificando ingrediente " + ingrediente + " de Receta " + idReceta);
+		String msg = "No se pudo cambiar ingrediente";
+
+		if (serviceReceta.modificarIngrediente(idReceta, ingrediente)) {
+			msg = "Ingrediente cambiado";
+		}
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("ingrediente", ingrediente);
+		model.addAttribute("msg", msg);
+
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/recuperar/ingredientes", method = RequestMethod.GET)
+	public String recuperarIngredientes(@PathVariable int idReceta, Model model) {
+
+		logger.info("Recuperando ingredientes para la Receta " + idReceta);
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("ingredientes", serviceReceta.listarIngredientesNoIncluidas(idReceta));
+
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/add/ingredientes", method = RequestMethod.POST)
+	public String addIngrediente(@PathVariable int idReceta, @Valid ArrayList<Ingrediente> ingredientes,
+			BindingResult bindingResult, Model model) {
+
+		logger.info("Añadiendo ingrediente " + ingredientes + " de Receta " + idReceta);
+		String msg = "No se pudo añadir ingrediente";
+
+		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
+			msg = "Ingrediente añadido";
+		}
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("ingrediente", ingrediente);
+		model.addAttribute("msg", msg);
+
+		return "receta/formIngrediente";
 	}
 
 }

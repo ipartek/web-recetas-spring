@@ -20,7 +20,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
 
@@ -47,7 +46,6 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, '4');";
-	private static final String SQL_DELETE_INGREDIENTE = "DELETE FROM `receta_ingrediente` WHERE `receta_id` = ? AND `ingrediente_id` = ?;";
 
 	@Override
 	public List<Receta> getAll() {
@@ -178,37 +176,6 @@ public class DAORecetaImpl implements DAOReceta {
 		}
 
 		return resul;
-	}
-
-	@Override
-	public boolean deleteIngrediente(long idReceta, long idIngrediente) {
-
-		logger.trace("Eliminar por id: " + idIngrediente + "de la receta " + idReceta);
-		boolean resul = false;
-		int affectedRows = -1;
-
-		try {
-
-			// affectedRows = this.jdbcTemplate.
-
-		} catch (Exception e) {
-
-			this.logger.error(e.getMessage());
-
-		}
-		return resul;
-	}
-
-	@Override
-	public boolean updateIngrediente(long idReceta, Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addIngrediente(long idReceta, Ingrediente i) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

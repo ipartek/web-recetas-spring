@@ -22,4 +22,21 @@ public interface DAOIngrediente {
 
 	boolean delete(long id);
 
+	boolean deleteByReceta(long idReceta, long idIngrediente);
+
+	boolean updateByReceta(long idReceta, Ingrediente i);
+
+	boolean addIngrediente(long idReceta, Ingrediente i);
+
+	List<Ingrediente> getAllByNotInReceta(long idReceta);
+
+	/**
+	 * Recupera un Ingrediente de la BBDD, sin la 'cantidad' asociada a una
+	 * Receta
+	 * 
+	 * @param id
+	 *            ingrediente
+	 * @return Ingrediente, null si no existe
+	 */
+	Ingrediente getByReceta(long idReceta, long idIngrediente);
 }

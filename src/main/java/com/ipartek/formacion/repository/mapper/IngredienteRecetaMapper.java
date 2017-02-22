@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.ipartek.formacion.domain.Ingrediente;
 
-public class IngredienteMapper implements RowMapper<Ingrediente> {
+public class IngredienteRecetaMapper implements RowMapper<Ingrediente> {
 
 	@Override
 	public Ingrediente mapRow(ResultSet rs, int numRow) throws SQLException {
@@ -16,6 +16,7 @@ public class IngredienteMapper implements RowMapper<Ingrediente> {
 		i.setId(rs.getLong("id"));
 		i.setNombre(rs.getString("nombre"));
 		i.setGluten(rs.getBoolean("gluten"));
+		i.setCantidad(rs.getString("cantidad"));
 
 		return i;
 	}
