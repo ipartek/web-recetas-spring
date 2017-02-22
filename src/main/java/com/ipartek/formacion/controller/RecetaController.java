@@ -1,7 +1,5 @@
 package com.ipartek.formacion.controller;
 
-import java.util.ArrayList;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -156,18 +154,13 @@ public class RecetaController {
 	}
 
 	@RequestMapping(value = "/receta/{idReceta}/add/ingredientes", method = RequestMethod.POST)
-	public String addIngrediente(@PathVariable int idReceta, @Valid ArrayList<Ingrediente> ingredientes,
-			BindingResult bindingResult, Model model) {
+	public String addIngrediente(@PathVariable int idReceta, @Valid Receta receta, BindingResult bindingResult,
+			Model model) {
 
-		logger.info("Añadiendo ingrediente " + ingredientes + " de Receta " + idReceta);
+		logger.info("Añadiendo ingredientes " + receta + " de Receta " + idReceta);
 		String msg = "No se pudo añadir ingrediente";
 
-		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
-			msg = "Ingrediente añadido";
-		}
-
-		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
-		model.addAttribute("ingrediente", ingrediente);
+		// model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 		model.addAttribute("msg", msg);
 
 		return "receta/formIngrediente";

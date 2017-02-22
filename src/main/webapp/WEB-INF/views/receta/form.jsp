@@ -48,7 +48,11 @@ ${msg}
 </c:if>
 
 
-<h2>Listado Ingredientes</h2>
+<h2>Listado Ingredientes
+	<span>
+		<a href="receta/${receta.id}/recuperar/ingredientes">[ Añadir Ingredientes ]</a>
+	</span>
+</h2>
 
 	<ol>
 		<c:forEach items="${receta.ingredientes}" var="ingrediente">
