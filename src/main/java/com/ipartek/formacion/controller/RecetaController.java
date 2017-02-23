@@ -74,6 +74,9 @@ public class RecetaController {
 		logger.info("recibimos datos del formulario " + receta);
 		String msg = null;
 
+		Usuario usuario = serviceUsuario.buscarPorID(receta.getUsuario().getId());
+		receta.setUsuario(usuario);
+
 		// validar datos del formulario
 		if (!bindingResult.hasErrors()) {
 
@@ -96,6 +99,8 @@ public class RecetaController {
 		}
 
 		model.addAttribute("msg", msg);
+		model.addAttribute("usuarios", serviceUsuario.listar());
+
 		return "receta/form";
 	}
 
@@ -174,11 +179,11 @@ public class RecetaController {
 	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
-		logger.info("Añadiendo ingrediente " + ingrediente + " de Receta " + idReceta);
-		String msg = "No se pudo añadir ingrediente";
+		logger.info("Aï¿½adiendo ingrediente " + ingrediente + " de Receta " + idReceta);
+		String msg = "No se pudo aï¿½adir ingrediente";
 
 		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
-			msg = "Se ha añadido el ingrediente:  " + ingrediente.getNombre();
+			msg = "Se ha aï¿½adido el ingrediente:  " + ingrediente.getNombre();
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));

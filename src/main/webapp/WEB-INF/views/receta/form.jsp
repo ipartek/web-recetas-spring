@@ -25,10 +25,18 @@ ${msg}
 	<form:errors path="descripcion" cssStyle="color:red;"/>
 	<br>
 	
-	<span>"${receta.usuario.nombre}"</span>
-	<img class="tamImg" src="${receta.usuario.imagen}"/>	
+	<c:if test="${receta.id != -1}">
+		<span>Usuario de la Receta: ${receta.usuario.nombre}</span>
+		<br><br>
+		<img class="tamImg" src="${receta.usuario.imagen}"/><br><br>
+		
+		<form:label path="usuario">Cambiar Usuario:</form:label>
+	</c:if>
 	
-	<form:label path="usuario">Cambiar Usuario:</form:label>	
+	<c:if test="${receta.id == -1}">
+		<form:label path="usuario">Usuario:</form:label>
+	</c:if>
+		
 	<form:select path="usuario.id">
 		<c:forEach items="${usuarios}" var="u">
 			<form:option value="${u.id}">${u.nombre}</form:option>
