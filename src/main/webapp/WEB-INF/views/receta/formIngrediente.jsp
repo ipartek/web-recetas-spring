@@ -6,12 +6,13 @@
 
 <c:if test="${not empty ingrediente.nombre}">
 <c:set var="accion" value="add"/>
+<c:set var="boton" value="Modificar"/>
 <h1>Modificar ${ingrediente.nombre} de ${receta.nombre}</h1>
 </c:if>
 
 <c:if test="${ empty ingrediente.nombre}">
 <c:set var="accion" value="nuevo"/>
-
+<c:set var="boton" value="Añadir"/>
 <h1>Añadir ingrediente a receta: ${receta.nombre }</h1>
 </c:if>
 
@@ -45,9 +46,6 @@ ${msg}
 	<c:if test="${disponibles==null}">
 	<form:hidden path="id"/>
 	
-	NO ingredientes
-	
-	
 	</c:if>	
 	<form:hidden path="nombre"/>	
 	
@@ -56,7 +54,7 @@ ${msg}
 	<form:input path="cantidad"/>	
 	<br>
 	<br>
-	<form:button>Modificar</form:button>
+	<form:button>${boton}</form:button>
 
 </form:form>
 

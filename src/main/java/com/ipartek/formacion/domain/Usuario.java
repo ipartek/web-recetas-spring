@@ -1,21 +1,15 @@
 package com.ipartek.formacion.domain;
 
-import javax.validation.constraints.Size;
-
 public class Usuario {
 
 	private long id;
 
-	@Size(min = 3, max = 255)
 	private String nombre;
 
-	@Size(min = 3, max = 255)
 	private String email;
 
-	@Size(min = 3, max = 255)
 	private String password;
 
-	@Size(min = 3, max = 255)
 	private String imagen;
 
 	public Usuario() {

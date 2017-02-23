@@ -8,7 +8,7 @@ public interface ServiceUsuario {
 
 	List<Usuario> listar();
 
-	Usuario buscarPorID(long id);
+	Usuario buscarPorId(long id);
 
 	boolean crear(Usuario u);
 

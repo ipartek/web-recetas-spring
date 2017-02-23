@@ -155,7 +155,7 @@ public class RecetaController {
 
 		model.addAttribute("msg", msg);
 
-		return "receta/formIngrediente";
+		return "receta/form";
 	}
 
 	@RequestMapping(value = "/receta/{idReceta}/add/ingrediente/", method = RequestMethod.GET)

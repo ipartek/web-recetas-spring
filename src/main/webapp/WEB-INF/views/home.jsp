@@ -15,5 +15,8 @@
 <br>
 <a href="receta">CRUD Recetas</a>
 
+<br>
+<a href="usuario">CRUD Usuarios</a>
+
 
 <%@ include file="includes/footer.jsp" %>
