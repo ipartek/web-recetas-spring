@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.Usuario;
 
 public interface ServiceReceta {
 
@@ -23,8 +24,17 @@ public interface ServiceReceta {
 
 	boolean addIngrediente(long idReceta, Ingrediente i);
 
+	/**
+	 * Buscamos todos los ingredientes que no esten en esa receta.<br>
+	 * Nos sirve para poder añadir un nuevo ingrediente.
+	 * 
+	 * @param idReceta
+	 * @return List<Ingrediente> disponibles
+	 */
 	List<Ingrediente> listarIngredientesNoIncluidas(long idReceta);
 
 	Ingrediente recuperarIngrediente(long idReceta, long idIngrediente);
+
+	Usuario getUsuarioReceta(long idReceta);
 
 }

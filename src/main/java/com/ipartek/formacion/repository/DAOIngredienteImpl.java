@@ -50,8 +50,12 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
 	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` WHERE `receta_id` = ? AND `ingrediente_id` = ?;";
 	private static final String SQL_UPDATE_BY_RECETA = "UPDATE `receta_ingrediente` SET `cantidad`= ? WHERE `receta_id` = ? AND `ingrediente_id` = ?;";
-	private static final String SQL_INSERT_BY_RECETA = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`, `cantidad` VALUES (?, ?, ?);";
-	private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id, i.nombre, i.gluten FROM ingrediente AS i WHERE i.id NOT IN (SELECT i.id FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND ri.receta_id = ?);";
+	private static final String SQL_INSERT_BY_RECETA = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`, `cantidad`) VALUES (?, ?, ?);";
+	// private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id,
+	// i.nombre, i.gluten FROM ingrediente AS i WHERE i.id NOT IN (SELECT i.id
+	// FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id =
+	// i.id AND ri.receta_id = ?) ORDER BY i.nombre ASC;";
+	private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id, i.nombre, i.gluten FROM ingrediente AS i WHERE i.id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?) ORDER BY i.nombre ASC;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -241,7 +245,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public boolean addIngrediente(long idReceta, Ingrediente i) {
+	public boolean insertByReceta(long idReceta, Ingrediente i) {
 
 		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
 		boolean resul = false;

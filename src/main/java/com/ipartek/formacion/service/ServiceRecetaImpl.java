@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DAOIngrediente;
 import com.ipartek.formacion.repository.DAOReceta;
+import com.ipartek.formacion.repository.DAOUsuario;
 
 @Service("serviceReceta")
 public class ServiceRecetaImpl implements ServiceReceta {
@@ -23,6 +25,9 @@ public class ServiceRecetaImpl implements ServiceReceta {
 
 	@Autowired
 	private DAOIngrediente daoIngrediente;
+
+	@Autowired
+	private DAOUsuario daousuario;
 
 	@Override
 	public List<Receta> listar() {
@@ -79,13 +84,19 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
-		return daoIngrediente.addIngrediente(idReceta, i);
+		return daoIngrediente.insertByReceta(idReceta, i);
 	}
 
 	@Override
 	public List<Ingrediente> listarIngredientesNoIncluidas(long idReceta) {
 		logger.trace("Listar ingredientes no incluidos en la receta " + idReceta);
 		return daoIngrediente.getAllByNotInReceta(idReceta);
+	}
+
+	@Override
+	public Usuario getUsuarioReceta(long idReceta) {
+		logger.trace("Conseguir usuario de la receta " + idReceta);
+		return daousuario.getUserByReceta(idReceta);
 	}
 
 }

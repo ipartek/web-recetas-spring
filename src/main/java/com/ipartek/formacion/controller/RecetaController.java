@@ -1,5 +1,7 @@
 package com.ipartek.formacion.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
+import com.ipartek.formacion.service.ServiceUsuario;
 
 @Controller
 public class RecetaController {
@@ -27,6 +31,9 @@ public class RecetaController {
 
 	@Autowired
 	private ServiceIngrediente serviceIngrediente;
+
+	@Autowired
+	private ServiceUsuario serviceUsuario;
 
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -40,6 +47,7 @@ public class RecetaController {
 	public String irFormularioNuevo(Model model) {
 
 		model.addAttribute("receta", new Receta());
+		model.addAttribute("usuarios", serviceUsuario.listar());
 
 		return "receta/form";
 	}
@@ -47,7 +55,15 @@ public class RecetaController {
 	@RequestMapping(value = "/receta/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
-		model.addAttribute("receta", serviceReceta.buscarPorID(id));
+		Receta receta = serviceReceta.buscarPorID(id);
+		Usuario usuario = serviceReceta.getUsuarioReceta(id);
+		receta.setUsuario(usuario);
+
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) serviceUsuario.listar();
+		// usuarios.remove(usuario);
+
+		model.addAttribute("receta", receta);
+		model.addAttribute("usuarios", usuarios);
 
 		return "receta/form";
 	}
@@ -148,22 +164,29 @@ public class RecetaController {
 		logger.info("Recuperando ingredientes para la Receta " + idReceta);
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		model.addAttribute("ingrediente", new Ingrediente());
 		model.addAttribute("ingredientes", serviceReceta.listarIngredientesNoIncluidas(idReceta));
 
 		return "receta/formIngrediente";
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/add/ingredientes", method = RequestMethod.POST)
-	public String addIngrediente(@PathVariable int idReceta, @Valid Receta receta, BindingResult bindingResult,
-			Model model) {
+	@RequestMapping(value = "/receta/{idReceta}/add/ingrediente", method = RequestMethod.POST)
+	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
+			BindingResult bindingResult, Model model) {
 
-		logger.info("Añadiendo ingredientes " + receta + " de Receta " + idReceta);
+		logger.info("Añadiendo ingrediente " + ingrediente + " de Receta " + idReceta);
 		String msg = "No se pudo añadir ingrediente";
 
-		// model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
+			msg = "Se ha añadido el ingrediente:  " + ingrediente.getNombre();
+		}
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 		model.addAttribute("msg", msg);
+		model.addAttribute("ingredientes", serviceReceta.listarIngredientesNoIncluidas(idReceta));
 
 		return "receta/formIngrediente";
+		// return ("receta/edit/" + idReceta);
 	}
 
 }

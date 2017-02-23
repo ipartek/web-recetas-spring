@@ -1,6 +1,6 @@
 <%@ include file="../includes/header.jsp" %> 
 
-<a href="receta">Volver</a>
+<a href="receta/edit/${receta.id}">Volver</a>
 
 
 <c:if test="${ingredientes == null}">
@@ -28,16 +28,19 @@
 
 	<h1>Añadir ingredientes en la receta: ${receta.nombre}</h1>
 	
-	${msg}<br>
+	${msg}<br><br>
 	
-	<form:form action="receta/${receta.id}/add/ingredientes" method="post" modelAttribute="receta">
-		<form:hidden path="id"/>
-		<form:select multiple="true" path="ingredientes">
+	<form:form action="receta/${receta.id}/add/ingrediente" method="post" modelAttribute="ingrediente">
+		<form:label path="id">Selecciona ingrediente</form:label>
+		<form:select multiple="false" path="id">
 		
 			<c:forEach items="${ingredientes}" var="i">
 				<form:option value="${i.id}">${i.nombre}</form:option>
 			</c:forEach>
 		</form:select>
+		<br>
+		<form:label path="cantidad">Cantidad</form:label>
+		<form:input path="cantidad"/>
 		<br><br>
 		<form:button>Añadir</form:button>
  	</form:form>

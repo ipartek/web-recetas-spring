@@ -19,6 +19,8 @@ public class Receta {
 
 	private ArrayList<Ingrediente> ingredientes;
 
+	private Usuario usuario;
+
 	public Receta() {
 		super();
 		this.id = -1;
@@ -68,9 +70,18 @@ public class Receta {
 		this.ingredientes = ingredientes;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String toString() {
-		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion + "]";
+		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
+				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
 	}
 
 }

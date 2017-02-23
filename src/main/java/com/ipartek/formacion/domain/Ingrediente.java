@@ -18,7 +18,7 @@ public class Ingrediente {
 		this.id = -1;
 		this.nombre = "";
 		this.gluten = true;
-		this.cantidad = "";
+		this.cantidad = "a ojimetro...";
 	}
 
 	public Ingrediente(long id, String nombre, boolean gluten) {
@@ -26,7 +26,7 @@ public class Ingrediente {
 		this.id = id;
 		this.nombre = nombre;
 		this.gluten = gluten;
-		this.cantidad = "a ojimetro";
+		this.cantidad = "a ojimetro...";
 	}
 
 	public long getId() {

@@ -1,4 +1,4 @@
-/*package com.ipartek.formacion.service;
+package com.ipartek.formacion.service;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.domain.Usuario;
-import com.ipartek.formacion.repository.DAOReceta;
+import com.ipartek.formacion.repository.DAOUsuario;
 
 @Service("serviceUsuario")
 public class ServiceUsuarioImpl implements ServiceUsuario {
@@ -16,7 +16,7 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
-	private DAOReceta daoUsuario;
+	private DAOUsuario daoUsuario;
 
 	@Override
 	public List<Usuario> listar() {
@@ -49,4 +49,3 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	}
 
 }
-*/

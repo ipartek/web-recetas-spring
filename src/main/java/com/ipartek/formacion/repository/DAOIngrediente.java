@@ -14,6 +14,14 @@ public interface DAOIngrediente {
 
 	List<Ingrediente> getAllByReceta(long idReceta);
 
+	/**
+	 * Recupera un Ingrediente de la bbdd, sin la 'cantidad' asociada a una
+	 * Receta
+	 * 
+	 * @param id
+	 *            ingrediente
+	 * @return Ingrediente, null si no existe
+	 */
 	Ingrediente getById(long id);
 
 	boolean insert(Ingrediente i);
@@ -26,16 +34,22 @@ public interface DAOIngrediente {
 
 	boolean updateByReceta(long idReceta, Ingrediente i);
 
-	boolean addIngrediente(long idReceta, Ingrediente i);
+	/**
+	 * Añadir nuevo ingrediente a Receta
+	 * 
+	 * @param idReceta
+	 * @param i
+	 * @return
+	 */
+	boolean insertByReceta(long idReceta, Ingrediente i);
 
 	List<Ingrediente> getAllByNotInReceta(long idReceta);
 
 	/**
-	 * Recupera un Ingrediente de la BBDD, sin la 'cantidad' asociada a una
-	 * Receta
+	 * Recupera Ingrediente de una Receta, con su 'cantidad'
 	 * 
-	 * @param id
-	 *            ingrediente
+	 * @param idReceta
+	 * @param idIngrediente
 	 * @return Ingrediente, null si no existe
 	 */
 	Ingrediente getByReceta(long idReceta, long idIngrediente);

@@ -25,10 +25,20 @@ ${msg}
 	<form:errors path="descripcion" cssStyle="color:red;"/>
 	<br>
 	
-	<form:label path="">Usuario</form:label>
-	<input type="text" value="4" />**	
-	<form:errors path="" cssStyle="color:red;"/>
-	<br>
+	<span>"${receta.usuario.nombre}"</span>
+	<img class="tamImg" src="${receta.usuario.imagen}"/>	
+	
+	<form:label path="usuario">Cambiar Usuario:</form:label>	
+	<form:select path="usuario.id">
+		<c:forEach items="${usuarios}" var="u">
+			<form:option value="${u.id}">${u.nombre}</form:option>
+		</c:forEach>
+	</form:select>
+	
+
+	
+	<br><br>
+	
 
 	<c:choose>
 		<c:when test="${receta.id == -1}">
@@ -45,29 +55,26 @@ ${msg}
 	<br>
 	<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
 
-</c:if>
-
-
-<h2>Listado Ingredientes
-	<span>
-		<a href="receta/${receta.id}/recuperar/ingredientes">[ Añadir Ingredientes ]</a>
-	</span>
-</h2>
-
-	<ol>
-		<c:forEach items="${receta.ingredientes}" var="ingrediente">
-			<li>${ingrediente.nombre} - ${ingrediente.cantidad}
-				<span style="color:red;">
-					<a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a>
-				</span>
-				
-				<span>
-					<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">[ Modificar cantidad ]</a>
-				</span>
-			</li>
-		</c:forEach>
-	</ol>
+	<h2>Listado Ingredientes
+		<span>
+			<a href="receta/${receta.id}/recuperar/ingredientes">[ Añadir Ingredientes ]</a>
+		</span>
+	</h2>
 	
+		<ol>
+			<c:forEach items="${receta.ingredientes}" var="ingrediente">
+				<li>${ingrediente.nombre} - ${ingrediente.cantidad}
+					<span style="color:red;">
+						<a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a>
+					</span>
+					
+					<span>
+						<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">[ Modificar cantidad ]</a>
+					</span>
+				</li>
+			</c:forEach>
+		</ol>
+</c:if>	
 
 
 <%@ include file="../includes/footer.jsp" %> 

@@ -1,5 +1,7 @@
 <%@ include file="../includes/header.jsp" %> 
 
+<a href="/formacion">Inicio</a>
+
 <h1>Listado Recetas</h1>
 
 <a href="receta/edit">Crear Nuevo</a>
