@@ -133,7 +133,41 @@ public class RecetaController {
 			msg = "Ingrediente cambiado";
 		}
 
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+
 		model.addAttribute("msg", msg);
+
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/nuevo/ingrediente", method = RequestMethod.POST)
+	public String nuevoIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
+			BindingResult bindingResult, Model model) {
+
+		logger.info("Modificando ingrediente " + ingrediente + " de Receta " + idReceta);
+		String msg = "No se pudo cambiar ingrediente";
+
+		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
+			msg = "Ingrediente añadido";
+		}
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+
+		model.addAttribute("msg", msg);
+
+		return "receta/formIngrediente";
+	}
+
+	@RequestMapping(value = "/receta/{idReceta}/add/ingrediente/", method = RequestMethod.GET)
+	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
+			BindingResult bindingResult, Model model) {
+
+		logger.info("Añadiendoo ingrediente " + ingrediente + " a Receta " + idReceta);
+
+		model.addAttribute("ingrediente", new Ingrediente());
+		model.addAttribute("disponibles", serviceReceta.listarIngredientesFueraReceta(idReceta));
+		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
+
 		return "receta/formIngrediente";
 	}
 

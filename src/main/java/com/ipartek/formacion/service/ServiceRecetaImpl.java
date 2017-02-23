@@ -72,7 +72,8 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 
-		return false;
+		logger.trace("Añadiendo Ingrediente" + i + "a receta " + idReceta);
+		return daoIngrediente.addIngrediente(idReceta, i);
 	}
 
 	@Override
@@ -81,4 +82,10 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return daoIngrediente.getByReceta(idReceta, idIngrediente);
 	}
 
+	@Override
+	public List<Ingrediente> listarIngredientesFueraReceta(long idReceta) {
+
+		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
+		return daoIngrediente.listadoFueraDeReceta(idReceta);
+	}
 }

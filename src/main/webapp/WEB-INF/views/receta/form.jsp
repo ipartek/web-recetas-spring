@@ -60,6 +60,10 @@ ${msg}
 </c:forEach>
 </ol>
 
+<h3 style="color:red;">
+<a  href="receta/${receta.id}/add/ingrediente/">Añadir ingrediente a la receta</a>
+</h3>
+
 
 
 

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.repository.mapper.IngredienteMapper;
+import com.ipartek.formacion.repository.mapper.IngredienteRecetaMapper;
 
 @Repository("daoIngrediente")
 public class DAOIngredienteImpl implements DAOIngrediente {
@@ -49,6 +50,9 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
 	private static final String SQL_DELETE_BY_RECETA = "DELETE FROM `receta_ingrediente` WHERE `receta_id`=? AND `ingrediente_id`=?;";
 	private static final String SQL_UPDATE_BY_RECETA = "UPDATE `receta_ingrediente` SET `cantidad`=? WHERE `receta_id`=? and`ingrediente_id`=?;";
+
+	private static final String SQL_INSERT_ADD_INGREDIENTE = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`,`cantidad`) VALUES (?, ?,?);";
+	private static final String SQL_INGREDIENTES_FUERA_RECETA = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?)ORDER BY nombre ASC;";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -150,7 +154,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 		try {
 			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_RECETA_ID, new Object[] { idReceta },
-					new IngredienteMapper());
+					new IngredienteRecetaMapper());
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");
 		} catch (Exception e) {
@@ -183,7 +187,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		Ingrediente i = null;
 		try {
 			i = this.jdbctemplate.queryForObject(SQL_GET_INGREDIENTE_BY_RECETA,
-					new Object[] { idReceta, idIngrediente }, new IngredienteMapper());
+					new Object[] { idReceta, idIngrediente }, new IngredienteRecetaMapper());
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");
 		} catch (Exception e) {
@@ -203,6 +207,41 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			Object[] argumentos = { i.getCantidad(), idReceta, i.getId() };
 			affectedRows = this.jdbctemplate.update(SQL_UPDATE_BY_RECETA, argumentos);
 
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+		return resul;
+	}
+
+	@Override
+	public List<Ingrediente> listadoFueraDeReceta(long recetaId) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_INGREDIENTES_FUERA_RECETA,
+					new Object[] { recetaId }, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes para receta");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
+	}
+
+	@Override
+	public boolean addIngrediente(long idReceta, Ingrediente i) {
+		logger.trace("insert " + i + "a receta" + idReceta);
+		boolean resul = false;
+		try {
+			int affectedRows = -1;
+			Object[] argumentos = { idReceta, i.getId(), i.getCantidad() };
+
+			affectedRows = this.jdbctemplate.update(SQL_INSERT_ADD_INGREDIENTE, argumentos);
 			if (affectedRows == 1) {
 				resul = true;
 			}

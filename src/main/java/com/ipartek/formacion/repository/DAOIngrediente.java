@@ -43,4 +43,8 @@ public interface DAOIngrediente {
 
 	boolean updateByReceta(long idReceta, Ingrediente i);
 
+	boolean addIngrediente(long idReceta, Ingrediente i);
+
+	List<Ingrediente> listadoFueraDeReceta(long recetaId);
+
 }

@@ -17,10 +17,6 @@ public class IngredienteMapper implements RowMapper<Ingrediente> {
 		i.setNombre(rs.getString("nombre"));
 		i.setGluten(rs.getBoolean("gluten"));
 
-		if (rs.getString("cantidad") != null) {
-			i.setCantidad(rs.getString("cantidad"));
-		}
-
 		return i;
 	}
 

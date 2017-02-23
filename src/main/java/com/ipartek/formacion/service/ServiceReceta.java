@@ -25,4 +25,13 @@ public interface ServiceReceta {
 
 	Ingrediente recuperarIngrediente(long idReceta, long idIngrediente);
 
+	/**
+	 * Buscamos todos los ingredintes que no esten en esa receta Nos sirve para
+	 * poder añadir un nuevo ingrediente
+	 * 
+	 * @param idReceta
+	 * @return listado de ingredientes disponibles
+	 */
+	List<Ingrediente> listarIngredientesFueraReceta(long idReceta);
+
 }
