@@ -53,8 +53,8 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	public Receta buscarPorID(long id) {
 		logger.trace("Buscamos receta por id: " + id);
 		Receta receta = daoReceta.getById(id);
-		ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) daoIngrediente.getAllByReceta(id);
-		receta.setIngredientes(ingredientes);
+		receta.setIngredientes((ArrayList<Ingrediente>) daoIngrediente.getAllByReceta(id));
+		receta.setUsuario(daoUsuario.getByRecetaId(id));
 		return receta;
 	}
 

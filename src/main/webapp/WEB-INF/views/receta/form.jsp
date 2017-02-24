@@ -6,40 +6,54 @@
 
 ${msg}
 
-<form:form action="receta/crear" modelAttribute="receta">
 
-	<form:input path="id" readonly="true"/><br>
-	
-	<form:label path="nombre">Nombre</form:label>
-	<form:input path="nombre"/><br>	
-	<form:errors path="nombre" cssStyle="color:red;"/>
-	<br>
-	
-	<form:label path="imagen">Imagen</form:label>
-	<form:input path="imagen"/><br>	
-	<form:errors path="imagen" cssStyle="color:red;"/>
-	<br>
-	
-	<form:label path="descripcion">Descripcion</form:label>
-	<form:textarea rows="8" cols="80" path="descripcion"/><br>	
-	<form:errors path="descripcion" cssStyle="color:red;"/>
-	<br>
-	
-	<form:label path="">Usuario</form:label>
-	<input type="text" value="4" />**	
-	<form:errors path="" cssStyle="color:red;"/>
-	<br>
 
-	<c:choose>
-		<c:when test="${receta.id == -1}">
-			<form:button type="submit">Crear</form:button>
-		</c:when>
-		<c:otherwise>
-			<form:button type="submit">Modificar</form:button>
-		</c:otherwise>
-	</c:choose>
+	<form:form action="receta/crear" modelAttribute="receta">
 	
-</form:form>
+		<div class="row">
+			<div class="col-md-6">
+				<form:input path="id" readonly="true"/><br>
+				
+				<form:label path="nombre">Nombre</form:label>
+				<form:input path="nombre"/><br>	
+				<form:errors path="nombre" cssStyle="color:red;"/>
+				<br>
+				
+				<form:label path="imagen">Imagen</form:label>
+				<form:input path="imagen"/><br>	
+				<form:errors path="imagen" cssStyle="color:red;"/>
+				<br>
+				
+				<form:label path="descripcion">Descripcion</form:label>
+				<form:textarea rows="8" cols="80" path="descripcion"/><br>	
+				<form:errors path="descripcion" cssStyle="color:red;"/>
+			</div>	
+			
+			<div class="col-md-6">
+				<img class="img-responsive" src="${receta.imagen}">	
+			</div>
+			
+		
+		</div> <!--  <div class="row"> -->
+		
+		
+		<h2>Cocinero ${receta.usuario.nombre}</h2>
+		<img src="${receta.usuario.imagen}" class="tamImg img-circle">
+		
+		<br>
+	
+		<c:choose>
+			<c:when test="${receta.id == -1}">
+				<form:button type="submit">Crear</form:button>
+			</c:when>
+			<c:otherwise>
+				<form:button type="submit">Modificar</form:button>
+			</c:otherwise>
+		</c:choose>
+		
+	</form:form>
+
+
 
 <c:if test="${receta.id != -1}">
 	<br>
