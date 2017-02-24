@@ -1,10 +1,13 @@
 package com.ipartek.formacion.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.validation.constraints.Size;
 
-public class Receta {
+public class Receta implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private long id;
 
@@ -19,6 +22,8 @@ public class Receta {
 
 	private ArrayList<Ingrediente> ingredientes;
 
+	private Usuario usuario;
+
 	public Receta() {
 		super();
 		this.id = -1;
@@ -26,6 +31,7 @@ public class Receta {
 		this.imagen = "";
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
+		this.usuario = null;
 	}
 
 	public long getId() {
@@ -34,6 +40,14 @@ public class Receta {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getNombre() {
@@ -70,7 +84,8 @@ public class Receta {
 
 	@Override
 	public String toString() {
-		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion + "]";
+		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
+				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.ipartek.formacion.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -31,7 +33,8 @@ public class RecetaController {
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
 
-		model.addAttribute("recetas", serviceReceta.listar());
+		ArrayList<Receta> recetas = (ArrayList<Receta>) serviceReceta.listarConUsuarios();
+		model.addAttribute("recetas", recetas);
 
 		return "receta/index";
 	}

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DAOIngrediente;
 import com.ipartek.formacion.repository.DAOReceta;
+import com.ipartek.formacion.repository.DAOUsuario;
 
 @Service("serviceReceta")
 public class ServiceRecetaImpl implements ServiceReceta {
@@ -24,10 +26,27 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Autowired
 	private DAOIngrediente daoIngrediente;
 
+	@Autowired
+	private DAOUsuario daoUsuario;
+
 	@Override
 	public List<Receta> listar() {
 		logger.trace("listar recetas");
 		return daoReceta.getAll();
+	}
+
+	@Override
+	public List<Receta> listarConUsuarios() {
+		logger.trace("listar recetas con usuarios asociados");
+		// TODO Usar un ResultSetExtractor en vez de llamar a dos DAOs
+		ArrayList<Receta> recetas = (ArrayList<Receta>) daoReceta.getAll();
+		// buscar usuarios
+		Usuario usuario = null;
+		for (Receta receta : recetas) {
+			usuario = daoUsuario.getByRecetaId(receta.getId());
+			receta.setUsuario(usuario);
+		}
+		return recetas;
 	}
 
 	@Override
@@ -88,4 +107,5 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
 		return daoIngrediente.listadoFueraDeReceta(idReceta);
 	}
+
 }

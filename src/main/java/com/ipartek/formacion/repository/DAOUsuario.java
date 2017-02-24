@@ -14,6 +14,8 @@ public interface DAOUsuario {
 
 	Usuario getById(long id);
 
+	Usuario getByRecetaId(long id);
+
 	boolean insert(Usuario u);
 
 	boolean update(Usuario u);
