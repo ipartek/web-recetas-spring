@@ -1,4 +1,12 @@
 .tamImg{
 	width: 150px;
 	height: 150px;
+	margin: 0 auto;
+}
+
+.tamImg75{
+	width: 75px;
+	height: 75px;
+	display: block;
+	margin: 0 auto;
 }
