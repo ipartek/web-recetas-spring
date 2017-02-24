@@ -44,7 +44,7 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
-	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ? WHERE `id`= ? ;";
+	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
 
 	@Override
@@ -109,6 +109,7 @@ public class DAORecetaImpl implements DAOReceta {
 					ps.setString(1, r.getNombre());
 					ps.setString(2, r.getImagen());
 					ps.setString(3, r.getDescripcion());
+					ps.setLong(4, r.getUsuario().getId());
 					return ps;
 				}
 			}, keyHolder);
@@ -135,7 +136,8 @@ public class DAORecetaImpl implements DAOReceta {
 
 		try {
 
-			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(), r.getId() };
+			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(), r.getUsuario().getId(),
+					r.getId() };
 			affectedRows = this.jdbcTemplate.update(SQL_UPDATE, argumentos);
 
 			if (affectedRows == 1) {

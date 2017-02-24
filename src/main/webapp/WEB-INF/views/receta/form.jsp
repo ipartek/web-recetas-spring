@@ -2,7 +2,7 @@
 
 <a href="receta">Volver</a>
 
-<h1>Formulario Receta</h1>
+<h1>${receta.nombre}</h1>
 
 ${msg}
 
@@ -12,7 +12,7 @@ ${msg}
 	
 		<div class="row">
 			<div class="col-md-6">
-				<form:input path="id" readonly="true"/><br>
+				<form:hidden path="id"/><br>
 				
 				<form:label path="nombre">Nombre</form:label>
 				<form:input path="nombre"/><br>	
@@ -36,30 +36,45 @@ ${msg}
 		
 		</div> <!--  <div class="row"> -->
 		
+		<div class="row">
+			<div class="col-md-6">
+				<c:choose>
+					<c:when test="${receta.id == -1}">						
+							<form:button type="submit">Crear</form:button>							
+					</c:when>
+					<c:otherwise>						
+						<form:button type="submit">Modificar</form:button>						
+					</c:otherwise>
+					
+				</c:choose>
+			</div>
 		
-		<h2>Cocinero ${receta.usuario.nombre}</h2>
-		<img src="${receta.usuario.imagen}" class="tamImg img-circle">
+			<div class="col-md-6">
+				<h2>Cocinero ${receta.usuario.nombre}</h2>
+				<img src="${receta.usuario.imagen}" class="tamImg img-circle">
+				<h3>Cambiar de Cocinero</h3>
+				<form:select path="usuario.id">
+					<c:forEach items="${usuarios}" var="usuario">
+						<form:option value="${usuario.id}">
+							${usuario.nombre}
+						</form:option>
+					</c:forEach>
+				</form:select>				
+			</div>	
+		</div>
 		
-		<br>
-	
-		<c:choose>
-			<c:when test="${receta.id == -1}">
-				<form:button type="submit">Crear</form:button>
-			</c:when>
-			<c:otherwise>
-				<form:button type="submit">Modificar</form:button>
-			</c:otherwise>
-		</c:choose>
 		
 	</form:form>
 
 
-
 <c:if test="${receta.id != -1}">
-	<br>
-	<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
+						<button type="button" class="btn btn-danger">
+						<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
+						</button>
+					</c:if>
 
-</c:if>
+
+
 
 
 <h2>Listado Ingredientes</h2>
