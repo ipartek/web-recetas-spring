@@ -14,12 +14,12 @@ public interface DAOUsuario {
 
 	Usuario getById(long id);
 
+	Usuario getUserByReceta(long idReceta);
+
 	boolean insert(Usuario u);
 
 	boolean update(Usuario u);
 
 	boolean delete(long id);
-
-	Usuario getUserByReceta(long idReceta);
 
 }

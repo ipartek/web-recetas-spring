@@ -1,4 +1,5 @@
 <%@ include file="../includes/header.jsp" %> 
+<%@ include file="../includes/nav.jsp" %> 
 
 <a href="/formacion">Inicio</a>
 
@@ -10,7 +11,13 @@
 
 <ul>
 <c:forEach items="${recetas}" var="r">
-	<li><a href="receta/edit/${r.id}">${r.id} </a> <img class="tamImg"  alt="imagen ${r.nombre}" src="${r.imagen}"> <a href="receta/edit/${r.id}">${r.nombre} </a></li>
+	<li>
+		<a href="receta/edit/${r.id}">${r.id}
+			<img class="tamImg img-thumbnail"  alt="imagen ${r.nombre}" src="${r.imagen}">
+			${r.nombre} 
+		</a>
+		<img class="tamImg img-circle"  alt="imagen ${r.usuario.nombre}" src="${r.usuario.imagen}">
+	</li>
 </c:forEach>
 </ul>
 

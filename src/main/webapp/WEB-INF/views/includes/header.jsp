@@ -11,6 +11,10 @@
 	<title>Web Recetas</title>
 	<base href="/formacion/" />
 	
+	<!-- Navbar -->
+	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+	
+	
 	<!-- Custom -->
 	<link href="resources/css/custom.css" rel="stylesheet">
 	

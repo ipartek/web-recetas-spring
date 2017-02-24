@@ -92,6 +92,29 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	}
 
 	@Override
+	public Usuario getUserByReceta(long idReceta) {
+
+		logger.trace("Get Usuario de Receta " + idReceta);
+		Usuario u = new Usuario();
+
+		try {
+
+			u = this.jdbctemplate.queryForObject(SQL_GET_USER_BY_RECETA, new Object[] { idReceta },
+					new UsuarioMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.info("Todavia no hay usuarios");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+		return u;
+	}
+
+	@Override
 	public boolean insert(final Usuario u) {
 
 		logger.trace("insert " + u);
@@ -174,29 +197,6 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		}
 		return resul;
-	}
-
-	@Override
-	public Usuario getUserByReceta(long idReceta) {
-
-		logger.trace("Get Usuario de Receta " + idReceta);
-		Usuario u = new Usuario();
-
-		try {
-
-			u = this.jdbctemplate.queryForObject(SQL_GET_USER_BY_RECETA, new Object[] { idReceta },
-					new UsuarioMapper());
-
-		} catch (EmptyResultDataAccessException e) {
-
-			this.logger.info("Todavia no hay usuarios");
-
-		} catch (Exception e) {
-
-			this.logger.error(e.getMessage());
-
-		}
-		return u;
 	}
 
 }

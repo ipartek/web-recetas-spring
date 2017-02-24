@@ -20,4 +20,12 @@ public interface DAOReceta {
 
 	boolean delete(long id);
 
+	/**
+	 * Buscamos todas las recetas que tenga el usuario.<br>
+	 * 
+	 * @param idUsuario
+	 * @return List<Receta>
+	 */
+	List<Receta> getRecetasUser(long idUsuario);
+
 }

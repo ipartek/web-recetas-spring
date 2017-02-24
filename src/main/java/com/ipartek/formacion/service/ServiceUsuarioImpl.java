@@ -7,7 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
+import com.ipartek.formacion.repository.DAOReceta;
 import com.ipartek.formacion.repository.DAOUsuario;
 
 @Service("serviceUsuario")
@@ -17,6 +19,9 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Autowired
 	private DAOUsuario daoUsuario;
+
+	@Autowired
+	private DAOReceta daoReceta;
 
 	@Override
 	public List<Usuario> listar() {
@@ -46,6 +51,12 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	public boolean eliminar(long id) {
 		logger.trace("Eliminando por id: " + id);
 		return daoUsuario.delete(id);
+	}
+
+	@Override
+	public List<Receta> listarRecetasUsuario(long idUsuario) {
+		logger.trace("Listar recetas del Usuario: " + idUsuario);
+		return daoReceta.getRecetasUser(idUsuario);
 	}
 
 }

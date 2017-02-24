@@ -38,7 +38,9 @@ public class RecetaController {
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
 
-		model.addAttribute("recetas", serviceReceta.listar());
+		ArrayList<Receta> recetas = (ArrayList<Receta>) serviceReceta.listarConUsuarios();
+
+		model.addAttribute("recetas", recetas);
 
 		return "receta/index";
 	}
@@ -56,14 +58,15 @@ public class RecetaController {
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
 		Receta receta = serviceReceta.buscarPorID(id);
-		Usuario usuario = serviceReceta.getUsuarioReceta(id);
-		receta.setUsuario(usuario);
+		// Usuario usuario = serviceReceta.getUsuarioReceta(id);
+		// receta.setUsuario(usuario);
 
-		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) serviceUsuario.listar();
+		// ArrayList<Usuario> usuarios = (ArrayList<Usuario>)
+		// serviceUsuario.listar();
 		// usuarios.remove(usuario);
 
 		model.addAttribute("receta", receta);
-		model.addAttribute("usuarios", usuarios);
+		model.addAttribute("usuarios", serviceUsuario.listar());
 
 		return "receta/form";
 	}

@@ -1,4 +1,5 @@
 <%@ include file="../includes/header.jsp" %> 
+<%@ include file="../includes/nav.jsp" %> 
 
 <a href="usuario">Volver</a>
 
@@ -42,7 +43,22 @@
 <c:if test="${usuario.id != -1}">
 	<br>
 	<a style="color:red;" href="usuario/delete/${usuario.id}">Eliminar</a>
+	<br>
+	
 
+	<h2>Listado de Recetas del usuario: ${usuario.nombre}
+		<span>
+			<a href="#">[ Añadir Recetas ]</a>
+		</span>
+	</h2>
+	
+		<ol>
+			<c:forEach items="${recetasUsuario}" var="r">
+				<li> 
+					<img class="tamImg" alt="foto ${r.nombre}" src="${r.imagen}">  ${r.nombre}
+				</li>
+			</c:forEach>
+		</ol>
 </c:if>
 
 <%@ include file="../includes/footer.jsp" %> 

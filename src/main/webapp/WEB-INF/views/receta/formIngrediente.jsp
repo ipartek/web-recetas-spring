@@ -1,4 +1,5 @@
 <%@ include file="../includes/header.jsp" %> 
+<%@ include file="../includes/nav.jsp" %> 
 
 <a href="receta/edit/${receta.id}">Volver</a>
 
@@ -17,9 +18,9 @@
 		<form:hidden path="gluten"/>
 		<form:hidden path="nombre"/>
 		<form:label path="cantidad">Modifica la cantidad</form:label>
-		<form:input path="cantidad"/>
+		<form:input class="form-control" path="cantidad"/>
 		<br><br>
-		<form:button>Modificar</form:button>
+		<form:button class="btn btn-success">Modificar</form:button>
 	
 	</form:form>
 </c:if>
@@ -32,7 +33,7 @@
 	
 	<form:form action="receta/${receta.id}/add/ingrediente" method="post" modelAttribute="ingrediente">
 		<form:label path="id">Selecciona ingrediente</form:label>
-		<form:select multiple="false" path="id">
+		<form:select class="form-control" multiple="false" path="id">
 		
 			<c:forEach items="${ingredientes}" var="i">
 				<form:option value="${i.id}">${i.nombre}</form:option>
@@ -40,9 +41,9 @@
 		</form:select>
 		<br>
 		<form:label path="cantidad">Cantidad</form:label>
-		<form:input path="cantidad"/>
+		<form:input class="form-control" path="cantidad"/>
 		<br><br>
-		<form:button>Añadir</form:button>
+		<form:button class="btn btn-success">Añadir</form:button>
  	</form:form>
  	
 </c:if>

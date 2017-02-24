@@ -46,6 +46,7 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id`= ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
+	private static final String SQL_GET_RECETAS_BY_USER = "SELECT `r`.`id`, `r`.`nombre`, `r`.`imagen`, `r`.`descripcion` FROM `receta` AS `r`, `usuario` AS `u` WHERE `r`.`usuario_id` = `u`.`id` AND `r`.`usuario_id` = ?;";
 
 	@Override
 	public List<Receta> getAll() {
@@ -178,6 +179,30 @@ public class DAORecetaImpl implements DAOReceta {
 		}
 
 		return resul;
+	}
+
+	@Override
+	public List<Receta> getRecetasUser(long idUsuario) {
+
+		logger.trace("Get Recetas del Usuario " + idUsuario);
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+
+		try {
+
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_RECETAS_BY_USER, new Object[] { idUsuario },
+					new RecetaMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.info("No hay recetas para el usuario" + idUsuario);
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return lista;
 	}
 
 }

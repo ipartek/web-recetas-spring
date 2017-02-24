@@ -8,7 +8,19 @@ import com.ipartek.formacion.domain.Usuario;
 
 public interface ServiceReceta {
 
+	/**
+	 * Lista recetas sin ingredientes y sin usuario
+	 * 
+	 * @return
+	 */
 	List<Receta> listar();
+
+	/**
+	 * Lista Recetas con Usuario asociado
+	 * 
+	 * @return
+	 */
+	List<Receta> listarConUsuarios();
 
 	Receta buscarPorID(long id);
 

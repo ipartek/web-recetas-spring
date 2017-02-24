@@ -43,6 +43,7 @@ public class UsuarioController {
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
 		model.addAttribute("usuario", serviceUsuario.buscarPorID(id));
+		model.addAttribute("recetasUsuario", serviceUsuario.listarRecetasUsuario(id));
 
 		return "usuario/form";
 	}

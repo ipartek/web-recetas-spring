@@ -27,7 +27,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	private DAOIngrediente daoIngrediente;
 
 	@Autowired
-	private DAOUsuario daousuario;
+	private DAOUsuario daoUsuario;
 
 	@Override
 	public List<Receta> listar() {
@@ -36,11 +36,31 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	}
 
 	@Override
+	public List<Receta> listarConUsuarios() {
+
+		logger.trace("listar recetas con usuarios asociados");
+
+		// TODO Usar un ResultSetExtraxtor en vez de llamar a dos DAOS
+		ArrayList<Receta> recetas = (ArrayList<Receta>) daoReceta.getAll();
+
+		// Buscar Usuarios
+		Usuario usuario = null;
+
+		for (Receta receta : recetas) {
+			usuario = daoUsuario.getUserByReceta(receta.getId());
+			receta.setUsuario(usuario);
+		}
+
+		return recetas;
+	}
+
+	@Override
 	public Receta buscarPorID(long id) {
 		logger.trace("Buscamos receta por id: " + id);
 
 		Receta receta = daoReceta.getById(id);
 		receta.setIngredientes((ArrayList<Ingrediente>) daoIngrediente.getAllByReceta(id));
+		receta.setUsuario(daoUsuario.getUserByReceta(id));
 
 		return receta;
 	}
@@ -96,7 +116,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public Usuario getUsuarioReceta(long idReceta) {
 		logger.trace("Conseguir usuario de la receta " + idReceta);
-		return daousuario.getUserByReceta(idReceta);
+		return daoUsuario.getUserByReceta(idReceta);
 	}
 
 }
