@@ -18,6 +18,7 @@ import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
+import com.ipartek.formacion.service.ServiceUsuario;
 
 @Controller
 public class RecetaController {
@@ -29,6 +30,9 @@ public class RecetaController {
 
 	@Autowired
 	private ServiceIngrediente serviceIngrediente;
+
+	@Autowired
+	private ServiceUsuario serviceUsuario;
 
 	@RequestMapping(value = "/receta", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -43,6 +47,7 @@ public class RecetaController {
 	public String irFormularioNuevo(Model model) {
 
 		model.addAttribute("receta", new Receta());
+		model.addAttribute("usuarios", serviceUsuario.listar());
 
 		return "receta/form";
 	}
@@ -51,7 +56,7 @@ public class RecetaController {
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(id));
-
+		model.addAttribute("usuarios", serviceUsuario.listar());
 		return "receta/form";
 	}
 
@@ -82,7 +87,10 @@ public class RecetaController {
 
 		}
 
+		model.addAttribute("receta", serviceReceta.buscarPorID(receta.getId()));
+		model.addAttribute("usuarios", serviceUsuario.listar());
 		model.addAttribute("msg", msg);
+
 		return "receta/form";
 	}
 
