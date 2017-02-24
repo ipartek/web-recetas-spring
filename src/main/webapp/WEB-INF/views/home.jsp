@@ -11,6 +11,8 @@
 <a href="saluda/pepe">Saludo, pasando parametro 'saluda/pepe'</a>
 <br>
 <a href="ingrediente">CRUD Ingredientes</a>
+<br>
+<a href="receta">CRUD Recetas</a>
 
 
 <%@ include file="includes/footer.jsp" %>

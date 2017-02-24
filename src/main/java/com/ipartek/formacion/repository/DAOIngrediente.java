@@ -20,4 +20,6 @@ public interface DAOIngrediente {
 
 	boolean delete(long id);
 
+	List<Ingrediente> getAllByReceta(long idReceta);
+
 }

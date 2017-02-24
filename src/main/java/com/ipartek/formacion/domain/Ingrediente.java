@@ -8,21 +8,23 @@ public class Ingrediente {
 
 	@Size(min = 3, max = 255)
 	private String nombre;
-
 	private boolean gluten;
+	private String cantidad;
 
 	public Ingrediente() {
 		super();
 		this.id = -1;
 		this.nombre = "";
 		this.gluten = true;
+		this.cantidad = "";
 	}
 
-	public Ingrediente(long id, String nombre, boolean gluten) {
+	public Ingrediente(long id, String nombre, boolean gluten, String cantidad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.gluten = gluten;
+		this.cantidad = cantidad;
 	}
 
 	public long getId() {
@@ -49,9 +51,12 @@ public class Ingrediente {
 		this.gluten = gluten;
 	}
 
-	@Override
-	public String toString() {
-		return "Ingrediente [id=" + id + ", nombre=" + nombre + ", gluten=" + gluten + "]";
+	public String getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(String cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }

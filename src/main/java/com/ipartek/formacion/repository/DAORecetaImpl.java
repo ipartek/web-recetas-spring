@@ -20,11 +20,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.ipartek.formacion.domain.Ingrediente;
-import com.ipartek.formacion.repository.mapper.IngredienteMapper;
+import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.repository.mapper.RecetaMapper;
 
-@Repository("daoIngrediente")
-public class DAOIngredienteImpl implements DAOIngrediente {
+@Repository("daoReceta")
+public class DAORecetaImpl implements DAOReceta {
 
 	private final Log logger = LogFactory.getLog(getClass());
 
@@ -40,21 +40,20 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	// Sentencias SQL
-	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
-	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
-	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
-	private static final String SQL_INSERT = "INSERT INTO `ingrediente` (`nombre`, `gluten`) VALUES (?,?);";
-	private static final String SQL_UPDATE = "UPDATE `ingrediente` SET `nombre`= ? , `gluten`= ? WHERE `id`= ? ;";
-	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, ri.cantidad FROM ingrediente AS i, receta_ingrediente AS ri WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id";
+	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY id ASC LIMIT 1000;";
+	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?;";
+	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
+	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`,`usuario_id`) VALUES (?,?,?,1);";
+	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ? WHERE `id`= ? ;";
 
 	@Override
-	public List<Ingrediente> getAll() {
-		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+	public List<Receta> getAll() {
+		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
-			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
+			lista = (ArrayList<Receta>) this.jdbctemplate.query(SQL_GET_ALL, new RecetaMapper());
 		} catch (EmptyResultDataAccessException e) {
-			this.logger.warn("No existen ingredientes todavia");
+			this.logger.warn("No existen recetas todavia");
 		} catch (Exception e) {
 			this.logger.error(e.getMessage());
 		}
@@ -63,12 +62,12 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public Ingrediente getById(long id) {
-		Ingrediente i = null;
+	public Receta getById(long id) {
+		Receta i = null;
 		try {
-			i = this.jdbctemplate.queryForObject(SQL_GET_BY_ID, new Object[] { id }, new IngredienteMapper());
+			i = this.jdbctemplate.queryForObject(SQL_GET_BY_ID, new Object[] { id }, new RecetaMapper());
 		} catch (EmptyResultDataAccessException e) {
-			this.logger.warn("No existen ingredientes todavia");
+			this.logger.warn("No existen recetas todavia");
 		} catch (Exception e) {
 			this.logger.error(e.getMessage());
 		}
@@ -77,8 +76,8 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public boolean insert(final Ingrediente i) {
-		logger.trace("insert " + i);
+	public boolean insert(final Receta r) {
+		logger.trace("insert " + r);
 		boolean resul = false;
 		try {
 			int affectedRows = -1;
@@ -88,15 +87,16 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 					final PreparedStatement ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
-					ps.setString(1, i.getNombre());
-					ps.setBoolean(2, i.isGluten());
+					ps.setString(1, r.getNombre());
+					ps.setString(2, r.getImagen());
+					ps.setString(3, r.getDescripcion());
 					return ps;
 				}
 			}, keyHolder);
 
 			if (affectedRows == 1) {
 				resul = true;
-				i.setId(keyHolder.getKey().longValue());
+				r.setId(keyHolder.getKey().longValue());
 			}
 
 		} catch (Exception e) {
@@ -106,13 +106,13 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public boolean update(Ingrediente i) {
-		logger.trace("update " + i);
+	public boolean update(Receta r) {
+		logger.trace("update " + r);
 		boolean resul = false;
 		int affectedRows = -1;
 		try {
 
-			Object[] argumentos = { i.getNombre(), i.isGluten(), i.getId() };
+			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(), r.getId() };
 			affectedRows = this.jdbctemplate.update(SQL_UPDATE, argumentos);
 
 			if (affectedRows == 1) {
@@ -140,24 +140,6 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			this.logger.error(e.getMessage());
 		}
 		return resul;
-	}
-
-	@Override
-	public List<Ingrediente> getAllByReceta(long idReceta) {
-
-		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
-
-		try {
-			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_RECETA_ID, new Object[] { idReceta },
-					new IngredienteMapper());
-		} catch (EmptyResultDataAccessException e) {
-			this.logger.warn("No existen ingredientes todavia");
-		} catch (Exception e) {
-			this.logger.error(e.getMessage());
-		}
-
-		return lista;
-
 	}
 
 }
