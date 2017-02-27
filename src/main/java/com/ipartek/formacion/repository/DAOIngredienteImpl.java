@@ -41,7 +41,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	// Sentencias SQL
-	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 500;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
 	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND ri.receta_id = ? AND i.id = ? ;";
@@ -54,6 +54,8 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_INSERT_ADD_INGREDIENTE = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`,`cantidad`) VALUES (?, ?,?);";
 	private static final String SQL_INGREDIENTES_FUERA_RECETA = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?)ORDER BY nombre ASC;";
 
+	private static final String SQL_FILTRO_INGREDIENTES = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE `nombre` LIKE ?";
+	
 	@Override
 	public List<Ingrediente> getAll() {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
@@ -133,7 +135,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public boolean delete(long id) {
+	public boolean delete(long id) throws DataIntegrityViolationException {
 		logger.trace("eliminar " + id);
 		boolean resul = false;
 		try {
@@ -143,6 +145,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			}
 		} catch (DataIntegrityViolationException e) {
 			this.logger.warn(e.getMessage());
+			throw new DataIntegrityViolationException("No se puede eliminar el ingrediente porque esta en una receta");
 		} catch (Exception e) {
 			this.logger.error(e.getMessage());
 		}
@@ -250,6 +253,21 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			this.logger.error(e.getMessage());
 		}
 		return resul;
+	}
+	
+	@Override
+	public List<Ingrediente> getAllFiltro(String nombre) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+		try {
+			nombre = "%" + nombre + "%";
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_FILTRO_INGREDIENTES,new Object[]{nombre}, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
 	}
 
 }

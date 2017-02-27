@@ -103,8 +103,9 @@ public class RecetaController {
 		if (serviceReceta.eliminar(id)) {
 			msg = "Receta Eliminada con exito";
 		}
+		ArrayList<Receta> recetas = (ArrayList<Receta>) serviceReceta.listarConUsuarios();
+		model.addAttribute("recetas", recetas);
 		model.addAttribute("msg", msg);
-		model.addAttribute("recetas", serviceReceta.listar());
 
 		return "receta/index";
 	}

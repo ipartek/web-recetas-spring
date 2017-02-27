@@ -15,5 +15,7 @@ public interface ServiceIngrediente {
 	boolean modificar(Ingrediente i);
 
 	boolean eliminar(long id);
+	
+	List<Ingrediente> getAllFiltro(String nombre);
 
 }

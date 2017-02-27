@@ -11,6 +11,21 @@
 	margin: 0 auto;
 }
 
+.tamImgReceta{
+	width: 150px;
+	height: 150px;
+	border-radius:50%;
+	margin-top:20px;
+}
+
+.texto{
+	margin-top:75px;	
+}
+
+.fondoblanco{
+	background-color:white;
+}
+
 textarea {
 	width: 100%;
 }

@@ -172,7 +172,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	}
 
 	@Override
-	public boolean delete(long id) {
+	public boolean delete(long id)throws DataIntegrityViolationException {
 		logger.trace("eliminar usuario " + id);
 		boolean resul = false;
 		int affectedRows = -1;
@@ -187,6 +187,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		} catch (DataIntegrityViolationException e) {
 
 			this.logger.warn(e.getMessage());
+			throw new DataIntegrityViolationException("no se puede eliminar un cocinero con recetas");
 
 		} catch (Exception e) {
 

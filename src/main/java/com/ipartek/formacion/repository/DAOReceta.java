@@ -19,5 +19,7 @@ public interface DAOReceta {
 	boolean update(Receta r);
 
 	boolean delete(long id);
+	
+	List<Receta> getAllByUsuarioId(long id);
 
 }

@@ -47,4 +47,6 @@ public interface DAOIngrediente {
 
 	List<Ingrediente> listadoFueraDeReceta(long recetaId);
 
+	List<Ingrediente> getAllFiltro(String nombre);
+
 }

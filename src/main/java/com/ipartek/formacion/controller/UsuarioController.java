@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class UsuarioController {
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
 		model.addAttribute("usuario", serviceUsuario.buscarPorId(id));
+		model.addAttribute("recetas", serviceUsuario.getAllByUsuarioId(id));
 		return "usuario/form";
 	}
 
@@ -82,8 +84,12 @@ public class UsuarioController {
 		logger.info("eliminar usuario " + id);
 		String msg = "Usuario no eliminado";
 
-		if (serviceUsuario.eliminar(id)) {
-			msg = "Usuario Eliminada con exito";
+		try{
+			if (serviceUsuario.eliminar(id)) {
+				msg = "Usuario Eliminada con exito";
+			}
+		}catch (DataIntegrityViolationException e){
+			msg = e.getMessage();
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("usuarios", serviceUsuario.listar());

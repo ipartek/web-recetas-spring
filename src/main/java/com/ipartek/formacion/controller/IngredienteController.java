@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ public class IngredienteController {
 	public String listar(Model model) {
 
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("ingrediente", new Ingrediente());
 
 		return "ingrediente/index";
 	}
@@ -70,12 +72,26 @@ public class IngredienteController {
 
 		logger.info("eliminar ingrediente " + id);
 		String msg = "Ingrediente no eliminado, posiblemente exista en una receta";
-
-		if (serviceIngrediente.eliminar(id)) {
-			msg = "Ingrediente Eliminado con exito";
+		try{
+			if (serviceIngrediente.eliminar(id)) {
+				msg = "Ingrediente Eliminado con exito";
+			}
+		}catch (DataIntegrityViolationException e){
+			msg = e.getMessage();
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		return "ingrediente/index";
+	}
+	
+	@RequestMapping(value = "/ingrediente/filtro", method = RequestMethod.POST)
+	public String filtrar(Ingrediente i, Model model) {
+
+		model.addAttribute("ingredientes", serviceIngrediente.getAllFiltro(i.getNombre()));
+		model.addAttribute("ingrediente", new Ingrediente());
+		String msg = "Mostrando ingredientes filtrados por " + i.getNombre();
+		model.addAttribute("msg", msg);
+
 		return "ingrediente/index";
 	}
 

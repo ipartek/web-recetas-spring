@@ -48,4 +48,9 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 		return daoIngrediente.delete(id);
 	}
 
+	@Override
+	public List<Ingrediente> getAllFiltro(String nombre) {
+		return daoIngrediente.getAllFiltro(nombre);
+	}
+
 }

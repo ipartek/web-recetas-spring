@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.ipartek.formacion.domain.Usuario;
 
 public interface DAOUsuario {
@@ -20,6 +22,6 @@ public interface DAOUsuario {
 
 	boolean update(Usuario u);
 
-	boolean delete(long id);
+	boolean delete(long id) throws DataIntegrityViolationException;
 
 }
