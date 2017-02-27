@@ -43,6 +43,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
+	private static final String SQL_GET_BY_NOMBRE = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%';";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
 	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND i.id = ? AND ri.receta_id = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
@@ -136,7 +137,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public boolean delete(long id) {
+	public boolean delete(long id) throws DataIntegrityViolationException {
 		logger.trace("eliminar " + id);
 		boolean resul = false;
 		try {
@@ -145,9 +146,14 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 				resul = true;
 			}
 		} catch (DataIntegrityViolationException e) {
+
 			this.logger.warn(e.getMessage());
+			throw new DataIntegrityViolationException(
+					"No se puede eliminar un ingrediente si otra receta lo esta utilizando");
 		} catch (Exception e) {
+
 			this.logger.error(e.getMessage());
+
 		}
 		return resul;
 	}
@@ -289,6 +295,29 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			this.logger.error(e.getMessage());
 
 		}
+		return lista;
+	}
+
+	@Override
+	public List<Ingrediente> buscarPorNombre(String nombre) {
+		logger.trace("Listando ingredientes que contengan el nombre: " + nombre);
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_NOMBRE, new Object[] { nombre },
+					new IngredienteMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No hay ingredientes");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
 		return lista;
 	}
 

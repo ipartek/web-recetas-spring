@@ -117,7 +117,7 @@ public class RecetaController {
 			msg = "Receta Eliminada con exito";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("recetas", serviceReceta.listar());
+		model.addAttribute("recetas", serviceReceta.listarConUsuarios());
 
 		return "receta/index";
 	}
@@ -182,11 +182,11 @@ public class RecetaController {
 	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
-		logger.info("Aï¿½adiendo ingrediente " + ingrediente + " de Receta " + idReceta);
-		String msg = "No se pudo aï¿½adir ingrediente";
+		logger.info("Añadiendo ingrediente " + ingrediente + " de Receta " + idReceta);
+		String msg = "No se pudo añadir ingrediente";
 
 		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
-			msg = "Se ha aï¿½adido el ingrediente:  " + ingrediente.getNombre();
+			msg = "Se ha añadido el ingrediente:  " + ingrediente.getNombre();
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));

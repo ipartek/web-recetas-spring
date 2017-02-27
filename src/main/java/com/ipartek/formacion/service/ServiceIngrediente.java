@@ -2,6 +2,8 @@ package com.ipartek.formacion.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.ipartek.formacion.domain.Ingrediente;
 
 public interface ServiceIngrediente {
@@ -10,10 +12,12 @@ public interface ServiceIngrediente {
 
 	Ingrediente buscarPorId(long id);
 
+	List<Ingrediente> buscarPorNombre(String nombre);
+
 	boolean crear(Ingrediente i);
 
 	boolean modificar(Ingrediente i);
 
-	boolean eliminar(long id);
+	boolean eliminar(long id) throws DataIntegrityViolationException;
 
 }

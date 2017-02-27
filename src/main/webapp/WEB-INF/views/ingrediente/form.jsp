@@ -7,8 +7,9 @@
 
 <form:form action="ingrediente/crear" modelAttribute="ingrediente">
 
-	<form:input path="id" readonly="true"/><br>
-	<form:input path="nombre"/><br>	
+	<form:input class="form-control" path="id" readonly="true"/><br>
+	<form:label path="nombre">Nombre</form:label>
+	<form:input class="form-control" path="nombre"/><br>	
 	<form:errors path="nombre" cssStyle="color:red;"/>
 	<br>
 	

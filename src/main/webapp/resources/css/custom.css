@@ -3,10 +3,25 @@
 	height: 150px;
 }
 
+.tamImg75{
+	width: 75px;
+	height: 75px;
+}
+
+.imgIcon{
+	width: 35px;
+	height: 35px;
+}
+
 .enlaceEliminar{
 	color: white;
 }
 
 texarea{
+	width: 100%;
+}
+
+table {
+	cellspacing: 0;
 	width: 100%;
 }

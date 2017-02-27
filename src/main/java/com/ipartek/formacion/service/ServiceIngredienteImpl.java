@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.domain.Ingrediente;
@@ -43,9 +44,15 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	}
 
 	@Override
-	public boolean eliminar(long id) {
+	public boolean eliminar(long id) throws DataIntegrityViolationException {
 		logger.trace("eliminar " + id);
 		return daoIngrediente.delete(id);
+	}
+
+	@Override
+	public List<Ingrediente> buscarPorNombre(String nombre) {
+		logger.trace("buscando por nombre que contien: " + nombre);
+		return daoIngrediente.buscarPorNombre(nombre);
 	}
 
 }

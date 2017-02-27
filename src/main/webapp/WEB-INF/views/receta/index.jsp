@@ -9,17 +9,34 @@
 
 <p>${msg}</p>
 
-<ul>
-<c:forEach items="${recetas}" var="r">
-	<li>
-		<a href="receta/edit/${r.id}">${r.id}
-			<img class="tamImg img-thumbnail"  alt="imagen ${r.nombre}" src="${r.imagen}">
-			${r.nombre} 
-		</a>
-		<img class="tamImg img-circle"  alt="imagen ${r.usuario.nombre}" src="${r.usuario.imagen}">
-	</li>
-</c:forEach>
-</ul>
+<table class="tablePlugin">
+	<thead>
+		<tr>
+			<th>receta</th>
+			<th>imagen</th>
+			<th>cocinero</th>          
+		</tr>
+	</thead>
+
+	<tbody>       
+		<c:forEach items="${recetas}" var="r">
+			<tr>
+				<td>
+					<a href="receta/edit/${r.id}">
+						<img class="tamImg img-thumbnail"  alt="imagen ${r.nombre}" src="${r.imagen}"> 
+					</a>
+				</td>
+				<td>
+					<a href="receta/edit/${r.id}">${r.nombre}</a>
+				</td>
+				<td>
+					<img class="tamImg75 img-circle"  alt="imagen ${r.usuario.nombre}" src="${r.usuario.imagen}">
+					<p class="text-center">${r.usuario.nombre}</p>
+				</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
 
 
 

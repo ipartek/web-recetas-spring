@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import com.ipartek.formacion.domain.Ingrediente;
 
 public interface DAOIngrediente {
@@ -24,11 +26,13 @@ public interface DAOIngrediente {
 	 */
 	Ingrediente getById(long id);
 
+	List<Ingrediente> buscarPorNombre(String nombre);
+
 	boolean insert(Ingrediente i);
 
 	boolean update(Ingrediente i);
 
-	boolean delete(long id);
+	boolean delete(long id) throws DataIntegrityViolationException;
 
 	boolean deleteByReceta(long idReceta, long idIngrediente);
 
