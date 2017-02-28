@@ -7,7 +7,17 @@
 <p>${msg}</p>
 
 <p>***TODO mostrando x ingredientes de TOTAL BBDD</p><br>
-<p>***TODO implementar buscador</p>
+
+<form:form action="ingrediente" method="post" modelAttribute="formularioBusqueda">
+	<form:label path="nombre">Busca Ingredientes</form:label>
+	<form:input path="nombre"/>
+	<form:errors path="nombre" cssClass="error"></form:errors>
+	<br>
+	<form:label path="ordenAscendente">Ordenados Ascendentemente</form:label>
+	<form:checkbox path="ordenAscendente"/>
+	<br>
+	<form:button type="submit">Filtrar</form:button>
+</form:form>
 
 
 <table class="tablePlugin" cellspacing="0" width="100%">

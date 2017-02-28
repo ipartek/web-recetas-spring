@@ -1,5 +1,7 @@
 package com.ipartek.formacion.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ipartek.formacion.domain.FormularioBusqueda;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.service.ServiceIngrediente;
 
@@ -25,8 +28,29 @@ public class IngredienteController {
 
 	@RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
 	public String listar(Model model) {
-
+		logger.info("Listado de ingredientes sin filtrar");
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		return "ingrediente/index";
+	}
+
+	@RequestMapping(value = "/ingrediente", method = RequestMethod.POST)
+	public String listarFiltrando(@Valid FormularioBusqueda formularioBusqueda, BindingResult bindingResult,
+			Model model) {
+
+		logger.info("Listado de ingredientes filtrados " + formularioBusqueda);
+
+		ArrayList<Ingrediente> ingredientesFiltrados = new ArrayList<Ingrediente>();
+
+		if (bindingResult.hasErrors()) {
+			// mostrar ultimos ingredientes
+			ingredientesFiltrados = (ArrayList<Ingrediente>) serviceIngrediente.listar();
+		} else {
+			ingredientesFiltrados = (ArrayList<Ingrediente>) serviceIngrediente.listar(formularioBusqueda.getNombre(),
+					formularioBusqueda.isOrdenAscendente());
+		}
+
+		model.addAttribute("ingredientes", ingredientesFiltrados);
 
 		return "ingrediente/index";
 	}

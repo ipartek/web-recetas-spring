@@ -12,6 +12,8 @@ public interface DAOIngrediente {
 
 	List<Ingrediente> getAll();
 
+	List<Ingrediente> getAll(String filtroNombre, boolean ordenAscedente);
+
 	List<Ingrediente> getAllByReceta(long idReceta);
 
 	/**

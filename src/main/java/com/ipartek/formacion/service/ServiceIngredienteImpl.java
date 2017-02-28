@@ -25,6 +25,12 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	}
 
 	@Override
+	public List<Ingrediente> listar(String filtroNombre, boolean ordenAscedente) {
+		logger.trace("listar ingredientes filtrador por " + filtroNombre + " ordenacion ascendente " + ordenAscedente);
+		return daoIngrediente.getAll(filtroNombre, ordenAscedente);
+	}
+
+	@Override
 	public Ingrediente buscarPorId(long id) {
 		logger.trace("Buscamos ingrediente id: " + id);
 		return daoIngrediente.getById(id);

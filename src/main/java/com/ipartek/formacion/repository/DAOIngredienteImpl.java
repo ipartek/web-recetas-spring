@@ -42,6 +42,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_FILTER = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre ? LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
 	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND ri.receta_id = ? AND i.id = ? ;";
@@ -60,6 +61,23 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 		try {
 			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
+	}
+
+	@Override
+	public List<Ingrediente> getAll(String filtroNombre, boolean ordenAscedente) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+			String orden = (ordenAscedente) ? "ASC" : "DESC";
+			Object[] args = { filtroNombre, orden };
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL_FILTER, args, new IngredienteMapper());
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");
 		} catch (Exception e) {
