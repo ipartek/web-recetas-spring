@@ -8,10 +8,13 @@
 <p>${msg}</p>
 
 <div class="row">
-	<form:form action="ingrediente/filtrar" modelAttribute="ingrediente">
+	<form:form action="ingrediente/filtro" modelAttribute="formularioBusqueda">
 		<div class="col-md-6">
 			<form:label path="nombre">Buscar Ingrediente por Nombre</form:label>
-			<form:input class="form-control" path="nombre"/><br>	
+			<form:input class="form-control" path="nombre"/>
+			<form:errors path="nombre" cssClass="error"></form:errors><br>
+			<form:label path="ordenAscendente">Ordenado Ascendentemete</form:label>
+			<form:checkbox path="ordenAscendente"/><br>	
 		</div> <!-- <div class="col-md-6"> -->
 		
 		<div class="col-md-4">
@@ -37,7 +40,7 @@
 					<a href="ingrediente/edit/${i.id}">${i.nombre}</a>
 				</td>
 				<td>
-					<c:if test="${i.gluten}"><img class="imgIcon" alt="gluten Free" src="resources/img/gluten.png"> </c:if>
+					<c:if test="${i.gluten}"><img class="imgIcon " alt="gluten Free" src="resources/img/gluten.png"> </c:if>
 					<c:if test="${!i.gluten}"><img class="imgIcon" alt="gluten Free" src="resources/img/glutenFree.png"> </c:if>
 				</td>
 			</tr>

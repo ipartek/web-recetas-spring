@@ -26,7 +26,7 @@ public interface DAOIngrediente {
 	 */
 	Ingrediente getById(long id);
 
-	List<Ingrediente> buscarPorNombre(String nombre);
+	List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC);
 
 	boolean insert(Ingrediente i);
 

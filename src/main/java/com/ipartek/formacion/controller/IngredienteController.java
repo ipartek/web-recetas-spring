@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ipartek.formacion.domain.FormularioBusqueda;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.service.ServiceIngrediente;
 
@@ -27,8 +28,10 @@ public class IngredienteController {
 	@RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
 	public String listar(Model model) {
 
+		logger.info("Listar ingredietnes sin filtrar ");
+
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
-		model.addAttribute("ingrediente", new Ingrediente());
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
 
 		return "ingrediente/index";
 	}
@@ -88,15 +91,25 @@ public class IngredienteController {
 		return "ingrediente/index";
 	}
 
-	@RequestMapping(value = "/ingrediente/filtrar", method = RequestMethod.POST)
-	public String buscarPorNombre(@Valid Ingrediente ingrediente, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "/ingrediente/filtro", method = RequestMethod.POST)
+	public String listarFiltrando(@Valid FormularioBusqueda formularioBusqueda, BindingResult bindingResult,
+			Model model) {
 
-		logger.info("Buscando ingredientes que contengan:  " + ingrediente.getNombre());
+		logger.info("Buscando ingredientes que contengan:  " + formularioBusqueda);
+
 		// String msg = "No se ha encontrado ningun ingrediente que contenga " +
 		// ingrediente.getNombre();
 
 		// model.addAttribute("msg", msg);
-		model.addAttribute("ingredientes", serviceIngrediente.buscarPorNombre(ingrediente.getNombre()));
+		if (!bindingResult.hasErrors()) {
+			model.addAttribute("ingredientes", serviceIngrediente.buscarPorNombre(formularioBusqueda.getNombre(),
+					formularioBusqueda.isOrdenAscendente()));
+
+		} else {
+			// mostrar ultimos ingredientes
+			model.addAttribute("ingredientes", serviceIngrediente.listar());
+		}
+
 		return "ingrediente/index";
 	}
 

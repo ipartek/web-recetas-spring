@@ -58,10 +58,16 @@
 				</span>
 			</h2>
 			
+			<c:if test="${empty recetasUsuario}">
+				<p>El usuario no tiene recetas todavia.</p>
+			</c:if>
+			
 				<ol>
 					<c:forEach items="${recetasUsuario}" var="r">
 						<li> 
-							<img class="tamImg img-thumbnail" alt="foto ${r.nombre}" src="${r.imagen}">  ${r.nombre}
+							<a href="receta/edit/${r.id}">
+								<img class="tamImg img-thumbnail" alt="foto ${r.nombre}" src="${r.imagen}">  ${r.nombre}
+							</a>
 						</li>
 					</c:forEach>
 				</ol>

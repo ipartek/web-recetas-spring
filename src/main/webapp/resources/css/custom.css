@@ -25,3 +25,19 @@ table {
 	cellspacing: 0;
 	width: 100%;
 }
+
+.imgIconRotar45{
+	width: 35px;
+	height: 35px;	
+	-ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+}
+
+tr:hover{
+	background: pink !important;
+}
+
+.error{
+	color: red;
+}

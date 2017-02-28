@@ -7,7 +7,7 @@
 
 <a href="usuario/edit">Crear Nuevo</a>
 
-<p>${msg}</p>
+<%@ include file="../includes/mensaje.jsp" %> 
 
 <ul>
 <c:forEach items="${usuarios}" var="u">

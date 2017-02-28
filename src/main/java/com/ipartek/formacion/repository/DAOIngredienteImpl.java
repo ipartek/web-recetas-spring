@@ -43,7 +43,8 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
-	private static final String SQL_GET_BY_NOMBRE = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%';";
+	private static final String SQL_GET_BY_NOMBRE_ASC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre ASC LIMIT 1000;";
+	private static final String SQL_GET_BY_NOMBRE_DSC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
 	private static final String SQL_GET_INGREDIENTE_BY_RECETA = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id = i.id AND i.id = ? AND ri.receta_id = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `ingrediente` WHERE `id` = ?;";
@@ -299,15 +300,18 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public List<Ingrediente> buscarPorNombre(String nombre) {
+	public List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC) {
 		logger.trace("Listando ingredientes que contengan el nombre: " + nombre);
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 
+		String SqlOrdenado = (ordenASC) ? SQL_GET_BY_NOMBRE_ASC : SQL_GET_BY_NOMBRE_DSC;
+
 		try {
 
-			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_BY_NOMBRE, new Object[] { nombre },
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SqlOrdenado, new Object[] { nombre },
 					new IngredienteMapper());
 
+			this.logger.info(lista);
 		} catch (EmptyResultDataAccessException e) {
 
 			this.logger.warn("No hay ingredientes");

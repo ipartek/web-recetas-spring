@@ -1,5 +1,7 @@
 package com.ipartek.formacion.domain;
 
+import java.util.ArrayList;
+
 import javax.validation.constraints.Size;
 
 public class Usuario {
@@ -17,6 +19,8 @@ public class Usuario {
 
 	@Size(min = 3, max = 255)
 	private String imagen;
+
+	private ArrayList<Receta> recetas;
 
 	public Usuario() {
 		super();
@@ -68,10 +72,18 @@ public class Usuario {
 		this.imagen = imagen;
 	}
 
+	public ArrayList<Receta> getRecetas() {
+		return recetas;
+	}
+
+	public void setRecetas(ArrayList<Receta> recetas) {
+		this.recetas = recetas;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", password=" + password + ", imagen="
-				+ imagen + "]";
+				+ imagen + ", recetas=" + recetas + "]";
 	}
 
 	@Override
@@ -83,6 +95,7 @@ public class Usuario {
 		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((recetas == null) ? 0 : recetas.hashCode());
 		return result;
 	}
 
@@ -116,6 +129,11 @@ public class Usuario {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (recetas == null) {
+			if (other.recetas != null)
+				return false;
+		} else if (!recetas.equals(other.recetas))
 			return false;
 		return true;
 	}

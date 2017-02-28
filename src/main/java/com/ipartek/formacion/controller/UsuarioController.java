@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ipartek.formacion.domain.Mensaje;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.service.ServiceUsuario;
 
@@ -53,7 +54,7 @@ public class UsuarioController {
 	public String crear(@Valid Usuario usuario, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + usuario);
-		String msg = null;
+		Mensaje msg = new Mensaje();
 
 		// validar datos del formulario
 		if (!bindingResult.hasErrors()) {
@@ -61,13 +62,14 @@ public class UsuarioController {
 			if (usuario.getId() == -1) {
 
 				serviceUsuario.crear(usuario);
-				msg = "Creada nueva Receta";
+				msg.setDescripcion("Creada nueva Receta");
+				msg.setClase(Mensaje.CLASE_SUCCESS);
 
 			} else {
 
 				serviceUsuario.modificar(usuario);
-				msg = "Modificada Receta";
-
+				msg.setDescripcion("Modificada Receta");
+				msg.setClase(Mensaje.CLASE_SUCCESS);
 			}
 
 		} else {
@@ -84,16 +86,21 @@ public class UsuarioController {
 	public String eliminar(@PathVariable int id, Model model) {
 
 		logger.info("eliminar usuario " + id);
-		String msg = "Usuario no eliminado, posiblemente tenga recetas";
+
+		Mensaje msg = new Mensaje();
+
+		msg.setDescripcion("Usuario no eliminado, posiblemente tenga recetas");
 
 		try {
 
 			if (serviceUsuario.eliminar(id)) {
-				msg = "Usuario Eliminado con exito";
+				msg.setDescripcion("Usuario Eliminado con exito");
+				msg.setClase(Mensaje.CLASE_SUCCESS);
 			}
 
 		} catch (DataIntegrityViolationException e) {
-			msg = e.getMessage();
+			msg.setDescripcion(e.getMessage());
+			msg.setClase(Mensaje.CLASE_DANGER);
 		}
 
 		model.addAttribute("msg", msg);

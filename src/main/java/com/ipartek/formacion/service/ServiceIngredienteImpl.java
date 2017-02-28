@@ -50,9 +50,9 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	}
 
 	@Override
-	public List<Ingrediente> buscarPorNombre(String nombre) {
-		logger.trace("buscando por nombre que contien: " + nombre);
-		return daoIngrediente.buscarPorNombre(nombre);
+	public List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC) {
+		logger.trace("buscando por nombre que contien: " + nombre + "en orden ASC a " + ordenASC);
+		return daoIngrediente.buscarPorNombre(nombre, ordenASC);
 	}
 
 }

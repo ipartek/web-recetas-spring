@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ipartek.formacion.domain.Ingrediente;
+import com.ipartek.formacion.domain.Mensaje;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.service.ServiceIngrediente;
@@ -75,7 +76,7 @@ public class RecetaController {
 	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + receta);
-		String msg = null;
+		Mensaje msg = new Mensaje();
 
 		Usuario usuario = serviceUsuario.buscarPorID(receta.getUsuario().getId());
 		receta.setUsuario(usuario);
@@ -86,12 +87,14 @@ public class RecetaController {
 			if (receta.getId() == -1) {
 
 				serviceReceta.crear(receta);
-				msg = "Creada nueva Receta";
+				msg.setDescripcion("Creada nueva Receta");
+				msg.setClase(Mensaje.CLASE_SUCCESS);
 
 			} else {
 
 				serviceReceta.modificar(receta);
-				msg = "Modificada Receta";
+				msg.setDescripcion("Modificada Receta");
+				msg.setClase(Mensaje.CLASE_SUCCESS);
 
 			}
 
@@ -111,10 +114,13 @@ public class RecetaController {
 	public String eliminar(@PathVariable int id, Model model) {
 
 		logger.info("eliminar ingrediente " + id);
-		String msg = "Receta no eliminado, posiblemente exista en otro sitio";
+		Mensaje msg = new Mensaje();
+		msg.setDescripcion("Receta no eliminado, posiblemente exista en otro sitio");
+		msg.setClase(Mensaje.CLASE_DANGER);
 
 		if (serviceReceta.eliminar(id)) {
-			msg = "Receta Eliminada con exito";
+			msg.setDescripcion("Receta Eliminada con exito");
+			msg.setClase(Mensaje.CLASE_SUCCESS);
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("recetas", serviceReceta.listarConUsuarios());
@@ -126,10 +132,11 @@ public class RecetaController {
 	public String eliminarIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
 
 		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
-		String msg = null;
+		Mensaje msg = new Mensaje();
 
 		if (serviceReceta.eliminarIngrediente(idReceta, idIngrediente)) {
-			msg = "Elimnado ingrediente: " + idIngrediente;
+			msg.setDescripcion("Elimnado ingrediente: " + idIngrediente);
+			msg.setClase(Mensaje.CLASE_SUCCESS);
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));

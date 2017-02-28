@@ -12,7 +12,7 @@ public interface ServiceIngrediente {
 
 	Ingrediente buscarPorId(long id);
 
-	List<Ingrediente> buscarPorNombre(String nombre);
+	List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC);
 
 	boolean crear(Ingrediente i);
 
