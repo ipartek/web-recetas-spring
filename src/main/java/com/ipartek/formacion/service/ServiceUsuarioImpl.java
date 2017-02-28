@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
+import com.ipartek.formacion.repository.DAOReceta;
 import com.ipartek.formacion.repository.DAOUsuario;
 
 @Service("serviceUsuario")
@@ -18,6 +21,9 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Autowired
 	private DAOUsuario daoUsuario;
+
+	@Autowired
+	private DAOReceta daoReceta;
 
 	@Override
 	public List<Usuario> listar() {
@@ -29,7 +35,14 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	public Usuario buscarPorId(long id) {
 		logger.trace("Buscamos usuario por id: " + id);
 		Usuario usuario = daoUsuario.getById(id);
+		return usuario;
+	}
 
+	@Override
+	public Usuario buscarPorIdConRecetas(long id) {
+		logger.trace("Buscamos usuario por id: " + id + " y sus recetas");
+		Usuario usuario = daoUsuario.getById(id);
+		usuario.setRecetas((ArrayList<Receta>) daoReceta.getAllByUser(id));
 		return usuario;
 	}
 

@@ -12,6 +12,8 @@ public interface DAOReceta {
 
 	List<Receta> getAll();
 
+	List<Receta> getAllByUser(long idUsuario);
+
 	Receta getById(long id);
 
 	boolean insert(Receta r);

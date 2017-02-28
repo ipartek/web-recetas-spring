@@ -12,6 +12,8 @@ public interface ServiceUsuario {
 
 	Usuario buscarPorId(long id);
 
+	Usuario buscarPorIdConRecetas(long id);
+
 	boolean crear(Usuario u);
 
 	boolean modificar(Usuario u);

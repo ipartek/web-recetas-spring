@@ -42,7 +42,9 @@ public class UsuarioController {
 	@RequestMapping(value = "/usuario/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
-		model.addAttribute("usuario", serviceUsuario.buscarPorId(id));
+		Usuario usuario = serviceUsuario.buscarPorIdConRecetas(id);
+
+		model.addAttribute("usuario", usuario);
 		return "usuario/form";
 	}
 

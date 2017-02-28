@@ -1,5 +1,7 @@
 package com.ipartek.formacion.domain;
 
+import java.util.ArrayList;
+
 public class Usuario {
 
 	private long id;
@@ -12,6 +14,8 @@ public class Usuario {
 
 	private String imagen;
 
+	private ArrayList<Receta> recetas;
+
 	public Usuario() {
 		super();
 		this.id = -1;
@@ -19,7 +23,16 @@ public class Usuario {
 		this.email = "";
 		this.password = "";
 		this.imagen = "";
+		this.recetas = new ArrayList<Receta>();
 
+	}
+
+	public ArrayList<Receta> getRecetas() {
+		return recetas;
+	}
+
+	public void setRecetas(ArrayList<Receta> recetas) {
+		this.recetas = recetas;
 	}
 
 	public long getId() {
