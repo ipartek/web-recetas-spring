@@ -19,6 +19,13 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	DAOIngrediente daoIngrediente;
 
 	@Override
+	public int total() {
+		int resul = -1;
+		resul = daoIngrediente.total();
+		return resul;
+	}
+
+	@Override
 	public List<Ingrediente> listar() {
 		logger.trace("listar ingredientes");
 		return daoIngrediente.getAll();

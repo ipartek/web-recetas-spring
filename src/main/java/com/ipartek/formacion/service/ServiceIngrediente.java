@@ -6,6 +6,8 @@ import com.ipartek.formacion.domain.Ingrediente;
 
 public interface ServiceIngrediente {
 
+	int total();
+
 	List<Ingrediente> listar();
 
 	List<Ingrediente> listar(String filtroNombre, boolean ordenAscedente);

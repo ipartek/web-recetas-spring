@@ -6,8 +6,8 @@
 
 <p>${msg}</p>
 
-<p>***TODO mostrando x ingredientes de TOTAL BBDD</p><br>
-
+<p>mostrando ${fn:length(ingredientes)} ingredientes de ${total}</p>
+<br>
 <form:form action="ingrediente" method="post" modelAttribute="formularioBusqueda">
 	<form:label path="nombre">Busca Ingredientes</form:label>
 	<form:input path="nombre"/>

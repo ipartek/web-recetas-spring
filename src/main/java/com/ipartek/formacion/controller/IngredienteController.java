@@ -31,6 +31,7 @@ public class IngredienteController {
 		logger.info("Listado de ingredientes sin filtrar");
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
 		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("total", serviceIngrediente.total());
 		return "ingrediente/index";
 	}
 
@@ -51,6 +52,7 @@ public class IngredienteController {
 		}
 
 		model.addAttribute("ingredientes", ingredientesFiltrados);
+		model.addAttribute("total", serviceIngrediente.total());
 
 		return "ingrediente/index";
 	}

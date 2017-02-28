@@ -57,6 +57,11 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_INGREDIENTES_FUERA_RECETA = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?)ORDER BY nombre ASC;";
 
 	@Override
+	public int total() {
+		return this.jdbctemplate.queryForInt("select count('id') from ingrediente;");
+	}
+
+	@Override
 	public List<Ingrediente> getAll() {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 
