@@ -53,8 +53,6 @@
           <!-- menu derecha -->  
             <ul class="nav navbar-nav navbar-right">
               <li class="active">
-              
-              				
               	 <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=es">ES</a>
               	</li>
               <li>

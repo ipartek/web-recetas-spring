@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<!-- i18n Internacionalitation -->
-	<beans:bean id="localeResolver"
+	<beans:bean id="localeResolver" name="localeUSer"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<beans:property name="defaultLocale" value="es" />
 		<beans:property name="cookieName" value="languageCookie"></beans:property>
