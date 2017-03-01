@@ -8,16 +8,16 @@ public class Usuario {
 
 	private long id;
 
-	@Size(min = 3, max = 255)
+	@Size(min = 3, max = 255, message = "Size.nombre")
 	private String nombre;
 
-	@Size(min = 3, max = 255)
+	@Size(min = 3, max = 255, message = "Size.email")
 	private String email;
 
-	@Size(min = 3, max = 255)
+	@Size(min = 3, max = 255, message = "Size.password")
 	private String password;
 
-	@Size(min = 3, max = 255)
+	@Size(min = 3, max = 255, message = "Size.imagen")
 	private String imagen;
 
 	private ArrayList<Receta> recetas;

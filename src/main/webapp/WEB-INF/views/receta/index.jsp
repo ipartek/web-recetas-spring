@@ -7,7 +7,7 @@
 
 <a href="receta/edit">Crear Nuevo</a>
 
-<p>${msg}</p>
+<%@ include file="../includes/mensaje.jsp" %> 
 
 <table class="tablePlugin">
 	<thead>

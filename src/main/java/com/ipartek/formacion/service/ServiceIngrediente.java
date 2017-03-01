@@ -20,4 +20,6 @@ public interface ServiceIngrediente {
 
 	boolean eliminar(long id) throws DataIntegrityViolationException;
 
+	int TotalIngrediente();
+
 }

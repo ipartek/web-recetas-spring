@@ -55,4 +55,10 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 		return daoIngrediente.buscarPorNombre(nombre, ordenASC);
 	}
 
+	@Override
+	public int TotalIngrediente() {
+		logger.trace("sacando el total de ingredientes");
+		return daoIngrediente.getTotalIngrediente();
+	}
+
 }

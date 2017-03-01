@@ -160,10 +160,14 @@ public class RecetaController {
 			BindingResult bindingResult, Model model) {
 
 		logger.info("Modificando ingrediente " + ingrediente + " de Receta " + idReceta);
-		String msg = "No se pudo cambiar ingrediente";
+		Mensaje msg = new Mensaje();
+		msg.setDescripcion("No se pudo cambiar ingrediente");
+		msg.setClase(Mensaje.CLASE_DANGER);
 
 		if (serviceReceta.modificarIngrediente(idReceta, ingrediente)) {
-			msg = "Ingrediente cambiado";
+			msg.setDescripcion("Ingrediente cambiado");
+			msg.setClase(Mensaje.CLASE_SUCCESS);
+
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
@@ -190,10 +194,14 @@ public class RecetaController {
 			BindingResult bindingResult, Model model) {
 
 		logger.info("Añadiendo ingrediente " + ingrediente + " de Receta " + idReceta);
-		String msg = "No se pudo añadir ingrediente";
+		Mensaje msg = new Mensaje();
+		msg.setDescripcion("No se pudo añadir ingrediente");
+		msg.setClase(Mensaje.CLASE_DANGER);
 
 		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
-			msg = "Se ha añadido el ingrediente:  " + ingrediente.getNombre();
+			msg.setDescripcion("Se ha añadido el ingrediente:  " + ingrediente.getNombre());
+			msg.setClase(Mensaje.CLASE_SUCCESS);
+
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));

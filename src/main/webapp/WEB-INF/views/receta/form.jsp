@@ -5,7 +5,7 @@
 
 <h1>Formulario Receta</h1>
 
-${msg}
+<%@ include file="../includes/mensaje.jsp" %>
 
 
 <form:form action="receta/crear" modelAttribute="receta">

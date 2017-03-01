@@ -2,13 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <%@ page session="false" %>
 
 <html>
 <head>
-	<title>Web Recetas</title>
+	<title><spring:message code="nav.app.name" text="Web App"/></title>
 	<base href="/formacion/" />
 	
 	<!-- Navbar -->

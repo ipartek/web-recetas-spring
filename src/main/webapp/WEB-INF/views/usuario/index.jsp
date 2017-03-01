@@ -1,11 +1,9 @@
 <%@ include file="../includes/header.jsp" %> 
 <%@ include file="../includes/nav.jsp" %> 
 
-<a href="/formacion">Inicio</a>
+<h1><spring:message code="view.usuario.titulo" text="Listado Usuarios"/></h1>
 
-<h1>Listado Usuarios</h1>
-
-<a href="usuario/edit">Crear Nuevo</a>
+<a href="usuario/edit"><spring:message code="url.crear" text="Crear Nuevo"/></a>
 
 <%@ include file="../includes/mensaje.jsp" %> 
 

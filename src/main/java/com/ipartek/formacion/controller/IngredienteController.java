@@ -32,6 +32,8 @@ public class IngredienteController {
 
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
 		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("total", serviceIngrediente.TotalIngrediente());
 
 		return "ingrediente/index";
 	}
@@ -109,6 +111,8 @@ public class IngredienteController {
 			// mostrar ultimos ingredientes
 			model.addAttribute("ingredientes", serviceIngrediente.listar());
 		}
+
+		model.addAttribute("total", serviceIngrediente.TotalIngrediente());
 
 		return "ingrediente/index";
 	}

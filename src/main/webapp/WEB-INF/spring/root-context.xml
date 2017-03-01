@@ -18,5 +18,16 @@
 		<property name="username" value="${mysql.user}" />
 		<property name="password" value="${mysql.pass}" />
 	</bean>	
-		
+	
+	<!-- i18n Internacionalitation ficheros properties -->
+	 <bean id="messageSource"
+      class="org.springframework.context.support.ResourceBundleMessageSource">
+       <property name="basenames">
+           <list>
+              <value>mensajes/validationMessages</value> 
+               <value>mensajes/viewtext</value>
+           </list>
+        </property>        
+    </bean>
+    
 </beans>

@@ -58,6 +58,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	// FROM receta_ingrediente as ri, ingrediente as i WHERE ri.ingrediente_id =
 	// i.id AND ri.receta_id = ?) ORDER BY i.nombre ASC;";
 	private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id, i.nombre, i.gluten FROM ingrediente AS i WHERE i.id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?) ORDER BY i.nombre ASC;";
+	private static final String SQL_TOTAL_INGREDIENTES = "SELECT COUNT(id) FROM ingrediente";
 
 	@Override
 	public List<Ingrediente> getAll() {
@@ -323,6 +324,26 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		}
 
 		return lista;
+	}
+
+	@Override
+	public int getTotalIngrediente() {
+
+		logger.trace("Sacando el numero total de ingredientes de la BBDD");
+
+		int resul = -1;
+
+		try {
+
+			resul = this.jdbctemplate.queryForInt(SQL_TOTAL_INGREDIENTES);
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return resul;
 	}
 
 }

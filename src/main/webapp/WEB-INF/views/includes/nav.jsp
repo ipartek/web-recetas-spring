@@ -14,9 +14,34 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class=""><a href="usuario">Usuarios</a></li>
-					<li><a href="receta">Recetas</a></li>
-					<li><a href="ingrediente">Ingredientes</a></li>
+					<li class="">
+						<a href="usuario">
+							<spring:message code="nav.usuario" text="Usuarios"/>
+						</a>
+					</li>
+					<li>
+						<a href="receta">
+							<spring:message code="nav.recetas" text="Recetas"/>
+						</a>
+					</li>
+					<li>
+						<a href="ingrediente">
+							<spring:message code="nav.ingredientes" text="Ingredientes"/>
+						</a>
+					</li>
+              
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="${requestScope['javax.servlet.forward.request_uri']}?locale=es">ES</a>
+					</li>
+					<li>
+						<a href="${requestScope['javax.servlet.forward.request_uri']}?locale=eu">EU</a>
+					</li>
+					<li>
+						<a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en">EN</a>
+					</li>
               
 				</ul>
             

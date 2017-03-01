@@ -57,4 +57,7 @@ public interface DAOIngrediente {
 	 * @return Ingrediente, null si no existe
 	 */
 	Ingrediente getByReceta(long idReceta, long idIngrediente);
+
+	int getTotalIngrediente();
+
 }

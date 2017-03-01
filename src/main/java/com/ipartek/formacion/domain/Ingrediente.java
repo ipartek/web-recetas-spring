@@ -6,7 +6,7 @@ public class Ingrediente {
 
 	private long id;
 
-	@Size(min = 3, max = 255)
+	@Size(min = 3, max = 255, message = "Size.nombre")
 	private String nombre;
 
 	private boolean gluten;
