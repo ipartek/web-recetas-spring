@@ -41,8 +41,9 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	// Sentencias SQL
-	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_FILTER = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre ASC LIMIT 1000;";
+	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_TOTAL = "select count('id') from `ingrediente`;";
+	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` WHERE `nombre` LIKE '%' ? '%' ORDER BY `nombre` ASC LIMIT 1000;";
 	private static final String SQL_GET_ALL_FILTER_DESC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT i.id, i.nombre, i.gluten, ri.cantidad FROM receta_ingrediente as ri, ingrediente as i WHERE ri.receta_id = ? AND ri.ingrediente_id = i.id;";
@@ -58,7 +59,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	@Override
 	public int total() {
-		return this.jdbctemplate.queryForInt("select count('id') from ingrediente;");
+		return this.jdbctemplate.queryForInt(SQL_TOTAL);
 	}
 
 	@Override
