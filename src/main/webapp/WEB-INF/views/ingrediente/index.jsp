@@ -1,22 +1,36 @@
 <%@ include file="../includes/header.jsp" %> 
 
-<h1>Listado ingredientes</h1>
+<h1><spring:message code="view.index.ingrediente.titulo" text="Ingredientes"/></h1>
 
-<a class="btn btn-primary" href="ingrediente/edit">Crear Nuevo</a>
+<a class="btn btn-primary" href="ingrediente/edit">
+	<spring:message code="btn.crear" text="Crear"/>
+</a>
 
 <p>${msg}</p>
 
-<p>mostrando ${fn:length(ingredientes)} ingredientes de ${total}</p>
+
+<p>
+	<spring:message code="view.index.ingrediente.mostrar" 
+					arguments="${fn:length(ingredientes)},${total}" 
+					text="mostrando x de y"/>
+</p>
+
 <br>
 <form:form action="ingrediente" method="post" modelAttribute="formularioBusqueda">
-	<form:label path="nombre">Busca Ingredientes</form:label>
+	<form:label path="nombre">
+		<spring:message code="view.form.label.buscar" text="Orden Ascendente"/>
+	</form:label>
 	<form:input path="nombre"/>
 	<form:errors path="nombre" cssClass="error"></form:errors>
 	<br>
-	<form:label path="ordenAscendente">Ordenados Ascendentemente</form:label>
+	<form:label path="ordenAscendente">
+		<spring:message code="view.form.label.orden" text="Orden Ascendente"/>
+	</form:label>
 	<form:checkbox path="ordenAscendente"/>
 	<br>
-	<form:button class="btn btn-warning" type="submit">Filtrar</form:button>
+	<form:button class="btn btn-warning" type="submit">
+		<spring:message code="btn.filtrar" text="Filtrar"/>
+	</form:button>
 </form:form>
 
 
