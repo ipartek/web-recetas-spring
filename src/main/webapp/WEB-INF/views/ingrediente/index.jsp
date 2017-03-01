@@ -2,7 +2,7 @@
 
 <h1>Listado ingredientes</h1>
 
-<a href="ingrediente/edit">Crear Nuevo</a>
+<a class="btn btn-primary" href="ingrediente/edit">Crear Nuevo</a>
 
 <p>${msg}</p>
 
@@ -16,7 +16,7 @@
 	<form:label path="ordenAscendente">Ordenados Ascendentemente</form:label>
 	<form:checkbox path="ordenAscendente"/>
 	<br>
-	<form:button type="submit">Filtrar</form:button>
+	<form:button class="btn btn-warning" type="submit">Filtrar</form:button>
 </form:form>
 
 
