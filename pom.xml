@@ -6,7 +6,7 @@
 	<artifactId>formacion</artifactId>
 	<name>web-recetas-spring</name>
 	<packaging>war</packaging>
-	<version>1.0</version>
+	<version>1.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
@@ -14,6 +14,11 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<mysql.version>5.0.8</mysql.version>
+
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -21,13 +26,9 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			<!-- <exclusions> Exclude Commons Logging in favor of SLF4j <exclusion> 
+				<groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+				</exclusion> </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -186,9 +187,35 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<runOrder>random</runOrder>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.0.201403182114</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<destFile>${sonar.jacoco.reportPath}</destFile>
+				</configuration>
 			</plugin>
 
 		</plugins>
