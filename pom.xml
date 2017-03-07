@@ -211,7 +211,7 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-					</execution>
+					</execution>					
 				</executions>
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
@@ -219,5 +219,42 @@
 			</plugin>
 
 		</plugins>
+		
+		<!-- Excluir goals del ciclo de vida de Maven en Eclipse, para evitar error plugin jacoco -->
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jacoco</groupId>
+										<artifactId>
+											jacoco-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.7.0.201403182114,)
+										</versionRange>
+										<goals>
+											<goal>prepare-agent</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		
 	</build>
 </project>
