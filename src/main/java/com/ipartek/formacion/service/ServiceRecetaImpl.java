@@ -91,7 +91,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 
-		logger.trace("Añadiendo Ingrediente" + i + "a receta " + idReceta);
+		logger.trace("AÃ±adiendo Ingrediente" + i + "a receta " + idReceta);
 		return daoIngrediente.addIngrediente(idReceta, i);
 	}
 

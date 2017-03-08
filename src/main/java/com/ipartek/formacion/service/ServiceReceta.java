@@ -39,7 +39,7 @@ public interface ServiceReceta {
 
 	/**
 	 * Buscamos todos los ingredintes que no esten en esa receta Nos sirve para
-	 * poder añadir un nuevo ingrediente
+	 * poder aÃ±adir un nuevo ingrediente
 	 * 
 	 * @param idReceta
 	 * @return listado de ingredientes disponibles

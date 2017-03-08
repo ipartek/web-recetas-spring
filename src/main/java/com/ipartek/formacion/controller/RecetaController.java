@@ -159,7 +159,7 @@ public class RecetaController {
 		String msg = "No se pudo cambiar ingrediente";
 
 		if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
-			msg = "Ingrediente añadido";
+			msg = "Ingrediente aÃ±adido";
 		}
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
@@ -173,7 +173,7 @@ public class RecetaController {
 	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
-		logger.info("Añadiendoo ingrediente " + ingrediente + " a Receta " + idReceta);
+		logger.info("AÃ±adiendoo ingrediente " + ingrediente + " a Receta " + idReceta);
 
 		model.addAttribute("ingrediente", new Ingrediente());
 		model.addAttribute("disponibles", serviceReceta.listarIngredientesFueraReceta(idReceta));
