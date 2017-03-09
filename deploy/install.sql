@@ -1,5 +1,5 @@
 -- --------------------------------------------------------
--- Host:                         127.0.0.1
+-- Host:                         localhost
 -- Versión del servidor:         5.7.14 - MySQL Community Server (GPL)
 -- SO del servidor:              Win64
 -- HeidiSQL Versión:             9.4.0.5125
@@ -13,12 +13,10 @@
 
 
 -- Volcando estructura de base de datos para recetas
-DROP DATABASE IF EXISTS `recetas`;
 CREATE DATABASE IF NOT EXISTS `recetas` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `recetas`;
 
 -- Volcando estructura para tabla recetas.ingrediente
-DROP TABLE IF EXISTS `ingrediente`;
 CREATE TABLE IF NOT EXISTS `ingrediente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -62,7 +60,6 @@ INSERT INTO `ingrediente` (`id`, `nombre`, `gluten`) VALUES
 /*!40000 ALTER TABLE `ingrediente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla recetas.receta
-DROP TABLE IF EXISTS `receta`;
 CREATE TABLE IF NOT EXISTS `receta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -72,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `receta` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_receta_usuario_idx` (`usuario_id`),
-  CONSTRAINT `fk_receta_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_receta_has_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Volcando datos para la tabla recetas.receta: ~4 rows (aproximadamente)
@@ -86,7 +83,6 @@ INSERT INTO `receta` (`id`, `nombre`, `imagen`, `descripcion`, `usuario_id`) VAL
 /*!40000 ALTER TABLE `receta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla recetas.receta_ingrediente
-DROP TABLE IF EXISTS `receta_ingrediente`;
 CREATE TABLE IF NOT EXISTS `receta_ingrediente` (
   `receta_id` int(11) NOT NULL,
   `ingrediente_id` int(11) NOT NULL,
@@ -94,8 +90,8 @@ CREATE TABLE IF NOT EXISTS `receta_ingrediente` (
   PRIMARY KEY (`receta_id`,`ingrediente_id`),
   KEY `fk_receta_has_ingrediente_ingrediente1_idx` (`ingrediente_id`),
   KEY `fk_receta_has_ingrediente_receta1_idx` (`receta_id`),
-  CONSTRAINT `fk_receta_has_ingrediente_ingrediente1` FOREIGN KEY (`ingrediente_id`) REFERENCES `ingrediente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_receta_has_ingrediente_receta1` FOREIGN KEY (`receta_id`) REFERENCES `receta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_receta_has_ingrediente_ingrediente1` FOREIGN KEY (`ingrediente_id`) REFERENCES `ingrediente` (`id`),
+  CONSTRAINT `fk_receta_has_ingrediente_receta1` FOREIGN KEY (`receta_id`) REFERENCES `receta` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Volcando datos para la tabla recetas.receta_ingrediente: ~35 rows (aproximadamente)
@@ -140,7 +136,6 @@ INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`, `cantidad`) VAL
 /*!40000 ALTER TABLE `receta_ingrediente` ENABLE KEYS */;
 
 -- Volcando estructura para tabla recetas.usuario
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
@@ -164,7 +159,6 @@ INSERT INTO `usuario` (`id`, `nombre`, `email`, `password`, `imagen`) VALUES
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 -- Volcando estructura para vista recetas.checff_recetas_left_join
-DROP VIEW IF EXISTS `checff_recetas_left_join`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `checff_recetas_left_join` (
 	`cheff` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -172,7 +166,6 @@ CREATE TABLE `checff_recetas_left_join` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.cheff_recetas_inner_join
-DROP VIEW IF EXISTS `cheff_recetas_inner_join`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `cheff_recetas_inner_join` (
 	`cheff` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -180,7 +173,6 @@ CREATE TABLE `cheff_recetas_inner_join` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.cheff_recetas_sin_inner_join
-DROP VIEW IF EXISTS `cheff_recetas_sin_inner_join`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `cheff_recetas_sin_inner_join` (
 	`cheff` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -188,14 +180,12 @@ CREATE TABLE `cheff_recetas_sin_inner_join` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.contar_recetas
-DROP VIEW IF EXISTS `contar_recetas`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `contar_recetas` (
 	`COUNT(*)` BIGINT(21) NOT NULL
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.ingredientes_disponibles_sopa_cebolla
-DROP VIEW IF EXISTS `ingredientes_disponibles_sopa_cebolla`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `ingredientes_disponibles_sopa_cebolla` (
 	`id` INT(11) NOT NULL,
@@ -204,7 +194,6 @@ CREATE TABLE `ingredientes_disponibles_sopa_cebolla` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.ingrediente_sopa_cebolla
-DROP VIEW IF EXISTS `ingrediente_sopa_cebolla`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `ingrediente_sopa_cebolla` (
 	`ingrediente` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -213,7 +202,6 @@ CREATE TABLE `ingrediente_sopa_cebolla` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.recetas_mas_de_5_ingredientes
-DROP VIEW IF EXISTS `recetas_mas_de_5_ingredientes`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `recetas_mas_de_5_ingredientes` (
 	`r_nombre` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -221,7 +209,6 @@ CREATE TABLE `recetas_mas_de_5_ingredientes` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.recetas_sin_gluten
-DROP VIEW IF EXISTS `recetas_sin_gluten`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `recetas_sin_gluten` (
 	`r_nombre` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -229,7 +216,6 @@ CREATE TABLE `recetas_sin_gluten` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.rectas_con_gluten
-DROP VIEW IF EXISTS `rectas_con_gluten`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `rectas_con_gluten` (
 	`r_nombre` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
@@ -237,7 +223,6 @@ CREATE TABLE `rectas_con_gluten` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.ultima_receta
-DROP VIEW IF EXISTS `ultima_receta`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `ultima_receta` (
 	`id` INT(11) NOT NULL,
@@ -245,7 +230,6 @@ CREATE TABLE `ultima_receta` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.ultima_receta_subconsulta
-DROP VIEW IF EXISTS `ultima_receta_subconsulta`;
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `ultima_receta_subconsulta` (
 	`id` INT(11) NOT NULL,
@@ -253,67 +237,56 @@ CREATE TABLE `ultima_receta_subconsulta` (
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista recetas.checff_recetas_left_join
-DROP VIEW IF EXISTS `checff_recetas_left_join`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `checff_recetas_left_join`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `checff_recetas_left_join` AS select `u`.`nombre` AS `cheff`,`r`.`nombre` AS `receta` from (`usuario` `u` left join `receta` `r` on((`u`.`id` = `r`.`usuario_id`)));
 
 -- Volcando estructura para vista recetas.cheff_recetas_inner_join
-DROP VIEW IF EXISTS `cheff_recetas_inner_join`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `cheff_recetas_inner_join`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cheff_recetas_inner_join` AS select `u`.`nombre` AS `cheff`,`r`.`nombre` AS `receta` from (`usuario` `u` join `receta` `r` on((`u`.`id` = `r`.`usuario_id`)));
 
 -- Volcando estructura para vista recetas.cheff_recetas_sin_inner_join
-DROP VIEW IF EXISTS `cheff_recetas_sin_inner_join`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `cheff_recetas_sin_inner_join`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `cheff_recetas_sin_inner_join` AS select `u`.`nombre` AS `cheff`,`r`.`nombre` AS `receta` from (`usuario` `u` join `receta` `r`) where (`u`.`id` = `r`.`usuario_id`);
 
 -- Volcando estructura para vista recetas.contar_recetas
-DROP VIEW IF EXISTS `contar_recetas`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `contar_recetas`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `contar_recetas` AS select count(0) AS `COUNT(*)` from `receta`;
 
 -- Volcando estructura para vista recetas.ingredientes_disponibles_sopa_cebolla
-DROP VIEW IF EXISTS `ingredientes_disponibles_sopa_cebolla`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `ingredientes_disponibles_sopa_cebolla`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ingredientes_disponibles_sopa_cebolla` AS select `ingrediente`.`id` AS `id`,`ingrediente`.`nombre` AS `nombre`,`ingrediente`.`gluten` AS `gluten` from `ingrediente` where (not(`ingrediente`.`id` in (select `receta_ingrediente`.`ingrediente_id` from `receta_ingrediente` where (`receta_ingrediente`.`receta_id` = 1))));
 
 -- Volcando estructura para vista recetas.ingrediente_sopa_cebolla
-DROP VIEW IF EXISTS `ingrediente_sopa_cebolla`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `ingrediente_sopa_cebolla`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ingrediente_sopa_cebolla` AS select `i`.`nombre` AS `ingrediente`,`ri`.`cantidad` AS `cantidad`,`i`.`gluten` AS `gluten` from ((`receta` `r` join `ingrediente` `i`) join `receta_ingrediente` `ri`) where ((`r`.`id` = 1) and (`r`.`id` = `ri`.`receta_id`) and (`ri`.`ingrediente_id` = `i`.`id`));
 
 -- Volcando estructura para vista recetas.recetas_mas_de_5_ingredientes
-DROP VIEW IF EXISTS `recetas_mas_de_5_ingredientes`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `recetas_mas_de_5_ingredientes`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `recetas_mas_de_5_ingredientes` AS select `receta`.`nombre` AS `r_nombre`,count(`ingrediente`.`id`) AS `numero_ingredientes` from ((`receta` join `receta_ingrediente`) join `ingrediente`) where ((`receta`.`id` = `receta_ingrediente`.`receta_id`) and (`receta_ingrediente`.`ingrediente_id` = `ingrediente`.`id`)) group by `receta`.`nombre` having (`numero_ingredientes` > 5);
 
 -- Volcando estructura para vista recetas.recetas_sin_gluten
-DROP VIEW IF EXISTS `recetas_sin_gluten`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `recetas_sin_gluten`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `recetas_sin_gluten` AS select `receta`.`nombre` AS `r_nombre`,sum(`ingrediente`.`gluten`) AS `ingredientes_con_gluten` from ((`receta` join `receta_ingrediente`) join `ingrediente`) where ((`receta`.`id` = `receta_ingrediente`.`receta_id`) and (`receta_ingrediente`.`ingrediente_id` = `ingrediente`.`id`)) group by `receta`.`nombre` having (`ingredientes_con_gluten` <= 0);
 
 -- Volcando estructura para vista recetas.rectas_con_gluten
-DROP VIEW IF EXISTS `rectas_con_gluten`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `rectas_con_gluten`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `rectas_con_gluten` AS select `receta`.`nombre` AS `r_nombre`,sum(`ingrediente`.`gluten`) AS `ingredientes_con_gluten` from ((`receta` join `receta_ingrediente`) join `ingrediente`) where ((`receta`.`id` = `receta_ingrediente`.`receta_id`) and (`receta_ingrediente`.`ingrediente_id` = `ingrediente`.`id`)) group by `receta`.`nombre` having (`ingredientes_con_gluten` > 0);
 
 -- Volcando estructura para vista recetas.ultima_receta
-DROP VIEW IF EXISTS `ultima_receta`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `ultima_receta`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ultima_receta` AS select `receta`.`id` AS `id`,`receta`.`nombre` AS `nombre` from `receta` order by `receta`.`id` desc limit 1;
 
 -- Volcando estructura para vista recetas.ultima_receta_subconsulta
-DROP VIEW IF EXISTS `ultima_receta_subconsulta`;
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `ultima_receta_subconsulta`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ultima_receta_subconsulta` AS select `receta`.`id` AS `id`,`receta`.`nombre` AS `nombre` from `receta` where (`receta`.`id` = (select max(`receta`.`id`) from `receta`));
