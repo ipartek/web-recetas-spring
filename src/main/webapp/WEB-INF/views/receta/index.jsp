@@ -4,7 +4,10 @@
 
 <a href="receta/edit">Crear Nuevo</a>
 
+<!-- atributo request -->
 <p>${msg}</p>
+<!-- parametro request, ej: ?msg=Mensaje+para+el+usuario -->
+<p>${param.msg}</p>
 
 <table class="tablePlugin" cellspacing="0" width="100%">
   <thead>

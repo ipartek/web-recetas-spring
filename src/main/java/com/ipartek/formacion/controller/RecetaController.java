@@ -21,6 +21,7 @@ import com.ipartek.formacion.service.ServiceReceta;
 import com.ipartek.formacion.service.ServiceUsuario;
 
 @Controller
+@RequestMapping(value = "/receta")
 public class RecetaController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IngredienteController.class);
@@ -34,7 +35,14 @@ public class RecetaController {
 	@Autowired
 	private ServiceUsuario serviceUsuario;
 
-	@RequestMapping(value = "/receta", method = RequestMethod.GET)
+	/**
+	 * Listado de las ultimas 500 recetas
+	 * 
+	 * @param model
+	 *            "recetas" ArrayList<Receta>
+	 * @return vista "receta/index.jsp"
+	 */
+	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public String listar(Model model) {
 
 		ArrayList<Receta> recetas = (ArrayList<Receta>) serviceReceta.listarConUsuarios();
@@ -43,7 +51,7 @@ public class RecetaController {
 		return "receta/index";
 	}
 
-	@RequestMapping(value = "/receta/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String irFormularioNuevo(Model model) {
 
 		model.addAttribute("receta", new Receta());
@@ -52,7 +60,7 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
 		model.addAttribute("receta", serviceReceta.buscarPorID(id));
@@ -60,7 +68,7 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/crear", method = RequestMethod.POST)
+	@RequestMapping(value = "/crear", method = RequestMethod.POST)
 	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + receta);
@@ -94,22 +102,40 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/delete/{id}", method = RequestMethod.GET)
-	public String eliminar(@PathVariable int id, Model model) {
+	/**
+	 * Elimina receta
+	 * 
+	 * @param idReceta
+	 *            identificador de la receta
+	 * @param model
+	 *            <ol>
+	 *            <li>msg: Mensaje para el usuario</li>
+	 *            </ol>
+	 * @return Si se elimina receta llamamos a la accion "listar".<br>
+	 *         Si no se puede eliminar llamamos a la accion
+	 *         "irFormularioEditar".
+	 * 
+	 * 
+	 */
+	@RequestMapping(value = "/delete/{idReceta}", method = RequestMethod.GET)
+	public String eliminar(@PathVariable int idReceta, Model model) {
 
-		logger.info("eliminar ingrediente " + id);
+		logger.info("eliminar ingrediente " + idReceta);
+		String view = "redirect: ../";
 		String msg = "Receta no eliminado, posiblemente exista en otro sitio";
 
-		if (serviceReceta.eliminar(id)) {
+		if (serviceReceta.eliminar(idReceta)) {
 			msg = "Receta Eliminada con exito";
+
+		} else {
+
+			view = "redirect: ../edit/" + idReceta;
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("recetas", serviceReceta.listar());
-
-		return "receta/index";
+		return view;
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/delete/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{idReceta}/delete/ingrediente/{idIngrediente}", method = RequestMethod.GET)
 	public String eliminarIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
 
 		logger.info("eliminar ingrediente " + idIngrediente + " de Receta " + idReceta);
@@ -124,7 +150,7 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente/{idIngrediente}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{idReceta}/edit/ingrediente/{idIngrediente}", method = RequestMethod.GET)
 	public String irIngredienteModificar(@PathVariable int idReceta, @PathVariable int idIngrediente, Model model) {
 
 		logger.info("Ir a Mostrar formulario " + idIngrediente + " de Receta " + idReceta);
@@ -133,7 +159,7 @@ public class RecetaController {
 		return "receta/formIngrediente";
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/edit/ingrediente", method = RequestMethod.POST)
+	@RequestMapping(value = "/{idReceta}/edit/ingrediente", method = RequestMethod.POST)
 	public String editarIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
@@ -151,7 +177,7 @@ public class RecetaController {
 		return "receta/formIngrediente";
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/nuevo/ingrediente", method = RequestMethod.POST)
+	@RequestMapping(value = "/{idReceta}/nuevo/ingrediente", method = RequestMethod.POST)
 	public String nuevoIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
@@ -169,7 +195,7 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/{idReceta}/add/ingrediente/", method = RequestMethod.GET)
+	@RequestMapping(value = "/{idReceta}/add/ingrediente/", method = RequestMethod.GET)
 	public String addIngrediente(@PathVariable int idReceta, @Valid Ingrediente ingrediente,
 			BindingResult bindingResult, Model model) {
 
