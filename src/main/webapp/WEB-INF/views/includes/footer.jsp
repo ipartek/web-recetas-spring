@@ -15,7 +15,7 @@
 		    "sProcessing":     "Procesando...",
 		    "sLengthMenu":     "Mostrar _MENU_ registros",
 		    "sZeroRecords":    "No se encontraron resultados",
-		    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		    "sEmptyTable":     "Ningï¿½n dato disponible en esta tabla",
 		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -26,7 +26,7 @@
 		    "sLoadingRecords": "Cargando...",
 		    "oPaginate": {
 		        "sFirst":    "Primero",
-		        "sLast":     "Último",
+		        "sLast":     "ï¿½ltimo",
 		        "sNext":     "Siguiente",
 		        "sPrevious": "Anterior"
 		    },
@@ -102,13 +102,65 @@
 	//Esperara a que todo el DOM este cargado
 	$(document).ready(function() {
 		
-	    $('.tablePlugin').DataTable({
-	    		language: idioma	    
-	    });
-	    
-	    
-	});//$(document).ready
-	
+		console.log('Documento Ready');
+		
+		//detectar cambio foco en input con javascript
+		/*var inputUsuario = document.getElementById("nombreUsuario");
+		inputUsuario.value = "Pepe";*/
+		
+		//detectar cambio foco en input con ajax
+		//$("#nombreUsuario").val("Pepe");
+		
+		// cambia el texto de todos los h1
+		//$("h1").text("YUjuuuuuuuuuuuu");
+		
+		//declarar una variable de una seleccion
+		var iUsuario = $("#nombreUsuario");
+		var msgUsuario = $("#msgNombreUsuario");
+		
+		//Cuando salga del input hay que comprobar el nombre del usuario --> se usa .blur()
+		iUsuario.blur(function(){
+			var valor = $(this).val();
+				
+			console.log('input usuario ha perdido focus value = ' + valor);
+			
+			if (valor.length > 2){
+				
+				msgUsuario.css('color', 'grey');
+				msgUsuario.text('comprobando nombre...');
+				console.log(valor);
+				console.log('llamada Ajax al servidor');
+				
+				
+				$.ajax("testCheckUser", {
+					//TODO por get
+					"type" : "post", // usualmente post o get
+					//"contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+					"encoding" : "UTF-8",
+					"data" : {nombre: valor},
+					"success" : function(result) {
+						console.log("Llego el contenido y no hubo error", result);
+						msgUsuario.text("");
+						msgUsuario.html(result);
+					},
+					"error" : function(result) {
+						console.error("Este callback maneja los errores", result);
+					}
+				});
+				
+			/*} else {
+				msgUsuario.css('color', 'red');
+				msgUsuario.text('Por favor escribe un nombre mas largo');
+			*/
+			}
+
+		});
+
+				$('.tablePlugin').DataTable({
+					language : idioma
+				});
+
+			});//$(document).ready
 </script>
 	
 </body>

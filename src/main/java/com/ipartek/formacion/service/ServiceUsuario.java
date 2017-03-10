@@ -32,4 +32,14 @@ public interface ServiceUsuario {
 
 	List<Receta> listarRecetasUsuario(long idUsuario);
 
+	/**
+	 * Buscamos si existe el nombre del usuario en la bbdd.<br>
+	 * La busqueda NO es Case-sensitive.
+	 * 
+	 * @param nombre
+	 *            String nombre del usuario a buscar
+	 * @return Usuario si existe, null si no existe
+	 */
+	Usuario existe(String nombre);
+
 }

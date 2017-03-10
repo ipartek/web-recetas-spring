@@ -60,4 +60,10 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 		return daoReceta.getRecetasUser(idUsuario);
 	}
 
+	@Override
+	public Usuario existe(String nombre) {
+		logger.trace("Buscando si exite en la bbdd el usuario: " + nombre);
+		return daoUsuario.exist(nombre);
+	}
+
 }

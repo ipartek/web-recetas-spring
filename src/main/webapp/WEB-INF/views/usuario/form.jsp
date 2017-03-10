@@ -12,22 +12,24 @@
 			<form:hidden path="id" readonly="true"/><br>
 			
 			<form:label path="nombre"><spring:message code="view.form.label.nombre" text="Nombre"/></form:label>
-			<form:input class="form-control" path="nombre"/><br>	
+			<form:input id="nombreUsuario" class="form-control" path="nombre" placeholder="Nombre Usuario"/><br>	
 			<form:errors path="nombre" cssStyle="color:red;"/>
+			<p id="msgNombreUsuario"></p>
+			
 			<br>
 			
 			<form:label path="email"><spring:message code="view.form.label.email" text="Email"/></form:label>
-			<form:input class="form-control" path="email"/><br>	
+			<form:input class="form-control" path="email" placeholder="E-mail"/><br>	
 			<form:errors path="email" cssStyle="color:red;"/>
 			<br>
 			
 			<form:label path="password"><spring:message code="view.form.label.password" text="Password"/></form:label>
-			<form:password class="form-control" showPassword="true" path="password"/><br>	
+			<form:password class="form-control" showPassword="true" path="password" placeholder="Password"/><br>	
 			<form:errors path="password" cssStyle="color:red;"/>
 			<br>
 			
 			<form:label path="imagen"><spring:message code="view.form.label.imagen" text="Imagen"/></form:label>
-			<form:input class="form-control" path="imagen"/><br>	
+			<form:input class="form-control" path="imagen" placeholder="URL de la imagen"/><br>	
 			<form:errors path="imagen" cssStyle="color:red;"/>
 			<br>
 			

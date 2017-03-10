@@ -46,6 +46,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	private static final String SQL_DELETE = "DELETE FROM `usuario` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `usuario` (`nombre`, `email`, `password`, `imagen`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE = "UPDATE `usuario` SET `nombre`= ? , `email`= ?, `password`= ?, `imagen`= ? WHERE `id`= ? ;";
+	private static final String SQL_GET_BY_NAME = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` WHERE LOWER(`nombre`)= LOWER( ? );";
 
 	@Override
 	public List<Usuario> getAll() {
@@ -198,6 +199,24 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		}
 		return resul;
+	}
+
+	@Override
+	public Usuario exist(String nombre) {
+		logger.trace("Buscando si exite el usuario " + nombre);
+
+		Usuario u = null;
+
+		try {
+
+			u = this.jdbctemplate.queryForObject(SQL_GET_BY_NAME, new Object[] { nombre }, new UsuarioMapper());
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+		return u;
 	}
 
 }
