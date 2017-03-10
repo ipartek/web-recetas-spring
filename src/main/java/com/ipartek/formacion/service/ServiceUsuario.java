@@ -31,4 +31,14 @@ public interface ServiceUsuario {
 	 */
 	boolean eliminar(long id) throws DataIntegrityViolationException;
 
+	/**
+	 * Buscamos si existe el nombre del usuario en la bbdd.<br>
+	 * La busqueda NO es Case-Sensitive
+	 * 
+	 * @param nombre
+	 *            String nombre del usuario a buscar
+	 * @return Usuario si existe, null si no existe
+	 */
+	Usuario existe(String nombre);
+
 }

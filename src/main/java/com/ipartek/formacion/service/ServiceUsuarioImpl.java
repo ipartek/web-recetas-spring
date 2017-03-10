@@ -64,4 +64,10 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 		return daoUsuario.delete(id);
 	}
 
+	@Override
+	public Usuario existe(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
