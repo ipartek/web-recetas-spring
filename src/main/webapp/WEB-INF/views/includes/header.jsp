@@ -7,8 +7,9 @@
 
 <%@ page session="false" %>
 
-<html>
+<html lang="es">
 <head>
+	<meta charset="UTF-8">
 	<title><spring:message code="nav.app.name" text="Web App"/></title>
 	<base href="/formacion/" />
 	

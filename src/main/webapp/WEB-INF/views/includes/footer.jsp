@@ -18,7 +18,7 @@
 		    "sProcessing":     "Procesando...",
 		    "sLengthMenu":     "Mostrar _MENU_ registros",
 		    "sZeroRecords":    "No se encontraron resultados",
-		    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		    "sEmptyTable":     "Ningï¿½n dato disponible en esta tabla",
 		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -29,7 +29,7 @@
 		    "sLoadingRecords": "Cargando...",
 		    "oPaginate": {
 		        "sFirst":    "Primero",
-		        "sLast":     "Último",
+		        "sLast":     "ï¿½ltimo",
 		        "sNext":     "Siguiente",
 		        "sPrevious": "Anterior"
 		    },
@@ -142,7 +142,8 @@
 	    		console.log('llamada Ajax al servidor');
 	    		
 	    		$.ajax("testCheckUser",{
-	    			"type": "get",
+	    			"type": "post",
+	    			"encoding":"UTF-8",
 	    			"data": { nombre: valor },
 	    			"success": function(result) {
 	    				console.log("Llego el contenido y no hubo error", result);

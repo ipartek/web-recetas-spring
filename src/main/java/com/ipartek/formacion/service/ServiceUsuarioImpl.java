@@ -66,8 +66,8 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public Usuario existe(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.trace("Buscando usuario por nombre: " + nombre);
+		return daoUsuario.existe(nombre);
 	}
 
 }
