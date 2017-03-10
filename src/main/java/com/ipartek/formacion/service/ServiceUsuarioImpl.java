@@ -64,4 +64,14 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 		return daoUsuario.delete(id);
 	}
 
+	@Override
+	// HAY QUE TOCAR SÍ O SÍ EL DAO, es imposible hacerlo sin ello. (NO seas
+	// cabezota con eso ¬¬ ).
+	public Usuario existe(String nombre) {
+		logger.trace("Buscamos si existe el nombre del usuario para comprobación por AJAX");
+		Usuario usuario = Usuario.getNombre(nombre);
+
+		return usuario;
+	}
+
 }

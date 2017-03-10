@@ -31,4 +31,18 @@ public interface ServiceUsuario {
 	 */
 	boolean eliminar(long id) throws DataIntegrityViolationException;
 
+	/**
+	 * Buscamos si existe el nombre del usuario en la DDBB.<br>
+	 * 
+	 * La búsqueda NO es Case-Sensitive
+	 * 
+	 * @param nombre
+	 *            String nombre del Usuario a buscar
+	 * 
+	 * @return Usuario si existe. null si no existe.
+	 * 
+	 */
+
+	Usuario existe(String nombre);
+
 }

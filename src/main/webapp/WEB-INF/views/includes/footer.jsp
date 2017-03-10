@@ -105,9 +105,71 @@
 	//Esperara a que todo el DOM este cargado
 	$(document).ready(function() {
 		
+		console.log('Documento Ready');
+		
 	    $('.tablePlugin').DataTable({
 	    		language: idioma	    
 	    });
+	    
+	    //detectar cambio de foco e focus
+	    
+	    
+	    var iUsuario = $("#nombreUsuario");
+	    var msgUsuario = $("#msgNombreUsuario");
+	    
+	   iUsuario.blur(function(){
+		   
+		   var valor = $(this).val();
+		   
+	    	console.log(
+	    			'input usuario ha perdido focus value= ' + valor );
+	    	
+	    	if(valor.length > 2){
+	    		
+	    		msgUsuario.css('color', 'grey');
+	    		msgUsuario.text('comprobando nombre...');
+	    		// msgUsuario.text('testing testing');
+	    		console.log ('llamada ajax al servidor');
+	    		
+	    		$.ajax("testCheckUser", {
+	    			"type": "get", // usualmente post o get
+	    			"data": {nombre: valor}, // Valor a enviar al servidor. Nombre es el parámetro, es decir, el name en HTML o el path en Spring.
+	    			"success": function(result) {
+	    			console.log("Llego el contenido y no hubo error", result);
+	    			msgUsuario.text(""); //pasa como texto un mensaje
+    				msgUsuario.html(result); //pinta en el HTML el mensaje
+	    			},
+	    			"error": function(result) {
+	    			console.error("Este callback maneja los errores", result);
+	    			}
+	    			});
+	    		
+	    		
+	    		
+	    		
+	    	} else {
+	    		msgUsuario.css('color','red');
+	    		 msgUsuario.text('Por favor, escribe un nombre mas largo');
+	    	}
+	   
+	    	
+	    });
+	    
+	    
+	    
+	    
+	  //  var inputUsuario = document.getElementById("nombreUsuario");
+	  //  inputUsuario.value="Pepe";
+	  
+	  //lo anterior con AJAX
+	   // $inputUsuario = $("#nombreUsuario");
+	    
+	  //lo mismo que antes en AJAX pero mas "elegante".
+	 //   $("#nombreUsuario").val("Pepe");
+	  
+	  //.text  = text
+	  //.val (getters y setters) . Los input siempre tendrán un value.
+	  //.html = InnerHTML
 	    
 	    
 	});//$(document).ready

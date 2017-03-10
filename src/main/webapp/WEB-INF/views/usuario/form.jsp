@@ -19,10 +19,11 @@ ${msg}
 	<form:form action="usuario/crear" modelAttribute="usuario">
 	
 		<form:input path="id" readonly="true"/><br>
-		<form:input path="nombre"/><br>	
-		<form:errors path="nombre" cssStyle="color:red;"/><br>
+		<form:input path="nombre" id="nombreUsuario" placeholder ="Escribe tu nombre de Usuario"/><br>
+		<p id="msgNombreUsuario"></p>	
+		<form:errors path="nombre" cssStyle="color:red;" /><br>
 	
-		<form:input path="email" value="${usuario.email}"/><br><br>
+		<form:input path="email" value="${usuario.email}" placeholder ="E-mail"/><br><br>
 		<form:label path="imagen">URL de la imagen: </form:label>
 		<form:input path="imagen" value="${usuario.imagen}"/><br>
 		<img class="tamImg" tag="imagenUsuario"src="${usuario.imagen}" />
@@ -66,3 +67,5 @@ ${msg}
 	<br>
 	<a style="color:red;" href="usuario/delete/${usuario.id}">Eliminar</a>
 </c:if>
+
+<%@ include file="../includes/footer.jsp" %> 
