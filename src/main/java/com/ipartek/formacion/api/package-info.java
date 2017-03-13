@@ -1,7 +1,7 @@
 /**
- * API para usar por terceros clientes. S
+ * API para usar por terceros clientes.<br>
  * 
- * @author Curso
+ * @author ur00
  *
  */
 package com.ipartek.formacion.api;
