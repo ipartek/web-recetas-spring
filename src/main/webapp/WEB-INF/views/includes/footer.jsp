@@ -104,7 +104,7 @@
 	
 	//Esperara a que todo el DOM este cargado
 	$(document).ready(function() {
-		
+				
 	    $('.tablePlugin').DataTable({
 	    		language: idioma	    
 	    });
@@ -113,6 +113,54 @@
 	});//$(document).ready
 	
 </script>
+
+<script>
+	$(document).ready(function() {
+		
+		console.log("Documento ready");
+		
+		var iUsuario = $("#nombreUsuario");
+		var msgUsuario = $("#msgNombreUsuario");
+		
+		iUsuario.blur(function() {
+			
+			var valor = iUsuario.val();
+			if(valor.length > 2){
+				console.log("llamada ajax al servidor");
+				$.ajax("testCheckUser", {
+					"type": "get", // usualmente post o get
+					"data": {nombre: valor},
+					"success": function(result) {
+						console.log("Llego el contenido y no hubo error", result);
+						msgUsuario.text("");
+						msgUsuario.html(result);
+					},
+					"error": function(result) {
+						console.error("Este callback maneja los errores", result);
+					}
+				});
+			}else{
+				msgUsuario.css("color", "red");
+				msgUsuario.text("Por favor escribe mas largo");
+				
+			}
+			
+			
+			
+			
+		});
+		
+		/*javascript clasico
+		javscript
+		var inputUsuario = document.getElementById("nombreUsuario");
+		inputUsuario.value = "PEPE";
+		jquery
+		$("#nombreUsuario").val("Pepe");
+		*/
+	});
+</script>
+
+
 
 </body>
 </html>

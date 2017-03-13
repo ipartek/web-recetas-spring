@@ -30,5 +30,13 @@ public interface ServiceUsuario {
 	 *             "fk_receta_usuario"
 	 */
 	boolean eliminar(long id) throws DataIntegrityViolationException;
+	
+	/**
+	 * Buscamos si existe el nombre del usuario en la BBDD<br>
+	 * La busqueda no es case-sensitive
+	 * @param nombre String nombre del usuario a buscar
+	 * @return Usuario si existe, null si no existe.
+	 */
+	Usuario existe(String nombre);
 
 }
