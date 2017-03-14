@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,20 +44,36 @@ public class ApiRecetaController {
 		return receta;
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public void altaReceta(@RequestBody Receta receta) {
+	/**
+	 * 
+	 * @param receta
+	 * @return
+	 */
+	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Receta> altaReceta(@RequestBody Receta receta) {
 
-		LOG.info("Dar de alta nueva receta: " + receta);
+		ResponseEntity<Receta> response = null;
+		try {
+			LOG.info("Dar de alta nueva receta: " + receta);
 
-		// TODO validar datos
+			response = new ResponseEntity<Receta>(HttpStatus.OK);
+			// TODO validar datos
 
-		// TODO siempre usamos el mismo usuario para las recetas
-		Usuario client = new Usuario();
-		client.setId(1);
-		receta.setUsuario(client);
+			// TODO siempre usamos el mismo usuario para las recetas
+			Usuario client = new Usuario();
+			client.setId(1);
+			receta.setUsuario(client);
 
-		boolean alta = this.servideReceta.crear(receta);
+			if (this.servideReceta.crear(receta)) {
+				response = new ResponseEntity<Receta>(receta, HttpStatus.CREATED);
+			}
 
+		} catch (Exception e) {
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} finally {
+			return response;
+		}
 	}
 
 }
