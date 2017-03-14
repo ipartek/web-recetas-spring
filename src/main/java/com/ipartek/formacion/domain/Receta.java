@@ -28,6 +28,7 @@ public class Receta {
 		this.imagen = "";
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
+		this.usuario = null;
 	}
 
 	public long getId() {
