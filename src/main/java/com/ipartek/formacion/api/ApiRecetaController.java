@@ -36,7 +36,7 @@ public class ApiRecetaController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public @ResponseBody Receta detale(@PathVariable int id) {
+	public @ResponseBody Receta detalle(@PathVariable int id) {
 		// TODO controlar si no existe receta
 		Receta receta = this.serviceReceta.buscarPorID(id);
 		/*
