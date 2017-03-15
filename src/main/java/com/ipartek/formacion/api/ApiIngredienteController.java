@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.service.ServiceIngrediente;
@@ -28,19 +27,59 @@ public class ApiIngredienteController {
 	private ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<Ingrediente> listar() {
+	public ResponseEntity<ArrayList<Ingrediente>> listar() {
 
-		return (ArrayList<Ingrediente>) this.serviceIngrediente.listar();
+		ResponseEntity<ArrayList<Ingrediente>> response = null;
+
+		try {
+
+			LOG.info("Listar todos los ingredientes");
+
+			ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar();
+
+			if (ingredientes.isEmpty()) {
+				response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.NO_CONTENT);
+			} else {
+				response = new ResponseEntity<ArrayList<Ingrediente>>(ingredientes, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+			return response;
+		}
 
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public @ResponseBody Ingrediente detalle(@PathVariable int id) {
+	public ResponseEntity<Ingrediente> detalle(@PathVariable int id) {
 
-		// TODO controlar si no existe ingrediente
-		Ingrediente ingrediente = this.serviceIngrediente.buscarPorId(id);
+		ResponseEntity<Ingrediente> response = null;
 
-		return ingrediente;
+		try {
+
+			LOG.info("Mostrar detalle del ingrediente " + id);
+
+			// TODO controlar si no existe ingrediente
+			Ingrediente ingrediente = this.serviceIngrediente.buscarPorId(id);
+
+			if (ingrediente != null) {
+				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
+			} else {
+
+				response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+			}
+
+		} catch (Exception e) {
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+
+			return response;
+
+		}
 
 	}
 
@@ -52,7 +91,7 @@ public class ApiIngredienteController {
 		try {
 			LOG.info("Dar de alta nuevo ingrediente" + ingrediente);
 
-			response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.ACCEPTED);
 
 			// TODO validar datos
 
@@ -81,10 +120,11 @@ public class ApiIngredienteController {
 		try {
 			LOG.info("Eliminar un ingrediente" + id);
 
-			response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
+			// TODO comprobar que los parametros son validos.
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
 
 			if (this.serviceIngrediente.eliminar(id)) {
-				response = new ResponseEntity<Ingrediente>(HttpStatus.CREATED);
+				response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
 			}
 
 		} catch (Exception e) {
@@ -108,14 +148,13 @@ public class ApiIngredienteController {
 		try {
 			LOG.info("Modificar un ingrediente" + ingrediente);
 
-			response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
-
 			// TODO validar datos
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
 
 			// TODO llamar al servicio
 
 			if (this.serviceIngrediente.modificar(ingrediente)) {
-				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.CREATED);
+				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
 			}
 
 		} catch (Exception e) {
