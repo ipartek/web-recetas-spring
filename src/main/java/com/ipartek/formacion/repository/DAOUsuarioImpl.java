@@ -44,10 +44,12 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_ALL_RESTRICTED = "SELECT `id`, `nombre`, `email`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` WHERE `id` = ?;";
+	private static final String SQL_GET_BY_ID_RESTRICTED = "SELECT `id`, `nombre`, `email`, `imagen` FROM `usuario` WHERE `id` = ?;";
 	private static final String SQL_GET_USER_BY_RECETA = "SELECT `u`.`id`, `u`.`nombre`, `u`.`email`, `u`.`password`, `u`.`imagen` FROM `usuario` AS `u`, `receta` AS `r` WHERE `r`.`usuario_id` = `u`.id AND `r`.`id` = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `usuario` WHERE `id` = ?;";
 	private static final String SQL_INSERT = "INSERT INTO `usuario` (`nombre`, `email`, `password`, `imagen`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE = "UPDATE `usuario` SET `nombre`= ? , `email`= ?, `password`= ?, `imagen`= ? WHERE `id`= ? ;";
+	private static final String SQL_UPDATE_RESTRICTED = "UPDATE `usuario` SET `nombre`= ? , `email`= ?, `imagen`= ? WHERE `id`= ? ;";
 	private static final String SQL_GET_BY_NAME = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` WHERE LOWER(`nombre`)= LOWER( ? );";
 
 	@Override
@@ -103,6 +105,29 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		try {
 
 			u = this.jdbctemplate.queryForObject(SQL_GET_BY_ID, new Object[] { id }, new UsuarioMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No existen ingredientes todavia");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return u;
+	}
+
+	@Override
+	public Usuario getByIdRestricted(long id) {
+
+		Usuario u = null;
+
+		try {
+
+			u = this.jdbctemplate.queryForObject(SQL_GET_BY_ID_RESTRICTED, new Object[] { id },
+					new UsuarioRestringidoMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -182,11 +207,23 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		logger.trace("update " + u);
 		boolean resul = false;
 		int affectedRows = -1;
+		String sql = null;
+		Object[] argumentos;
 
 		try {
 
-			Object[] argumentos = { u.getNombre(), u.getEmail(), u.getPassword(), u.getImagen(), u.getId() };
-			affectedRows = this.jdbctemplate.update(SQL_UPDATE, argumentos);
+			if (u.getPassword() != "") {
+
+				sql = SQL_UPDATE;
+				argumentos = new Object[] { u.getNombre(), u.getEmail(), u.getPassword(), u.getImagen(), u.getId() };
+
+			} else {
+
+				sql = SQL_UPDATE_RESTRICTED;
+				argumentos = new Object[] { u.getNombre(), u.getEmail(), u.getImagen(), u.getId() };
+
+			}
+			affectedRows = this.jdbctemplate.update(sql, argumentos);
 
 			if (affectedRows == 1) {
 				resul = true;

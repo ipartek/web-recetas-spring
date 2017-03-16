@@ -63,7 +63,7 @@ public class ApiUsuarioController {
 			LOG.info("Mostrar detalle del usuario " + id);
 
 			// TODO controlar si no existe ingrediente
-			Usuario usuario = this.serviceUsuario.buscarPorID(id);
+			Usuario usuario = this.serviceUsuario.buscarPorIDRestringido(id);
 
 			if (usuario != null) {
 				response = new ResponseEntity<Usuario>(usuario, HttpStatus.OK);

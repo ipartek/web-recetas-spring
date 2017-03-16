@@ -43,6 +43,12 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	}
 
 	@Override
+	public Usuario buscarPorIDRestringido(long id) {
+		logger.trace("Buscamos receta por id con datos restringidos: " + id);
+		return daoUsuario.getByIdRestricted(id);
+	}
+
+	@Override
 	public boolean crear(Usuario u) {
 		logger.trace("Creando receta: " + u);
 		return daoUsuario.insert(u);

@@ -18,6 +18,8 @@ public interface DAOUsuario {
 
 	Usuario getById(long id);
 
+	Usuario getByIdRestricted(long id);
+
 	Usuario getUserByReceta(long idReceta);
 
 	boolean insert(Usuario u);
