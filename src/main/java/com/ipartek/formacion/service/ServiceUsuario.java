@@ -11,6 +11,8 @@ public interface ServiceUsuario {
 
 	List<Usuario> listar();
 
+	List<Usuario> listarRestringido();
+
 	Usuario buscarPorID(long id);
 
 	boolean crear(Usuario u);

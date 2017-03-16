@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioRestringidoMapper;
 
 @Repository("daoUsuario")
 public class DAOUsuarioImpl implements DAOUsuario {
@@ -41,6 +42,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_RESTRICTED = "SELECT `id`, `nombre`, `email`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` WHERE `id` = ?;";
 	private static final String SQL_GET_USER_BY_RECETA = "SELECT `u`.`id`, `u`.`nombre`, `u`.`email`, `u`.`password`, `u`.`imagen` FROM `usuario` AS `u`, `receta` AS `r` WHERE `r`.`usuario_id` = `u`.id AND `r`.`id` = ?;";
 	private static final String SQL_DELETE = "DELETE FROM `usuario` WHERE `id` = ?;";
@@ -56,6 +58,29 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		try {
 
 			lista = (ArrayList<Usuario>) this.jdbctemplate.query(SQL_GET_ALL, new UsuarioMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No existen usuarios todavia");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return lista;
+	}
+
+	@Override
+	public List<Usuario> getAllRestricted() {
+
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+
+		try {
+
+			lista = (ArrayList<Usuario>) this.jdbctemplate.query(SQL_GET_ALL_RESTRICTED,
+					new UsuarioRestringidoMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 

@@ -26,8 +26,14 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public List<Usuario> listar() {
-		logger.trace("listar recetas");
+		logger.trace("listar usuarios");
 		return daoUsuario.getAll();
+	}
+
+	@Override
+	public List<Usuario> listarRestringido() {
+		logger.trace("listar usuarios con datos restringidos");
+		return daoUsuario.getAllRestricted();
 	}
 
 	@Override

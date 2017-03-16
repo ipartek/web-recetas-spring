@@ -14,6 +14,8 @@ public interface DAOUsuario {
 
 	List<Usuario> getAll();
 
+	List<Usuario> getAllRestricted();
+
 	Usuario getById(long id);
 
 	Usuario getUserByReceta(long idReceta);
