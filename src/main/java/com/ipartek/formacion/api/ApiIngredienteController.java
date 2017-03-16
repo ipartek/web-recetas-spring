@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -141,6 +142,11 @@ public class ApiIngredienteController {
 			if (this.serviceIngrediente.eliminar(id)) {
 				response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
 			}
+
+		} catch (DataIntegrityViolationException e) {
+
+			LOG.error("No se puede eliminar un ingrediente si otra receta lo esta utilizando", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.ACCEPTED);
 
 		} catch (Exception e) {
 

@@ -159,7 +159,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 			this.logger.warn(e.getMessage());
 			throw new DataIntegrityViolationException(
-					"No se puede eliminar un ingrediente si otra receta lo esta utilizando");
+					"No se puede eliminar un ingrediente si otra receta lo esta utilizando", e);
 		} catch (Exception e) {
 
 			this.logger.error(e.getMessage());
