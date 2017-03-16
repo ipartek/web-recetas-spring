@@ -14,6 +14,16 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<filter>
+	    <filter-name>corsFilter</filter-name>
+	    <filter-class>com.ipartek.formacion.filter.CORSFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>corsFilter</filter-name>
+	    <url-pattern>/api/*</url-pattern>
+	</filter-mapping>
+	
 	 <filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>
