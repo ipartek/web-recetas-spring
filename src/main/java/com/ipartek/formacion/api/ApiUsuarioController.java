@@ -146,7 +146,7 @@ public class ApiUsuarioController {
 		ResponseEntity<Usuario> response = null;
 
 		try {
-			LOG.info("Modificar un ingrediente" + usuario);
+			LOG.info("Modificar un usuario" + usuario);
 
 			// TODO validar datos
 			response = new ResponseEntity<Usuario>(HttpStatus.NO_CONTENT);

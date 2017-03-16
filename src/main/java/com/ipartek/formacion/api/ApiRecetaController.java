@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
@@ -29,25 +28,59 @@ public class ApiRecetaController {
 	private ServiceReceta serviceReceta;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<Receta> listar() {
+	public ResponseEntity<ArrayList<Receta>> listar() {
 
-		return (ArrayList<Receta>) this.serviceReceta.listarConUsuarios();
+		ResponseEntity<ArrayList<Receta>> response = null;
+
+		try {
+
+			LOG.info("Listar todas las recetas");
+
+			ArrayList<Receta> recetas = (ArrayList<Receta>) this.serviceReceta.listarConUsuarios();
+
+			if (recetas.isEmpty()) {
+				response = new ResponseEntity<ArrayList<Receta>>(HttpStatus.NO_CONTENT);
+			} else {
+				response = new ResponseEntity<ArrayList<Receta>>(recetas, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			response = new ResponseEntity<ArrayList<Receta>>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+			return response;
+		}
 
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public @ResponseBody Receta detalle(@PathVariable int id) {
-		// TODO controlar si no existe receta
-		Receta receta = this.serviceReceta.buscarPorID(id);
-		/*
-		 * ResponseEntity response = null;
-		 * 
-		 * if (-1 == .getId()) { response = new
-		 * ResponseEntity<>(HttpStatus.NO_CONTENT); } else {
-		 * 
-		 * }
-		 */
-		return receta;
+	public ResponseEntity<Receta> detalle(@PathVariable int id) {
+
+		ResponseEntity<Receta> response = null;
+
+		try {
+
+			LOG.info("Mostrar detalle de la receta " + id);
+
+			// TODO controlar si no existe receta
+			Receta receta = this.serviceReceta.buscarPorID(id);
+
+			if (receta != null) {
+				response = new ResponseEntity<Receta>(receta, HttpStatus.OK);
+			} else {
+
+				response = new ResponseEntity<Receta>(HttpStatus.NO_CONTENT);
+			}
+
+		} catch (Exception e) {
+			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+
+			return response;
+
+		}
 
 	}
 
@@ -59,7 +92,7 @@ public class ApiRecetaController {
 		try {
 			LOG.info("Dar de alta nueva receta" + receta);
 
-			response = new ResponseEntity<Receta>(HttpStatus.OK);
+			response = new ResponseEntity<Receta>(HttpStatus.ACCEPTED);
 
 			// TODO validar datos
 
@@ -83,5 +116,60 @@ public class ApiRecetaController {
 			return response;
 		}
 
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Receta> eliminar(@PathVariable int id) {
+
+		ResponseEntity<Receta> response = null;
+
+		try {
+			LOG.info("Eliminar una receta" + id);
+
+			// TODO comprobar que los parametros son validos.
+			response = new ResponseEntity<Receta>(HttpStatus.NO_CONTENT);
+
+			if (this.serviceReceta.eliminar(id)) {
+				response = new ResponseEntity<Receta>(HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+
+			return response;
+
+		}
+
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Receta> modificar(@RequestBody Receta receta) {
+
+		ResponseEntity<Receta> response = null;
+
+		try {
+			LOG.info("Modificar una Receta" + receta);
+
+			// TODO validar datos
+			response = new ResponseEntity<Receta>(HttpStatus.NO_CONTENT);
+
+			// TODO llamar al servicio
+
+			if (this.serviceReceta.modificar(receta)) {
+				response = new ResponseEntity<Receta>(receta, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+			return response;
+		}
 	}
 }
