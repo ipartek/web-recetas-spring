@@ -20,9 +20,9 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	DAOIngrediente daoIngrediente;
 
 	@Override
-	public List<Ingrediente> listar() {
+	public List<Ingrediente> listar(String order) {
 		logger.trace("listar ingredientes");
-		return daoIngrediente.getAll();
+		return daoIngrediente.getAll(order);
 	}
 
 	@Override

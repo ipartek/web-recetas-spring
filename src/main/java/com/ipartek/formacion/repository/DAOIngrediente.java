@@ -12,7 +12,7 @@ public interface DAOIngrediente {
 
 	void setDatasource(DataSource ds);
 
-	List<Ingrediente> getAll();
+	List<Ingrediente> getAll(String order);
 
 	List<Ingrediente> getAllByReceta(long idReceta);
 
@@ -39,7 +39,7 @@ public interface DAOIngrediente {
 	boolean updateByReceta(long idReceta, Ingrediente i);
 
 	/**
-	 * Añadir nuevo ingrediente a Receta
+	 * Aï¿½adir nuevo ingrediente a Receta
 	 * 
 	 * @param idReceta
 	 * @param i

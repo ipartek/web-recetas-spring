@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.service.ServiceIngrediente;
@@ -27,22 +28,36 @@ public class ApiIngredienteController {
 	private ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<Ingrediente>> listar() {
+	public ResponseEntity<ArrayList<Ingrediente>> listar(
+			@RequestParam(value = "order", required = false) String order) {
 
 		ResponseEntity<ArrayList<Ingrediente>> response = null;
+		ArrayList<Ingrediente> ingredientes = null;
 
 		try {
 
 			LOG.info("Listar todos los ingredientes");
 
-			ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar();
+			if (order == null) {
 
-			if (ingredientes.isEmpty()) {
-				response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.NO_CONTENT);
+				ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar("ASC");
+
+			} else if ("DESC".equals(order.toUpperCase()) || "ASC".equals(order.toUpperCase())) {
+
+				ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar(order.toUpperCase());
+
 			} else {
-				response = new ResponseEntity<ArrayList<Ingrediente>>(ingredientes, HttpStatus.OK);
+
+				response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.BAD_REQUEST);
 			}
 
+			if (ingredientes != null) {
+				if (ingredientes.isEmpty()) {
+					response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.NO_CONTENT);
+				} else {
+					response = new ResponseEntity<ArrayList<Ingrediente>>(ingredientes, HttpStatus.OK);
+				}
+			}
 		} catch (Exception e) {
 
 			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.INTERNAL_SERVER_ERROR);

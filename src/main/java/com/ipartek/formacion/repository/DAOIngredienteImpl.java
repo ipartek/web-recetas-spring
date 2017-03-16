@@ -41,7 +41,8 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	// Sentencias SQL
-	private static final String SQL_GET_ALL = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_ASC = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id ASC LIMIT 1000;";
+	private static final String SQL_GET_ALL_DESC = "SELECT id, nombre, gluten FROM ingrediente ORDER BY id DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, gluten FROM `ingrediente` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_NOMBRE_ASC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre ASC LIMIT 1000;";
 	private static final String SQL_GET_BY_NOMBRE_DSC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre DESC LIMIT 1000;";
@@ -61,11 +62,18 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_TOTAL_INGREDIENTES = "SELECT COUNT(id) FROM ingrediente";
 
 	@Override
-	public List<Ingrediente> getAll() {
+	public List<Ingrediente> getAll(String order) {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+		String sql = null;
+
+		if ("DESC".equals(order)) {
+			sql = SQL_GET_ALL_DESC;
+		} else {
+			sql = SQL_GET_ALL_ASC;
+		}
 
 		try {
-			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(sql, new IngredienteMapper());
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");
 		} catch (Exception e) {
@@ -255,7 +263,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	@Override
 	public boolean insertByReceta(long idReceta, Ingrediente i) {
 
-		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
+		logger.trace("Aï¿½adir ingrediente: " + i + "de la receta " + idReceta);
 		boolean resul = false;
 		int affectedRows = -1;
 

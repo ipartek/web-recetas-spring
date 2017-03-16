@@ -8,7 +8,7 @@ import com.ipartek.formacion.domain.Ingrediente;
 
 public interface ServiceIngrediente {
 
-	List<Ingrediente> listar();
+	List<Ingrediente> listar(String order);
 
 	Ingrediente buscarPorId(long id);
 

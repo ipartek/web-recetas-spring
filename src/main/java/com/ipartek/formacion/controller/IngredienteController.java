@@ -30,7 +30,7 @@ public class IngredienteController {
 
 		logger.info("Listar ingredietnes sin filtrar ");
 
-		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("ingredientes", serviceIngrediente.listar("DESC"));
 		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
 		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
 		model.addAttribute("total", serviceIngrediente.TotalIngrediente());
@@ -89,7 +89,7 @@ public class IngredienteController {
 		}
 
 		model.addAttribute("msg", msg);
-		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("ingredientes", serviceIngrediente.listar("DESC"));
 		return "ingrediente/index";
 	}
 
@@ -109,7 +109,7 @@ public class IngredienteController {
 
 		} else {
 			// mostrar ultimos ingredientes
-			model.addAttribute("ingredientes", serviceIngrediente.listar());
+			model.addAttribute("ingredientes", serviceIngrediente.listar("DESC"));
 		}
 
 		model.addAttribute("total", serviceIngrediente.TotalIngrediente());
