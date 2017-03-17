@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.validation.constraints.Size;
 
-public class Receta implements Serializable {
+public class Receta implements Serializable,Comparable<Receta>  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -86,6 +86,13 @@ public class Receta implements Serializable {
 	public String toString() {
 		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
 				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
+	}
+
+	@Override
+	public int compareTo(Receta r) {
+		// TODO Auto-generated method stub
+		return this.getNombre().compareTo(r.getNombre());
+ 
 	}
 
 }

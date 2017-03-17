@@ -1,8 +1,10 @@
 package com.ipartek.formacion.domain;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Size;
 
-public class Ingrediente {
+public class Ingrediente implements Serializable, Comparable<Ingrediente> {
 
 	private long id;
 
@@ -65,4 +67,10 @@ public class Ingrediente {
 		return "Ingrediente [id=" + id + ", nombre=" + nombre + ", gluten=" + gluten + ", cantidad=" + cantidad + "]";
 	}
 
+	@Override
+	public int compareTo(Ingrediente r) {
+		// TODO Auto-generated method stub
+		return this.getNombre().compareTo(r.getNombre());
+ 
+	}
 }

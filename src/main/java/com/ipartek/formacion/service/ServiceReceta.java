@@ -1,9 +1,11 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.form.IngredienteForm;
 
 public interface ServiceReceta {
 
@@ -45,5 +47,14 @@ public interface ServiceReceta {
 	 * @return listado de ingredientes disponibles
 	 */
 	List<Ingrediente> listarIngredientesFueraReceta(long idReceta);
+	List<IngredienteForm> listarIngredientesFormFueraReceta(long idReceta);
+
+	boolean addIngrediente(int idReceta, IngredienteForm ingrediente);
+
+	Receta buscarPorNombre(String nombre);
+
+	boolean crear(Receta receta, String idUsuario);
+
+	ArrayList<Receta> listar(String order);
 
 }

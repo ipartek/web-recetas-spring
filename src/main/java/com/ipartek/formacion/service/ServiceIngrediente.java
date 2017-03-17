@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ipartek.formacion.domain.Ingrediente;
@@ -19,5 +20,7 @@ public interface ServiceIngrediente {
 	boolean modificar(Ingrediente i);
 
 	boolean eliminar(long id);
+
+	List<Ingrediente> listar(String order);
 
 }

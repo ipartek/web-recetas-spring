@@ -22,4 +22,6 @@ public interface DAOReceta {
 
 	boolean delete(long id);
 
+	Receta getByName(String nombre);
+
 }

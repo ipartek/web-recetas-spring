@@ -31,4 +31,6 @@ public interface ServiceUsuario {
 	 */
 	boolean eliminar(long id) throws DataIntegrityViolationException;
 
+	List<Usuario> listarPintarUsuarios();
+
 }

@@ -30,6 +30,16 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 		logger.trace("listar recetas");
 		return daoUsuario.getAll();
 	}
+	
+	@Override
+	public List<Usuario> listarPintarUsuarios() {
+		logger.trace("listar recetas");
+		List<Usuario> list= daoUsuario.getAll();
+		for(Usuario u : list){
+			u.setPassword("");
+		}
+		return list;
+	}
 
 	@Override
 	public Usuario buscarPorId(long id) {

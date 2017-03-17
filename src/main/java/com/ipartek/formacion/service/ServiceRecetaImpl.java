@@ -1,6 +1,8 @@
 package com.ipartek.formacion.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
+import com.ipartek.formacion.domain.form.IngredienteForm;
 import com.ipartek.formacion.repository.DAOIngrediente;
 import com.ipartek.formacion.repository.DAOReceta;
 import com.ipartek.formacion.repository.DAOUsuario;
@@ -32,7 +35,28 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public List<Receta> listar() {
 		logger.trace("listar recetas");
-		return daoReceta.getAll();
+		List<Receta> listaReceta=daoReceta.getAll();
+		for(Receta r:listaReceta){
+			r.setUsuario(daoUsuario.getByRecetaId(r.getId()));
+		}
+		return listaReceta;
+	}
+
+	@Override
+	public ArrayList<Receta> listar(String order) {
+		// TODO Auto-generated method stub
+		logger.trace("listar recetas");
+		ArrayList<Receta> listaReceta=(ArrayList<Receta>) daoReceta.getAll();
+		for(Receta r:listaReceta){
+			r.setUsuario(daoUsuario.getByRecetaId(r.getId()));
+		}
+		if(order.equals("desc")){
+			Collections.sort(listaReceta, Collections.reverseOrder());
+		}else if(order.equals("asc")){
+			Collections.sort(listaReceta);
+
+		}
+		return (ArrayList<Receta>) listaReceta;
 	}
 
 	@Override
@@ -96,6 +120,17 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	}
 
 	@Override
+	public boolean addIngrediente(int idReceta, IngredienteForm ingrediente) {
+		// TODO Auto-generated method stub
+		logger.trace("Añadiendo Ingrediente" + ingrediente + " a receta " + idReceta);
+		Ingrediente i=new Ingrediente();
+		i.setId(ingrediente.getIdIngrediente());
+		i.setCantidad(ingrediente.getCantidad());
+		i.setNombre(ingrediente.getNombre());
+		return daoIngrediente.addIngrediente(idReceta, i);
+	}
+
+	@Override
 	public Ingrediente recuperarIngrediente(long idReceta, long idIngrediente) {
 		logger.trace("recuperando Ingrediente" + idIngrediente + "de una receta " + idReceta);
 		return daoIngrediente.getByReceta(idReceta, idIngrediente);
@@ -107,5 +142,42 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
 		return daoIngrediente.listadoFueraDeReceta(idReceta);
 	}
+
+	@Override
+	public List<IngredienteForm> listarIngredientesFormFueraReceta(long idReceta) {
+		// TODO Auto-generated method stub
+		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
+		
+		ArrayList<Ingrediente> lista=(ArrayList<Ingrediente>) daoIngrediente.listadoFueraDeReceta(idReceta);
+		ArrayList<IngredienteForm> lista2=new ArrayList<IngredienteForm>();
+	
+		for(Ingrediente ingrediente: lista){
+			IngredienteForm i=new IngredienteForm();
+			i.setIdIngrediente(ingrediente.getId());
+			i.setCantidad(ingrediente.getCantidad());
+			i.setNombre(ingrediente.getNombre());
+			i.setGluten(ingrediente.isGluten());
+			lista2.add(i);
+		}
+		
+		return lista2;
+		
+	}
+
+	@Override
+	public Receta buscarPorNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return daoReceta.getByName(nombre);
+	}
+
+	@Override
+	public boolean crear(Receta receta, String idUsuario) {
+		// TODO Auto-generated method stub
+		logger.trace("Creando receta: " + receta);
+		receta.setUsuario(daoUsuario.getById(Long.parseLong(idUsuario)));
+		return daoReceta.insert(receta);
+	}
+
+
 
 }

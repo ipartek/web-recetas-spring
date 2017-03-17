@@ -47,6 +47,8 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
+	
+	private static final String SQL_GET_BY_NAME = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `nombre`=?  ORDER BY `id` DESC LIMIT 1000;";
 
 	@Override
 	public List<Receta> getAll() {
@@ -201,6 +203,22 @@ public class DAORecetaImpl implements DAOReceta {
 		}
 
 		return resul;
+	}
+
+	@Override
+	public Receta getByName(String nombre) {
+		// TODO Auto-generated method stub
+		Receta r =null;
+		System.out.println(nombre);
+		try {
+			r = this.jdbcTemplate.queryForObject(SQL_GET_BY_NAME, new Object[] { nombre }, new RecetaMapper());
+			System.out.println(r);
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen recetas todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+		return r;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -29,6 +31,19 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	public List<Ingrediente> listar() {
 		logger.trace("listar ingredientes");
 		return daoIngrediente.getAll();
+	}
+	
+	@Override
+	public List<Ingrediente> listar(String order) {
+		// TODO Auto-generated method stub
+		List<Ingrediente> listaIngrediente=daoIngrediente.getAll();
+		if(order.equals("desc")){
+			Collections.sort(listaIngrediente, Collections.reverseOrder());
+		}else if(order.equals("asc")){
+			Collections.sort(listaIngrediente);
+
+		}
+		return listaIngrediente ;
 	}
 
 	@Override
@@ -60,5 +75,7 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 		logger.trace("eliminar " + id);
 		return daoIngrediente.delete(id);
 	}
+
+
 
 }

@@ -22,21 +22,16 @@ ${msg}
 <c:if test="${!ingrediente.gluten}">Gluten Free</c:if>
 <c:if test="${ingrediente.gluten}">*Atención contiene Gluten</c:if>
 
-<form:form 
-		   action="receta/${receta.id}/${accion}/ingrediente"  
-           
-           modelAttribute="ingrediente">
+<form:form action="receta/${receta.id}/${accion}/ingrediente" modelAttribute="ingrediente">
 
-	
 <!-- Si hay ingredientes para seleccionar estamos añadiendo un ingrediente no incluido a la receta -->
-	
 	<c:if test="${disponibles!=null}">
 
-	<form:label path="id">Selecciona el ingrediente</form:label>
-	<form:select path="id" >
-		<c:forEach items="${disponibles}" var="d">	
-			 <form:option value="${d.id}"> ${d.nombre}</form:option>
-		</c:forEach>
+	<form:label path="idIngrediente">Selecciona el ingrediente</form:label>
+	<form:select path="idIngrediente" >
+		<c:forEach items="${disponibles}" var="d">
+				<form:option value="${d.idIngrediente}"> ${d.nombre}</form:option>
+			</c:forEach>
 	 </form:select>
 
 	</c:if>	
@@ -44,7 +39,7 @@ ${msg}
 	<!-- Si no hay ingredientes para seleccionar estamos modificando un ingrediente existente -->
 	
 	<c:if test="${disponibles==null}">
-	<form:hidden path="id"/>
+	<form:hidden path="idIngrediente"/>
 	
 	</c:if>	
 	<form:hidden path="nombre"/>	
@@ -52,6 +47,7 @@ ${msg}
 	<form:hidden path="gluten"/>	
 	<form:label path="cantidad">Cantidad:</form:label>
 	<form:input path="cantidad"/>	
+	<form:errors path="cantidad" cssClass="rojo"/>
 	<br>
 	<br>
 	<form:button>${boton}</form:button>

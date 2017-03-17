@@ -16,6 +16,7 @@
 	<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
 	<!-- Custom -->
 	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
 </head>
 <body>
