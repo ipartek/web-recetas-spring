@@ -29,7 +29,8 @@ public class IngredienteController {
 	@RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
 	public String listar(Model model) {
 		logger.info("Listado de ingredientes sin filtrar");
-		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		//TODO comprobar ordenacion
+		model.addAttribute("ingredientes", serviceIngrediente.listar(""));
 		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
 		model.addAttribute("total", serviceIngrediente.total());
 		return "ingrediente/index";
@@ -45,7 +46,8 @@ public class IngredienteController {
 
 		if (bindingResult.hasErrors()) {
 			// mostrar ultimos ingredientes
-			ingredientesFiltrados = (ArrayList<Ingrediente>) serviceIngrediente.listar();
+			//TODO comprobar ordenacio0n
+			ingredientesFiltrados = (ArrayList<Ingrediente>) serviceIngrediente.listar("");
 		} else {
 			ingredientesFiltrados = (ArrayList<Ingrediente>) serviceIngrediente.listar(formularioBusqueda.getNombre(),
 					formularioBusqueda.isOrdenAscendente());
@@ -101,7 +103,8 @@ public class IngredienteController {
 			msg = "Ingrediente Eliminado con exito";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		//comprobar ordenacion
+		model.addAttribute("ingredientes", serviceIngrediente.listar(""));
 		return "ingrediente/index";
 	}
 

@@ -63,10 +63,11 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public List<Ingrediente> getAll() {
+	public List<Ingrediente> getAll( String orden ) {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 
 		try {
+			// TODO ordenar con el parametro de entrada
 			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");

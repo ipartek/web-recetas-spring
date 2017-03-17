@@ -47,7 +47,7 @@ public class DAOIngredienteTest {
 	@Test
 	public void test() {
 
-		ArrayList<Ingrediente> lista = (ArrayList<Ingrediente>) daoIngrediente.getAll();
+		ArrayList<Ingrediente> lista = (ArrayList<Ingrediente>) daoIngrediente.getAll("");
 		assertNotNull(lista);
 
 	}

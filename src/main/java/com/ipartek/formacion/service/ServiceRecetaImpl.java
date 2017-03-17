@@ -38,14 +38,8 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public List<Receta> listarConUsuarios() {
 		logger.trace("listar recetas con usuarios asociados");
-		// TODO Usar un ResultSetExtractor en vez de llamar a dos DAOs
-		ArrayList<Receta> recetas = (ArrayList<Receta>) daoReceta.getAll();
-		// buscar usuarios
-		Usuario usuario = null;
-		for (Receta receta : recetas) {
-			usuario = daoUsuario.getByRecetaId(receta.getId());
-			receta.setUsuario(usuario);
-		}
+		ArrayList<Receta> recetas = new ArrayList<Receta>();
+		//recetas = 	daoIngrediente.get	
 		return recetas;
 	}
 
