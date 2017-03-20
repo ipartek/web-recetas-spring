@@ -10,7 +10,19 @@ public interface DAOReceta {
 
 	void setDatasource(DataSource ds);
 
+	/**
+	 * Listado de todas las recetas sin Usuarios
+	 * 
+	 * @return List<Receta> si hay datos, si no List inicializada not null
+	 */
 	List<Receta> getAll();
+
+	/**
+	 * Listado de todas las recetas con usuarios
+	 * 
+	 * @return List<Receta> si hay datos, si no List inicializada not null
+	 */
+	List<Receta> getAllWithUser();
 
 	Receta getById(long id);
 
