@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -22,11 +23,12 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioRecetaResultSetExtractor;
 
 @Repository("daoUsuario")
 public class DAOUsuarioImpl implements DAOUsuario {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log LOG = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DataSource dataSource;
@@ -40,7 +42,6 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	}
 
 	// Sentencias SQL
-
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` WHERE `id` = ?";
 	private static final String SQL_EXIST_BY_NAME = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` WHERE LOWER(`nombre`) = LOWER(?);";
@@ -48,27 +49,54 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	private static final String SQL_INSERT = "INSERT INTO `usuario` (`nombre`, `email`, `password`,`imagen`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE = "UPDATE `usuario` SET `nombre`= ? ,`email`=? ,`password`=? ,`imagen`= ? WHERE `id`= ? ;";
 	private static final String SQL_DELETE = "DELETE FROM `usuario` WHERE `id` = ?;";
+	private static final String SQL_GET_ALL_WITH_RECETAS = "SELECT u.id as usuario_id, u.nombre as usuario_nombre,u.email as usuario_email, u.imagen as usuario_imagen, r.nombre as receta_nombre , r.id as receta_id, r.imagen as receta_imagen, r.descripcion as receta_descripcion FROM usuario as u LEFT JOIN receta as r ON u.id = r.usuario_id;";
 
 	@Override
 	public List<Usuario> getAll() {
 		ArrayList<Usuario> lista = new ArrayList<Usuario>();
-
+		this.LOG.trace("Recuperando usuarios");
 		try {
 
 			lista = (ArrayList<Usuario>) this.jdbcTemplate.query(SQL_GET_ALL, new UsuarioMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia",e);
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error("Excepcion inesperada",e);
 
 		}
 
 		return lista;
 	}
+	
+	
+	@Override
+	public List<Usuario> getAllConRecetas() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		this.LOG.trace("Recuperando usuarios con recetas");
+		try {
+
+			HashMap<Long, Usuario> hmUsuarios = this.jdbcTemplate.query(SQL_GET_ALL_WITH_RECETAS, new UsuarioRecetaResultSetExtractor());
+			lista = (ArrayList<Usuario>) hmUsuarios.values();			
+			
+			this.LOG.debug("Recuperados " + lista.size() + " usuarios con recetas");
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia", e);
+
+		} catch (Exception e) {
+
+			this.LOG.error("Excepcion inesperada ",e);
+
+		}
+
+		return lista;
+	}
+	
 
 	@Override
 	public Usuario getById(long id) {
@@ -80,11 +108,11 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -101,11 +129,11 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia con este usuario");
+			this.LOG.warn("No existen recetas todavia con este usuario");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -114,7 +142,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	@Override
 	public boolean insert(final Usuario u) {
-		logger.trace("insert " + u);
+		LOG.trace("insert " + u);
 		boolean resul = false;
 
 		try {
@@ -141,7 +169,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 			}
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -150,7 +178,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	@Override
 	public boolean update(Usuario u) {
-		logger.trace("update " + u);
+		LOG.trace("update " + u);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -165,7 +193,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -174,7 +202,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	@Override
 	public boolean delete(long id) throws DataIntegrityViolationException {
-		logger.trace("eliminar usuario " + id);
+		LOG.trace("eliminar usuario " + id);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -186,12 +214,12 @@ public class DAOUsuarioImpl implements DAOUsuario {
 				resul = true;
 			}
 		} catch (DataIntegrityViolationException e) {
-			this.logger.warn(e.getMessage());
+			this.LOG.warn(e.getMessage());
 			throw new DataIntegrityViolationException("No se puede eliminar un cocinero con recetas");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -208,15 +236,17 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia", e);
+			this.LOG.warn("No existen recetas todavia", e);
 
 		} catch (Exception e) {
 
-			this.logger.error(e);
+			this.LOG.error(e);
 
 		}
 
 		return u;
 	}
+
+	
 
 }

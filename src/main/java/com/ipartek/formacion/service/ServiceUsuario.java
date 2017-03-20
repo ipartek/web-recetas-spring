@@ -8,7 +8,17 @@ import com.ipartek.formacion.domain.Usuario;
 
 public interface ServiceUsuario {
 
+	/**
+	 * Listado de usuarios con los datos minimos
+	 * @return List<Usuario> ordenados de forma desdecente y limitado a los ultimos 1000 creados. Lista vacias si no existe ninguno
+	 */
 	List<Usuario> listar();
+	
+	/**
+	 * Listado de usuarios con sus recetas asociadas 
+	 * @return @return List<Usuario> ordenados de forma desdecente y limitado a los ultimos 1000 creados. Lista vacias si no existe ninguno
+	 */
+	List<Usuario> listarConRecetas();
 
 	Usuario buscarPorId(long id);
 
