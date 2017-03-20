@@ -22,11 +22,12 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
+import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
 
 @Repository("daoReceta")
 public class DAORecetaImpl implements DAOReceta {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log LOG = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DataSource dataSource;
@@ -42,7 +43,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_WITH_USERS = "select r.id as receta_id,r.nombre as receta_nombre,r.imagen as recetas_imagen,r.descripcion,u.id as user_id,u.nombre as usuario_nombre,u.email ,u.imagen as usuario_imagen from usuario checff_recetas_left_joinchecff_recetas_left_joinchecff_recetas_left_joinas u ,receta as r where u.id=r.usuario_id  DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_USERS = "SELECT u.id AS user_id,u.nombre AS usuario_nombre,u.email AS user_email ,u.imagen AS usuario_imagen,r.id AS receta_id,r.nombre AS receta_nombre,r.imagen AS recetas_imagen,r.descripcion FROM (receta as r) left join  (usuario as u)  ON u.id = r.usuario_id;";
 
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
@@ -61,11 +62,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -74,19 +75,21 @@ public class DAORecetaImpl implements DAOReceta {
 
 	@Override
 	public List<Receta> getAllWhitUsers() {
+		this.LOG.trace("Recuperando recetas con usuarios");
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
-			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USERS, new RecetaMapper());
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USERS, new RecetaUsuarioMapper());
+			this.LOG.debug("Recuperado" + lista.size() + "recetas con usuarios");
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -104,11 +107,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -118,7 +121,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean insert(final Receta r) {
 
-		logger.trace("insert " + r);
+		LOG.trace("insert " + r);
 		boolean resul = false;
 
 		try {
@@ -144,7 +147,7 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -154,7 +157,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean update(Receta r) {
 
-		logger.trace("update " + r);
+		LOG.trace("update " + r);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -170,7 +173,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -180,7 +183,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean delete(long id) {
 
-		logger.trace("eliminar " + id);
+		LOG.trace("eliminar " + id);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -193,11 +196,11 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (DataIntegrityViolationException e) {
 
-			this.logger.warn(e.getMessage());
+			this.LOG.warn(e.getMessage());
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -207,7 +210,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public List<Receta> getRecetasUser(long idUsuario) {
 
-		logger.trace("Get Recetas del Usuario " + idUsuario);
+		LOG.trace("Get Recetas del Usuario " + idUsuario);
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
@@ -217,11 +220,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.info("No hay recetas para el usuario" + idUsuario);
+			this.LOG.info("No hay recetas para el usuario" + idUsuario);
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 

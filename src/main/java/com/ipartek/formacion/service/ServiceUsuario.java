@@ -8,9 +8,28 @@ import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
 
 public interface ServiceUsuario {
-
+	/**
+	 * Listar usuarios con datos minimos
+	 *
+	 * @return list usuarios de foprma descendente limitado a los ultimos 1000
+	 *         creados,lista vacia si no existe ningun nombre
+	 */
 	List<Usuario> listar();
 
+	/**
+	 * Listar usuarios con sus recetas asociadas
+	 *
+	 * @return list usuarios de foprma descendente limitado a los ultimos 1000
+	 *         creados,lista vacia si no existe ningun nombre
+	 */
+	List<Usuario> listarConRecetas();
+
+	/**
+	 * Listar usuarios sin id
+	 *
+	 * @return list usuarios de foprma descendente limitado a los ultimos 1000
+	 *         creados,lista vacia si no existe ningun nombre
+	 */
 	List<Usuario> listarRestringido();
 
 	Usuario buscarPorID(long id);
@@ -23,7 +42,7 @@ public interface ServiceUsuario {
 
 	/**
 	 * Eliminamos un Usuario
-	 * 
+	 *
 	 * @param id
 	 *            identificador del Usuario
 	 * @return true si lo elimina, false en caso contrario
@@ -39,7 +58,7 @@ public interface ServiceUsuario {
 	/**
 	 * Buscamos si existe el nombre del usuario en la bbdd.<br>
 	 * La busqueda NO es Case-sensitive.
-	 * 
+	 *
 	 * @param nombre
 	 *            String nombre del usuario a buscar
 	 * @return Usuario si existe, null si no existe

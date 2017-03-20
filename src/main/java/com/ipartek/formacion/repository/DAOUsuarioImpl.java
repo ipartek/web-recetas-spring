@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioRecetaResultSetExtractor;
 import com.ipartek.formacion.repository.mapper.UsuarioRestringidoMapper;
 
 @Repository("daoUsuario")
@@ -42,6 +44,8 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_RECETAS = "SELECT u.id AS user_id,u.nombre AS usuario_nombre,u.email ,u.imagen AS usuario_imagen,r.id AS receta_id,r.nombre AS receta_nombre,r.imagen AS recetas_imagen,r.descripcion FROM (usuario AS u) LEFT JOIN (receta AS r) ON u.id = r.usuario_id ;";
+
 	private static final String SQL_GET_ALL_RESTRICTED = "SELECT `id`, `nombre`, `email`, `imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `email`, `password`, `imagen` FROM `usuario` WHERE `id` = ?;";
 	private static final String SQL_GET_BY_ID_RESTRICTED = "SELECT `id`, `nombre`, `email`, `imagen` FROM `usuario` WHERE `id` = ?;";
@@ -54,20 +58,22 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	@Override
 	public List<Usuario> getAll() {
+		this.logger.trace("recuperando usuarios");
 
 		ArrayList<Usuario> lista = new ArrayList<Usuario>();
 
 		try {
 
 			lista = (ArrayList<Usuario>) this.jdbctemplate.query(SQL_GET_ALL, new UsuarioMapper());
+			this.logger.debug("Recuperados" + lista.size() + "usuarios sin recetas");
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen usuarios todavia");
+			this.logger.warn("No existen usuarios todavia", e);
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.logger.error("Error inesperado", e);
 
 		}
 
@@ -83,6 +89,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 			lista = (ArrayList<Usuario>) this.jdbctemplate.query(SQL_GET_ALL_RESTRICTED,
 					new UsuarioRestringidoMapper());
+			this.logger.debug("Recuperados" + lista.size() + "usuarios sin id");
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -91,6 +98,29 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		} catch (Exception e) {
 
 			this.logger.error(e.getMessage());
+
+		}
+
+		return lista;
+	}
+
+	@Override
+	public List<Usuario> getAllWithRecetas() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		this.logger.trace("recupwrando usuarios");
+		try {
+			HashMap<Long, Usuario> hmUsuarios = this.jdbctemplate.query(SQL_GET_ALL_WITH_RECETAS,
+					new UsuarioRecetaResultSetExtractor());
+			lista = (ArrayList<Usuario>) hmUsuarios.values();
+			this.logger.debug("Recuperados" + lista.size() + "usuarios con recetas");
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No existen usuarios todavia", e);
+
+		} catch (Exception e) {
+
+			this.logger.error("excepcion inesperada", e);
 
 		}
 

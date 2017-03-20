@@ -7,11 +7,33 @@
 
 <%@ include file="../includes/mensaje.jsp" %> 
 
-<ul>
-<c:forEach items="${usuarios}" var="u">
-	<li><a href="usuario/edit/${u.id}"><img class="tamImg" alt="Foto ${u.nombre}" src="${u.imagen}"> ${u.nombre}</a></li>
-</c:forEach>
-</ul>
+
+<table class="tablePlugin">
+	<thead>
+		<tr>
+			
+			<th>imagen</th>
+			<th>nombre</th>
+			<th>Nº Recetas</th>          
+		</tr>
+	</thead>
+
+	<tbody>       
+		<c:forEach items="${usuarios}" var="u">
+			<tr>
+				<td>
+					<a href="usuario/edit/${u.id}"><img class="tamImg" alt="Foto ${u.nombre}" src="${u.imagen}"></a>
+				</td>
+				<td>
+					<a href="receta/edit/${u.id}">${u.nombre}</a>
+				</td>
+				<td>
+					<span class="label label-primary">3</span>
+				</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
 
 
 

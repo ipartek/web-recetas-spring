@@ -30,4 +30,6 @@ public interface DAOUsuario {
 
 	Usuario exist(String nombre);
 
+	List<Usuario> getAllWithRecetas();
+
 }
