@@ -30,34 +30,16 @@ public class UsuarioRecetaResultSetExtractor implements ResultSetExtractor<HashM
 	@Override
 	public HashMap<Long, Usuario> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
-		// recuperar key de rs de la fila actual RS
-
-		// buscar esa key(idUsuario) en coleccion y recuperar "usuario"
-
-		// usuario ==Null
-
-		// Crear usuario
-
-		// usuario!=null
-
-		// no hacer nada
-
-		// Recuperar y crear receta
-
-		// Asociar receta al usuario
-
-		// Guardar usuario en coleccion
-
-		// recorrer el rs sacamos el numero de filas
-
 		HashMap<Long, Usuario> map = new HashMap<Long, Usuario>();
 		Usuario usr = null;
 		Receta receta = null;
 		ArrayList<Receta> recetas = null;
+		// reecorrer el rs
 		while (rs.next()) {
-
-			Long usrId = (Long) rs.getObject("usuario_id");
-
+			// recuperar key de rs de la fila actual RS
+			Integer usrIdInt = (Integer) rs.getObject("usuario_id");
+			Long usrId = usrIdInt.longValue();
+			// buscar esa key(idUsuario) en coleccion y recuperar "usuario"
 			if (map.containsKey(usrId)) {
 
 			} else {
@@ -75,7 +57,9 @@ public class UsuarioRecetaResultSetExtractor implements ResultSetExtractor<HashM
 				map.put(usrId, usr);
 
 			}
-			Long recetaId = (Long) rs.getObject("receta_id");
+			// Recuperar y crear receta
+			Integer recetaIdInteger =  (Integer) rs.getObject("receta_id");
+			Long recetaId=recetaIdInteger.longValue();
 			if (recetaId != 0) {
 				String recetaNombre = (String) rs.getObject("receta_nombre");
 				String recetaDescripcion = (String) rs.getObject("receta_descrpcion");
@@ -84,9 +68,11 @@ public class UsuarioRecetaResultSetExtractor implements ResultSetExtractor<HashM
 				receta.setId(recetaId);
 				receta.setImagen(recetaImagen);
 				receta.setNombre(recetaNombre);
-
+				// Asociar receta al usuario
 				usr = map.get(usrId);
 				usr.setRecetas(recetas);
+				// Guardar usuario en coleccion
+				map.put(usrId, usr);
 
 			}
 
