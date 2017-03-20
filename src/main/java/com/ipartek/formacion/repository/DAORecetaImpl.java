@@ -42,6 +42,8 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_USERS = "select r.id as receta_id,r.nombre as receta_nombre,r.imagen as recetas_imagen,r.descripcion,u.id as user_id,u.nombre as usuario_nombre,u.email ,u.imagen as usuario_imagen from usuario checff_recetas_left_joinchecff_recetas_left_joinchecff_recetas_left_joinas u ,receta as r where u.id=r.usuario_id  DESC LIMIT 1000;";
+
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id`= ? WHERE `id`= ? ;";
@@ -56,6 +58,27 @@ public class DAORecetaImpl implements DAOReceta {
 		try {
 
 			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.logger.warn("No existen recetas todavia");
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return lista;
+	}
+
+	@Override
+	public List<Receta> getAllWhitUsers() {
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+
+		try {
+
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USERS, new RecetaMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
