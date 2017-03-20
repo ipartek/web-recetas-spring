@@ -43,8 +43,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_WITH_USERS = "SELECT u.id AS user_id,u.nombre AS usuario_nombre,u.email AS user_email ,u.imagen AS usuario_imagen,r.id AS receta_id,r.nombre AS receta_nombre,r.imagen AS recetas_imagen,r.descripcion FROM (receta as r) left join  (usuario as u)  ON u.id = r.usuario_id;";
-
+	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen,r.descripcion as receta_descripcion,u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id`= ? WHERE `id`= ? ;";
@@ -80,7 +79,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		try {
 
-			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USERS, new RecetaUsuarioMapper());
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USER, new RecetaUsuarioMapper());
 			this.LOG.debug("Recuperado" + lista.size() + "recetas con usuarios");
 
 		} catch (EmptyResultDataAccessException e) {

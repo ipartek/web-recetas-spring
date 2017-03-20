@@ -2,11 +2,13 @@ package com.ipartek.formacion.repository.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
+import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
 
 public class UsuarioRecetaResultSetExtractor implements ResultSetExtractor<HashMap<Long, Usuario>> {
@@ -28,26 +30,67 @@ public class UsuarioRecetaResultSetExtractor implements ResultSetExtractor<HashM
 	@Override
 	public HashMap<Long, Usuario> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
-		// recorrer el rs
+		// recuperar key de rs de la fila actual RS
 
-			// recuperar key de rs de la fila actual RS
+		// buscar esa key(idUsuario) en coleccion y recuperar "usuario"
 
-			// buscar esa key(idUsuario) en coleccion y recuperar "usuario"
-		
-				// usuario ==Null
+		// usuario ==Null
 
-					// Crear usuario
+		// Crear usuario
 
-				// usuario!=null
+		// usuario!=null
 
-					// no hacer nada
+		// no hacer nada
 
-			// Recuperar y crear receta
-		
-			// Asociar receta al usuario
+		// Recuperar y crear receta
 
-			// Guardar usuario en coleccion
-		return null;
+		// Asociar receta al usuario
+
+		// Guardar usuario en coleccion
+
+		// recorrer el rs sacamos el numero de filas
+
+		HashMap<Long, Usuario> map = new HashMap<Long, Usuario>();
+		Usuario usr = null;
+		Receta receta = null;
+		ArrayList<Receta> recetas = null;
+		while (rs.next()) {
+
+			Long usrId = (Long) rs.getObject("usuario_id");
+
+			if (map.containsKey(usrId)) {
+
+			} else {
+				String usrNombre = (String) rs.getObject("usuario_nombre");
+				String usrEmail = (String) rs.getObject("usuario_email");
+				String usrImagen = (String) rs.getObject("usuario_imagen");
+				recetas = new ArrayList<Receta>();
+				usr = new Usuario();
+				usr.setId(usrId);
+				usr.setEmail(usrEmail);
+				usr.setNombre(usrNombre);
+				usr.setImagen(usrImagen);
+				usr.setRecetas(recetas);
+				usr.setRecetas(recetas);
+				map.put(usrId, usr);
+
+			}
+			Long recetaId = (Long) rs.getObject("receta_id");
+			if (recetaId != 0) {
+				String recetaNombre = (String) rs.getObject("receta_nombre");
+				String recetaDescripcion = (String) rs.getObject("receta_descrpcion");
+				String recetaImagen = (String) rs.getObject("receta_imagen");
+				receta.setDescripcion(recetaDescripcion);
+				receta.setId(recetaId);
+				receta.setImagen(recetaImagen);
+				receta.setNombre(recetaNombre);
+
+				usr = map.get(usrId);
+				usr.setRecetas(recetas);
+
+			}
+
+		}
+		return map;
 	}
-
 }
