@@ -38,8 +38,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public List<Receta> listarConUsuarios() {
 		logger.trace("listar recetas con usuarios asociados");
-		ArrayList<Receta> recetas = new ArrayList<Receta>();
-		//recetas = 	daoIngrediente.get	
+		ArrayList<Receta> recetas = (ArrayList<Receta>) daoReceta.getAllWithUSer();
 		return recetas;
 	}
 

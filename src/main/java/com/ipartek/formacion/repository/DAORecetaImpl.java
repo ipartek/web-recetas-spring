@@ -22,11 +22,12 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
+import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
 
 @Repository("daoReceta")
 public class DAORecetaImpl implements DAOReceta {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log LOG = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DataSource dataSource;
@@ -42,7 +43,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_AND_USER = "SELECT r.`id` as receta_id , r.`nombre` as receta_nombre, r.`imagen` as receta_imagen, `descripcion`, u.id as usuario_id, u.nombre as usuario_nombre, u.email, u.imagen as usuario_imagen FROM `receta` as r,`usuario` as  u WHERE r.usuario_id = u.id ORDER BY r.`id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen,r.descripcion as receta_descripcion,u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
@@ -60,11 +61,36 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
+
+		}
+
+		return lista;
+	}
+	
+	
+	@Override
+	public List<Receta> getAllWithUSer() {
+		
+		this.LOG.trace("Recuperando Recetas con Usuarios");
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+
+		try {
+
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USER, new RecetaUsuarioMapper());
+			this.LOG.debug("Recuperandas " + lista.size()  + " Recetas"  );
+			
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia", e);
+
+		} catch (Exception e) {
+
+			this.LOG.error("Excepion inseperada" , e);
 
 		}
 
@@ -82,11 +108,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -105,11 +131,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -127,11 +153,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -141,7 +167,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean insert(final Receta r) {
 
-		logger.trace("insert " + r);
+		LOG.trace("insert " + r);
 		boolean resul = false;
 
 		try {
@@ -167,7 +193,7 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -177,7 +203,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean update(Receta r) {
 
-		logger.trace("update " + r);
+		LOG.trace("update " + r);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -193,7 +219,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -203,7 +229,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean delete(long id) {
 
-		logger.trace("eliminar " + id);
+		LOG.trace("eliminar " + id);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -216,15 +242,18 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (DataIntegrityViolationException e) {
 
-			this.logger.warn(e.getMessage());
+			this.LOG.warn(e.getMessage());
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
 		return resul;
 	}
+
+
+	
 
 }
