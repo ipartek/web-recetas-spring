@@ -82,6 +82,8 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	@Override()
 	public List<Usuario> getAllRestricted() {
 
+		this.LOG.trace("recuperando usuarios");
+
 		ArrayList<Usuario> lista = new ArrayList<Usuario>();
 
 		try {
@@ -96,7 +98,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 		} catch (Exception e) {
 
-			this.LOG.error(e.getMessage());
+			this.LOG.error("Error inesperado", e);
 
 		}
 
@@ -106,7 +108,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	@Override()
 	public List<Usuario> getAllWithRecetas() {
 		ArrayList<Usuario> lista = new ArrayList<Usuario>();
-		this.LOG.trace("recupwrando usuarios");
+		this.LOG.trace("recuperando usuarios");
 		try {
 			HashMap<Long, Usuario> hmUsuarios = this.jdbctemplate.query(SQL_GET_ALL_WITH_RECETAS,
 					new UsuarioRecetaResultSetExtractor());

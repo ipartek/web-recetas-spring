@@ -9,12 +9,32 @@ import org.springframework.dao.DataIntegrityViolationException;
 import com.ipartek.formacion.domain.Usuario;
 
 public interface DAOUsuario {
-
+	/**
+	 *
+	 * @param ds
+	 */
 	void setDatasource(DataSource ds);
 
+	/**
+	 * retorna lista de usuarios con datos basicos
+	 *
+	 * @return List<Usuario>
+	 */
 	List<Usuario> getAll();
 
+	/**
+	 * retorna lista de usuarios con datos basicos sin password
+	 *
+	 * @return List<Usuario>
+	 */
 	List<Usuario> getAllRestricted();
+
+	/**
+	 * retorna lista de usuarios con Sus recetas sin password
+	 *
+	 * @return List<Usuario>
+	 */
+	List<Usuario> getAllWithRecetas();
 
 	Usuario getById(long id);
 
@@ -29,7 +49,5 @@ public interface DAOUsuario {
 	boolean delete(long id) throws DataIntegrityViolationException;
 
 	Usuario exist(String nombre);
-
-	List<Usuario> getAllWithRecetas();
 
 }
