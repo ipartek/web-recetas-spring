@@ -9,7 +9,7 @@ import com.ipartek.formacion.domain.Usuario;
 
 public class UsuarioRestringidoMapper implements RowMapper<Usuario> {
 
-	@Override
+	@Override()
 	public Usuario mapRow(ResultSet rs, int numRow) throws SQLException {
 
 		Usuario u = new Usuario();

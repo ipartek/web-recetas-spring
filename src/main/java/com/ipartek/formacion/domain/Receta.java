@@ -21,6 +21,9 @@ public class Receta {
 
 	private Usuario usuario;
 
+	/**
+	 * Constructor for Receta Class
+	 */
 	public Receta() {
 		super();
 		this.id = -1;
@@ -31,14 +34,26 @@ public class Receta {
 		this.usuario = null;
 	}
 
+	/**
+	 *
+	 * @return long Id
+	 */
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 *
+	 * @param id
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
+	/**
+	 *
+	 * @return String Nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
@@ -79,9 +94,9 @@ public class Receta {
 		this.usuario = usuario;
 	}
 
-	@Override
+	@Override()
 	public String toString() {
-		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
+		return "Receta [id=" + this.id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
 				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
 	}
 

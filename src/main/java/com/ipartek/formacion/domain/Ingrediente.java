@@ -61,7 +61,7 @@ public class Ingrediente {
 		this.cantidad = cantidad;
 	}
 
-	@Override
+	@Override()
 	public String toString() {
 		return "Ingrediente [id=" + id + ", nombre=" + nombre + ", gluten=" + gluten + ", cantidad=" + cantidad + "]";
 	}

@@ -46,7 +46,7 @@ public class Mensaje {
 		this.clase = clase;
 	}
 
-	@Override
+	@Override()
 	public String toString() {
 		return "Mensaje [descripcion=" + descripcion + ", clase=" + clase + "]";
 	}

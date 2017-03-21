@@ -19,43 +19,43 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	@Autowired
 	DAOIngrediente daoIngrediente;
 
-	@Override
+	@Override()
 	public List<Ingrediente> listar(String order) {
 		logger.trace("listar ingredientes");
 		return daoIngrediente.getAll(order);
 	}
 
-	@Override
+	@Override()
 	public Ingrediente buscarPorId(long id) {
 		logger.trace("Buscamos ingrediente id: " + id);
 		return daoIngrediente.getById(id);
 	}
 
-	@Override
+	@Override()
 	public boolean crear(Ingrediente i) {
 		logger.trace("Creando ingrediente: " + i);
 		return daoIngrediente.insert(i);
 	}
 
-	@Override
+	@Override()
 	public boolean modificar(Ingrediente i) {
 		logger.trace("Modificando ingrediente: " + i);
 		return daoIngrediente.update(i);
 	}
 
-	@Override
+	@Override()
 	public boolean eliminar(long id) throws DataIntegrityViolationException {
 		logger.trace("eliminar " + id);
 		return daoIngrediente.delete(id);
 	}
 
-	@Override
+	@Override()
 	public List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC) {
 		logger.trace("buscando por nombre que contien: " + nombre + "en orden ASC a " + ordenASC);
 		return daoIngrediente.buscarPorNombre(nombre, ordenASC);
 	}
 
-	@Override
+	@Override()
 	public int TotalIngrediente() {
 		logger.trace("sacando el total de ingredientes");
 		return daoIngrediente.getTotalIngrediente();

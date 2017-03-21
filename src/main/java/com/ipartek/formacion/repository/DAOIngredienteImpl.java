@@ -34,7 +34,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private JdbcTemplate jdbctemplate;
 
 	@Autowired
-	@Override
+	@Override()
 	public void setDatasource(DataSource ds) {
 		this.dataSource = ds;
 		this.jdbctemplate = new JdbcTemplate(this.dataSource);
@@ -61,7 +61,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	private static final String SQL_GET_BY_NOT_IN_RECETA = "SELECT i.id, i.nombre, i.gluten FROM ingrediente AS i WHERE i.id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?) ORDER BY i.nombre ASC;";
 	private static final String SQL_TOTAL_INGREDIENTES = "SELECT COUNT(id) FROM ingrediente";
 
-	@Override
+	@Override()
 	public List<Ingrediente> getAll(String order) {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 		String sql = null;
@@ -83,7 +83,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return lista;
 	}
 
-	@Override
+	@Override()
 	public Ingrediente getById(long id) {
 		Ingrediente i = null;
 		try {
@@ -97,7 +97,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return i;
 	}
 
-	@Override
+	@Override()
 	public boolean insert(final Ingrediente i) {
 		logger.trace("insert " + i);
 		boolean resul = false;
@@ -106,7 +106,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 
 			affectedRows = this.jdbctemplate.update(new PreparedStatementCreator() {
-				@Override
+				@Override()
 				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 					final PreparedStatement ps = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
 					ps.setString(1, i.getNombre());
@@ -126,7 +126,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public boolean update(Ingrediente i) {
 		logger.trace("update " + i);
 		boolean resul = false;
@@ -146,7 +146,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public boolean delete(long id) throws DataIntegrityViolationException {
 		logger.trace("eliminar " + id);
 		boolean resul = false;
@@ -168,7 +168,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public List<Ingrediente> getAllByReceta(long idReceta) {
 
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
@@ -191,7 +191,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return lista;
 	}
 
-	@Override
+	@Override()
 	public boolean deleteByReceta(long idReceta, long idIngrediente) {
 
 		logger.trace("Eliminar por id: " + idIngrediente + "de la receta " + idReceta);
@@ -214,7 +214,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public boolean updateByReceta(long idReceta, Ingrediente i) {
 
 		logger.trace("Modificar ingrediente: " + i + "para receta " + idReceta);
@@ -239,7 +239,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public Ingrediente getByReceta(long idReceta, long idIngrediente) {
 
 		Ingrediente i = null;
@@ -260,7 +260,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return i;
 	}
 
-	@Override
+	@Override()
 	public boolean insertByReceta(long idReceta, Ingrediente i) {
 
 		logger.trace("A�adir ingrediente: " + i + "de la receta " + idReceta);
@@ -285,7 +285,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return resul;
 	}
 
-	@Override
+	@Override()
 	public List<Ingrediente> getAllByNotInReceta(long idReceta) {
 		logger.trace("Listando ingredientes que no se encuentran en la receta " + idReceta);
 
@@ -308,7 +308,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return lista;
 	}
 
-	@Override
+	@Override()
 	public List<Ingrediente> buscarPorNombre(String nombre, boolean ordenASC) {
 		logger.trace("Listando ingredientes que contengan el nombre: " + nombre);
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
@@ -334,7 +334,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 		return lista;
 	}
 
-	@Override
+	@Override()
 	public int getTotalIngrediente() {
 
 		logger.trace("Sacando el numero total de ingredientes de la BBDD");

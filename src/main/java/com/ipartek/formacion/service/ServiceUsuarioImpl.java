@@ -24,61 +24,61 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	@Autowired
 	private DAOReceta daoReceta;
 
-	@Override
+	@Override()
 	public List<Usuario> listar() {
 		LOG.trace("listar usuarios");
 		return daoUsuario.getAllWithRecetas();
 	}
 
-	@Override
+	@Override()
 	public List<Usuario> listarRestringido() {
 		LOG.trace("listar usuarios con datos restringidos");
 		return daoUsuario.getAllRestricted();
 	}
 
-	@Override
+	@Override()
 	public List<Usuario> listarConRecetas() {
 		LOG.trace("listar con recetas");
 		return null;
 	}
 
-	@Override
+	@Override()
 	public Usuario buscarPorID(long id) {
 		LOG.trace("Buscamos receta por id: " + id);
 		return daoUsuario.getById(id);
 	}
 
-	@Override
+	@Override()
 	public Usuario buscarPorIDRestringido(long id) {
 		LOG.trace("Buscamos receta por id con datos restringidos: " + id);
 		return daoUsuario.getByIdRestricted(id);
 	}
 
-	@Override
+	@Override()
 	public boolean crear(Usuario u) {
 		LOG.trace("Creando receta: " + u);
 		return daoUsuario.insert(u);
 	}
 
-	@Override
+	@Override()
 	public boolean modificar(Usuario u) {
 		LOG.trace("Modificando receta: " + u);
 		return daoUsuario.update(u);
 	}
 
-	@Override
+	@Override()
 	public boolean eliminar(long id) throws DataIntegrityViolationException {
 		LOG.trace("Eliminando por id: " + id);
 		return daoUsuario.delete(id);
 	}
 
-	@Override
+	@Override()
 	public List<Receta> listarRecetasUsuario(long idUsuario) {
 		LOG.trace("Listar recetas del Usuario: " + idUsuario);
 		return daoReceta.getRecetasUser(idUsuario);
 	}
 
-	@Override
+	@Override()
 	public Usuario existe(String nombre) {
 		LOG.trace("Buscando si exite en la bbdd el usuario: " + nombre);
 		return daoUsuario.exist(nombre);

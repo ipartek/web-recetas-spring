@@ -9,18 +9,18 @@ public class SaludoImpl implements Saludo {
 		this.saludo = "Soy un borde y no saludo";
 	}
 
-	@Override
+	@Override()
 	public String getSaludo() {
 		return this.saludo;
 	}
 
-	@Override
+	@Override()
 	public void setSaludo(String saludo) {
 		this.saludo = saludo;
 
 	}
 
-	@Override
+	@Override()
 	public void saluda() {
 		System.out.println(this.saludo);
 

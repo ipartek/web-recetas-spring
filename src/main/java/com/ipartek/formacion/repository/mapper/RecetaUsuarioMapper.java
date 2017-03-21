@@ -10,7 +10,7 @@ import com.ipartek.formacion.domain.Usuario;
 
 public class RecetaUsuarioMapper implements RowMapper<Receta> {
 
-	@Override
+	@Override()
 	public Receta mapRow(ResultSet rs, int row) throws SQLException {
 
 		Receta r = new Receta();

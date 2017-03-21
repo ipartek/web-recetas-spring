@@ -29,6 +29,7 @@ public class Usuario {
 		this.email = "";
 		this.password = "";
 		this.imagen = "";
+		this.recetas = new ArrayList<Receta>();
 
 	}
 
@@ -80,62 +81,87 @@ public class Usuario {
 		this.recetas = recetas;
 	}
 
-	@Override
+	@Override()
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", password=" + password + ", imagen="
 				+ imagen + ", recetas=" + recetas + "]";
 	}
 
-	@Override
+	@Override()
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((recetas == null) ? 0 : recetas.hashCode());
+		result = (prime * result) + ((email == null) ? 0 : email.hashCode());
+		result = (prime * result) + (int) (id ^ (id >>> 32));
+		result = (prime * result) + ((imagen == null) ? 0 : imagen.hashCode());
+		result = (prime * result) + ((nombre == null) ? 0 : nombre.hashCode());
+		result = (prime * result) + ((password == null) ? 0 : password.hashCode());
+		result = (prime * result) + ((recetas == null) ? 0 : recetas.hashCode());
 		return result;
 	}
 
-	@Override
+	@Override()
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Usuario other = (Usuario) obj;
 		if (email == null) {
-			if (other.email != null)
+			if (other.email != null) {
 				return false;
-		} else if (!email.equals(other.email))
+			}
+		} else if (!email.equals(other.email)) {
 			return false;
-		if (id != other.id)
+		}
+		if (id != other.id) {
 			return false;
+		}
 		if (imagen == null) {
-			if (other.imagen != null)
+			if (other.imagen != null) {
 				return false;
-		} else if (!imagen.equals(other.imagen))
+			}
+		} else if (!imagen.equals(other.imagen)) {
 			return false;
+		}
 		if (nombre == null) {
-			if (other.nombre != null)
+			if (other.nombre != null) {
 				return false;
-		} else if (!nombre.equals(other.nombre))
+			}
+		} else if (!nombre.equals(other.nombre)) {
 			return false;
+		}
 		if (password == null) {
-			if (other.password != null)
+			if (other.password != null) {
 				return false;
-		} else if (!password.equals(other.password))
+			}
+		} else if (!password.equals(other.password)) {
 			return false;
+		}
 		if (recetas == null) {
-			if (other.recetas != null)
+			if (other.recetas != null) {
 				return false;
-		} else if (!recetas.equals(other.recetas))
+			}
+		} else if (!recetas.equals(other.recetas)) {
 			return false;
+		}
 		return true;
+	}
+
+	public void addReceta(Receta receta) {
+		if (this.recetas == null) {
+			this.recetas = new ArrayList<Receta>();
+		}
+		if (receta == null) {
+			receta = new Receta();
+		}
+		this.recetas.add(receta);
+
 	}
 
 }

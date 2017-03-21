@@ -29,13 +29,13 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Autowired
 	private DAOUsuario daoUsuario;
 
-	@Override
+	@Override()
 	public List<Receta> listar() {
 		logger.trace("listar recetas");
 		return daoReceta.getAll();
 	}
 
-	@Override
+	@Override()
 	public List<Receta> listarConUsuarios() {
 
 		logger.trace("listar recetas con usuarios asociados");
@@ -46,7 +46,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return recetas;
 	}
 
-	@Override
+	@Override()
 	public Receta buscarPorID(long id) {
 		logger.trace("Buscamos receta por id: " + id);
 
@@ -57,55 +57,55 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return receta;
 	}
 
-	@Override
+	@Override()
 	public boolean crear(Receta r) {
 		logger.trace("Creando receta: " + r);
 		return daoReceta.insert(r);
 	}
 
-	@Override
+	@Override()
 	public boolean modificar(Receta r) {
 		logger.trace("Modificando receta: " + r);
 		return daoReceta.update(r);
 	}
 
-	@Override
+	@Override()
 	public boolean eliminar(long id) {
 		logger.trace("Eliminando por id: " + id);
 		return daoReceta.delete(id);
 	}
 
-	@Override
+	@Override()
 	public boolean eliminarIngrediente(long idReceta, long idIngrediente) {
 		logger.trace("Eliminando por id: " + idIngrediente + "de la receta " + idReceta);
 		return daoIngrediente.deleteByReceta(idReceta, idIngrediente);
 	}
 
-	@Override
+	@Override()
 	public boolean modificarIngrediente(long idReceta, Ingrediente i) {
 		logger.trace("Modificar ingrediente: " + i + "de la receta " + idReceta);
 		return daoIngrediente.updateByReceta(idReceta, i);
 	}
 
-	@Override
+	@Override()
 	public Ingrediente recuperarIngrediente(long idReceta, long idIngrediente) {
 		logger.trace("Recuperar ingrediente: " + idIngrediente + "de la receta " + idReceta);
 		return daoIngrediente.getByReceta(idReceta, idIngrediente);
 	}
 
-	@Override
+	@Override()
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 		logger.trace("Añadir ingrediente: " + i + "de la receta " + idReceta);
 		return daoIngrediente.insertByReceta(idReceta, i);
 	}
 
-	@Override
+	@Override()
 	public List<Ingrediente> listarIngredientesNoIncluidas(long idReceta) {
 		logger.trace("Listar ingredientes no incluidos en la receta " + idReceta);
 		return daoIngrediente.getAllByNotInReceta(idReceta);
 	}
 
-	@Override
+	@Override()
 	public Usuario getUsuarioReceta(long idReceta) {
 		logger.trace("Conseguir usuario de la receta " + idReceta);
 		return daoUsuario.getUserByReceta(idReceta);

@@ -35,7 +35,7 @@ public class FormularioBusqueda implements Serializable {
 		this.ordenAscendente = ordenAscendente;
 	}
 
-	@Override
+	@Override()
 	public String toString() {
 		return "FormularioBusqueda [nombre=" + nombre + ", ordenAscendente=" + ordenAscendente + "]";
 	}

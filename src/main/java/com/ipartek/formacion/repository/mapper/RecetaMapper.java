@@ -9,7 +9,7 @@ import com.ipartek.formacion.domain.Receta;
 
 public class RecetaMapper implements RowMapper<Receta> {
 
-	@Override
+	@Override()
 	public Receta mapRow(ResultSet rs, int numRow) throws SQLException {
 
 		Receta r = new Receta();
