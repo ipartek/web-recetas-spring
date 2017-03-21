@@ -29,6 +29,7 @@ public class Usuario {
 		this.email = "";
 		this.password = "";
 		this.imagen = "";
+		this.recetas = new ArrayList<Receta>();
 
 	}
 
@@ -78,6 +79,18 @@ public class Usuario {
 
 	public void setRecetas(ArrayList<Receta> recetas) {
 		this.recetas = recetas;
+	}
+
+	public void addReceta(Receta receta) {
+
+		if (this.recetas == null) {
+			this.recetas = new ArrayList<Receta>();
+		}
+
+		if (receta != null) {
+			this.recetas.add(receta);
+		}
+
 	}
 
 	@Override
