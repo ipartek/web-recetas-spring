@@ -26,7 +26,7 @@
 					<a href="/usuario/edit/${u.id}">${u.nombre}</a>
 				</td>
 				<td>
-					<span class="label label-primary">X</span>
+					<span class="label label-primary">${fn:length(u.recetas)}</span>
 				</td>
 			</tr>
 		</c:forEach>

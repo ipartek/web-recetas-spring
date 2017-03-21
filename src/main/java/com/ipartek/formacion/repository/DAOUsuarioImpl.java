@@ -80,7 +80,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		try {
 
 			HashMap<Long, Usuario> hmUsuarios = this.jdbcTemplate.query(SQL_GET_ALL_WITH_RECETAS, new UsuarioRecetaResultSetExtractor());
-			lista = (ArrayList<Usuario>) hmUsuarios.values();			
+			lista.addAll(hmUsuarios.values());			
 			
 			this.LOG.debug("Recuperados " + lista.size() + " usuarios con recetas");
 

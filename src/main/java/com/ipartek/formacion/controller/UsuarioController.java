@@ -27,7 +27,7 @@ public class UsuarioController {
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public String listar(Model model) {
 
-		model.addAttribute("usuarios", serviceUsuario.listar());
+		model.addAttribute("usuarios", serviceUsuario.listarConRecetas() );
 
 		return "usuario/index";
 	}
