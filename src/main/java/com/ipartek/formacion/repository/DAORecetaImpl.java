@@ -21,7 +21,11 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioRecetaExtractor;
+import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioMapper;
 
 @Repository("daoReceta")
 public class DAORecetaImpl implements DAOReceta {
@@ -43,13 +47,18 @@ public class DAORecetaImpl implements DAOReceta {
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_USER = "SELECT recetas.receta.id AS id_receta,recetas.receta.nombre AS nombre_receta,"
+	+ "recetas.receta.imagen AS imagen_receta,recetas.receta.descripcion AS descripcion_receta,recetas.usuario.id AS id_usuario,recetas.usuario.nombre AS nombre_usuario,"
+			+ "recetas.usuario.email AS email_usuario,recetas.usuario.imagen AS imagen_usuario FROM recetas.receta,recetas.usuario WHERE "
+			+ "recetas.receta.usuario_id = recetas.usuario.id;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
-	
 	private static final String SQL_GET_BY_NAME = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `nombre`=?  ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_UPDATE_USER_FROM_RECIPE = "UPDATE `receta` SET `usuario_id` = ? WHERE `id`= ? ;";
 
+	
 	@Override
 	public List<Receta> getAll() {
 
@@ -77,18 +86,30 @@ public class DAORecetaImpl implements DAOReceta {
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
-
 			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_BY_USER, new Object[] { idUsuario },
 					new RecetaMapper());
-
 		} catch (EmptyResultDataAccessException e) {
-
 			this.logger.warn("No existen recetas todavia");
-
 		} catch (Exception e) {
-
 			this.logger.error(e.getMessage());
+		}
 
+		return lista;
+	}
+
+	@Override
+	public List<Receta> getAllWithUser() {
+		// TODO Auto-generated method stub
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+		try {
+			lista = (ArrayList<Receta>) jdbcTemplate.query(SQL_GET_ALL_WITH_USER,new RecetaUsuarioMapper());
+			System.out.println("LISTA");
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("VACIO");
+			this.logger.warn("No existen recetas todavia");
+		} catch (Exception e) {
+			System.out.println("ERROR");
+			this.logger.error(e.getMessage());
 		}
 
 		return lista;
@@ -208,7 +229,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public Receta getByName(String nombre) {
 		// TODO Auto-generated method stub
-		Receta r =null;
+		Receta r = null;
 		System.out.println(nombre);
 		try {
 			r = this.jdbcTemplate.queryForObject(SQL_GET_BY_NAME, new Object[] { nombre }, new RecetaMapper());
@@ -219,6 +240,32 @@ public class DAORecetaImpl implements DAOReceta {
 			this.logger.error(e.getMessage());
 		}
 		return r;
+	}
+
+	@Override
+	public boolean updateUserOfRecipe(Receta r) {
+		// TODO Auto-generated method stub
+		logger.trace("update " + r);
+		boolean resul = false;
+		int affectedRows = -1;
+
+		try {
+
+			Object[] argumentos = {r.getUsuario().getId(),
+					r.getId() };
+			affectedRows = this.jdbcTemplate.update(SQL_UPDATE_USER_FROM_RECIPE, argumentos);
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.logger.error(e.getMessage());
+
+		}
+
+		return resul;
 	}
 
 }

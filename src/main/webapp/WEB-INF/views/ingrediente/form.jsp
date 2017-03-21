@@ -1,29 +1,48 @@
-<%@ include file="../includes/header.jsp" %> 
+<%@ include file="../includes/header.jsp"%>
 
-<a href="ingrediente">Volver</a>
+<a class="btn btn-primary" href="ingrediente"><i
+	class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
 
 <h1>Formulario</h1>
 
-<form:form action="ingrediente/crear" modelAttribute="ingrediente">
+<div class="row">
+	<div class="col-md-6">
+		<form:form modelAttribute="ingrediente">
+			<c:if test="${ingrediente.id != -1}">
+				<div class="form-group">
+					<form:label path="id">#ID</form:label>
+					<form:input class="form-control" path="id" readonly="true" />
+				</div>
+			</c:if>
+			<div class="form-group">
+				<form:label path="nombre">Nombre</form:label>
+				<form:input class="form-control" path="nombre" />
+				<form:errors class="form-control" path="nombre"
+					cssStyle="color:red;" />
+			</div>
 
-	<form:input path="id" readonly="true"/><br>
-	<form:input path="nombre"/><br>	
-	<form:errors path="nombre" cssStyle="color:red;"/>
-	<br>
-	
-	
-	<form:label path="gluten">¿ Contiene Glutten ?</form:label>
-	<form:checkbox path="gluten"/><br>	
-	
-	
-	<form:button type="submit">Crear</form:button>
+			<div class="form-group">
+				<form:label path="gluten">¿ Contiene Glutten ?</form:label>
+				<form:checkbox class="form-control" path="gluten" />
+			</div>
 
-</form:form>
+			<div class="form-group">
+				<c:if test="${ingrediente.id == -1}">
+					<form:button class="btn btn-success" type="submit">Crear</form:button>
+				</c:if>
+				<c:if test="${ingrediente.id != -1}">
+					<form:button class="btn btn-warning" type="submit">Modificar</form:button>
+				</c:if>
+			</div>
+		</form:form>
+	</div>
+</div>
+
 
 <c:if test="${ingrediente.id != -1}">
 	<br>
-	<a style="color:red;" href="ingrediente/delete/${ingrediente.id}">Eliminar</a>
+	<a class="btn btn-danger" href="ingrediente/delete/${ingrediente.id}">Eliminar</a>
 
 </c:if>
 
-<%@ include file="../includes/footer.jsp" %> 
+<%@ include file="../includes/footer.jsp"%>

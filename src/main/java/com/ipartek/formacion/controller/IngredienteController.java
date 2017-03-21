@@ -57,7 +57,7 @@ public class IngredienteController {
 		return "ingrediente/index";
 	}
 
-	@RequestMapping(value = "/ingrediente/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/ingrediente/crear", method = RequestMethod.GET)
 	public String irFormularioNuevo(Model model) {
 
 		model.addAttribute("ingrediente", new Ingrediente());
@@ -72,18 +72,32 @@ public class IngredienteController {
 	}
 
 	@RequestMapping(value = "/ingrediente/crear", method = RequestMethod.POST)
-	public String crear(@Valid Ingrediente ingrediente, BindingResult bindingResult) {
+	public String crear(@Valid Ingrediente ingrediente, BindingResult bindingResult,Model model) {
 
 		logger.info("recibimos datos del formulario " + ingrediente);
 
 		// validar datos del formulario
 		if (!bindingResult.hasErrors()) {
 
-			if (ingrediente.getId() == -1) {
-				serviceIngrediente.crear(ingrediente);
-			} else {
-				serviceIngrediente.modificar(ingrediente);
-			}
+			serviceIngrediente.crear(ingrediente);
+
+		} else {
+			logger.info("formulario con datos no validos");
+		}
+		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("total", serviceIngrediente.total());
+		return "ingrediente/index";
+	}
+
+	@RequestMapping(value = "/ingrediente/edit/{id}", method = RequestMethod.POST)
+	public String modificar(@Valid Ingrediente ingrediente, BindingResult bindingResult) {
+
+		logger.info("recibimos datos del formulario " + ingrediente);
+
+		// validar datos del formulario
+		if (!bindingResult.hasErrors()) {
+			serviceIngrediente.modificar(ingrediente);
 		} else {
 			logger.info("formulario con datos no validos");
 		}
@@ -102,6 +116,8 @@ public class IngredienteController {
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("ingredientes", serviceIngrediente.listar());
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("total", serviceIngrediente.total());
 		return "ingrediente/index";
 	}
 

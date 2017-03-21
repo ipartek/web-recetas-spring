@@ -34,11 +34,7 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 	@Override
 	public List<Usuario> listarPintarUsuarios() {
 		logger.trace("listar recetas");
-		List<Usuario> list= daoUsuario.getAll();
-		for(Usuario u : list){
-			u.setPassword("");
-		}
-		return list;
+		return daoUsuario.getAll();
 	}
 
 	@Override
@@ -73,5 +69,7 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 		logger.trace("Eliminando por id: " + id);
 		return daoUsuario.delete(id);
 	}
+
+
 
 }

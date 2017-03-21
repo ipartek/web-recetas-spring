@@ -62,7 +62,7 @@ public class RecetaController {
 		return "receta/form";
 	}
 
-	@RequestMapping(value = "/receta/crear", method = RequestMethod.POST)
+	@RequestMapping(value = "/receta/edit", method = RequestMethod.POST)
 	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 
 		logger.info("recibimos datos del formulario " + receta);
@@ -83,6 +83,30 @@ public class RecetaController {
 
 			}
 
+		} else {
+
+			logger.info("formulario con datos no validos");
+
+		}
+
+		model.addAttribute("receta", serviceReceta.buscarPorID(receta.getId()));
+		model.addAttribute("usuarios", serviceUsuario.listar());
+		model.addAttribute("msg", msg);
+
+		return "receta/form";
+	}
+
+	@RequestMapping(value = "/receta/edit-usuario", method = RequestMethod.POST)
+	public String cambiarUsuarioReceta(@Valid Receta receta, BindingResult bindingResult, Model model) {
+
+		logger.info("recibimos datos del formulario " + receta);
+		String msg = null;
+
+		// validar datos del formulario
+		if (!bindingResult.hasErrors()) {
+
+			serviceReceta.modificarUsuario(receta);
+			msg = "Modificada Receta";
 		} else {
 
 			logger.info("formulario con datos no validos");
@@ -154,12 +178,12 @@ public class RecetaController {
 	}
 
 	@RequestMapping(value = "/receta/{idReceta}/nuevo/ingrediente", method = RequestMethod.POST)
-	public String nuevoIngrediente(@PathVariable int idReceta,@ModelAttribute("ingrediente") IngredienteForm ingrediente,
-			BindingResult bindingResult, Model model) {
+	public String nuevoIngrediente(@PathVariable int idReceta,
+			@ModelAttribute("ingrediente") IngredienteForm ingrediente, BindingResult bindingResult, Model model) {
 
 		logger.info("Modificando ingrediente " + ingrediente + " de Receta " + idReceta);
 		String msg = "No se pudo cambiar ingrediente";
-		if(!bindingResult.hasErrors()){
+		if (!bindingResult.hasErrors()) {
 			if (serviceReceta.addIngrediente(idReceta, ingrediente)) {
 				msg = "Ingrediente añadido";
 			}

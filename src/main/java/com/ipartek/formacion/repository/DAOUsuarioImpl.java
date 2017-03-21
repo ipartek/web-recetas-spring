@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
+import com.ipartek.formacion.repository.mapper.UsuarioRecetaExtractor;
 
 @Repository("daoUsuario")
 public class DAOUsuarioImpl implements DAOUsuario {
@@ -47,19 +49,42 @@ public class DAOUsuarioImpl implements DAOUsuario {
 	private static final String SQL_INSERT = "INSERT INTO `usuario` (`nombre`, `email`, `password`,`imagen`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_UPDATE = "UPDATE `usuario` SET `nombre`= ? ,`email`=? ,`password`=? ,`imagen`= ? WHERE `id`= ? ;";
 	private static final String SQL_DELETE = "DELETE FROM `usuario` WHERE `id` = ?;";
+	private static final String SQL_GET_ALL_WITH_RECETAS = "SELECT "+
+    "recetas.usuario.id AS id_usuario, "+
+    "usuario.nombre AS nombre_usuario, "+
+    "recetas.usuario.email AS email_usuario, "+
+    "recetas.usuario.imagen AS imagen_usuario, "+
+    "recetas.receta.id AS id_receta, "+
+    "recetas.receta.nombre AS nombre_receta, "+
+    "recetas.receta.imagen AS imagen_receta, "+
+    "recetas.receta.descripcion AS descripcion_receta  "+
+			"FROM "+
+    "recetas.usuario "+
+			"LEFT JOIN "+
+    "recetas.receta ON receta.usuario_id = usuario.id; ";
 
 	@Override
 	public List<Usuario> getAll() {
-		ArrayList<Usuario> lista = new ArrayList<Usuario>();
-
+		ArrayList<Usuario> lUsuarios= new ArrayList<Usuario>();
+		HashMap<Long, Usuario> hmUsuarios = new HashMap<Long, Usuario>();
 		try {
-
-			lista = (ArrayList<Usuario>) this.jdbcTemplate.query(SQL_GET_ALL, new UsuarioMapper());
-
-		} catch (EmptyResultDataAccessException e) {
-
+			hmUsuarios = this.jdbcTemplate.query(SQL_GET_ALL_WITH_RECETAS, new UsuarioRecetaExtractor());
+			lUsuarios.addAll(hmUsuarios.values());
 			this.logger.warn("No existen recetas todavia");
-
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+		return lUsuarios;
+	}
+	
+	
+	@Override
+	public List<Usuario> getAllUsuarios() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			lista = (ArrayList<Usuario>) this.jdbcTemplate.query(SQL_GET_ALL, new UsuarioMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen recetas todavia");
 		} catch (Exception e) {
 
 			this.logger.error(e.getMessage());

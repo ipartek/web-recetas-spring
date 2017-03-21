@@ -2,20 +2,13 @@
 
 <h1><spring:message code="view.index.ingrediente.titulo" text="Ingredientes"/></h1>
 
-<a class="btn btn-primary" href="ingrediente/edit">
+<a class="btn btn-success" href="ingrediente/crear">
 	<spring:message code="btn.crear" text="Crear"/>
 </a>
 
 <p>${msg}</p>
 
 
-<p>
-	<spring:message code="view.index.ingrediente.mostrar" 
-					arguments="${fn:length(ingredientes)},${total}" 
-					text="mostrando x de y"/>
-</p>
-
-<br>
 <form:form action="ingrediente" method="post" modelAttribute="formularioBusqueda">
 	<form:label path="nombre">
 		<spring:message code="view.form.label.buscar" text="Orden Ascendente"/>

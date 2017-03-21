@@ -33,4 +33,6 @@ public interface ServiceUsuario {
 
 	List<Usuario> listarPintarUsuarios();
 
+
+
 }

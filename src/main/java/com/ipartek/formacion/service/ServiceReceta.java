@@ -57,4 +57,6 @@ public interface ServiceReceta {
 
 	ArrayList<Receta> listar(String order);
 
+	boolean modificarUsuario(Receta receta);
+
 }

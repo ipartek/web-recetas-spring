@@ -61,16 +61,8 @@ public class ServiceRecetaImpl implements ServiceReceta {
 
 	@Override
 	public List<Receta> listarConUsuarios() {
-		logger.trace("listar recetas con usuarios asociados");
-		// TODO Usar un ResultSetExtractor en vez de llamar a dos DAOs
-		ArrayList<Receta> recetas = (ArrayList<Receta>) daoReceta.getAll();
-		// buscar usuarios
-		Usuario usuario = null;
-		for (Receta receta : recetas) {
-			usuario = daoUsuario.getByRecetaId(receta.getId());
-			receta.setUsuario(usuario);
-		}
-		return recetas;
+
+		return daoReceta.getAllWithUser();
 	}
 
 	@Override
@@ -176,6 +168,13 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		logger.trace("Creando receta: " + receta);
 		receta.setUsuario(daoUsuario.getById(Long.parseLong(idUsuario)));
 		return daoReceta.insert(receta);
+	}
+
+	@Override
+	public boolean modificarUsuario(Receta receta) {
+		// TODO Auto-generated method stub
+		logger.trace("Modificando usuario Receta: " + receta);
+		return daoReceta.updateUserOfRecipe(receta);
 	}
 
 

@@ -2,7 +2,7 @@
 
 <h1>Listado Recetas</h1>
 
-<a href="receta/edit">Crear Nuevo</a>
+<a class="btn btn-success" href="receta/edit">Crear Nuevo</a>
 
 <p>${msg}</p>
 

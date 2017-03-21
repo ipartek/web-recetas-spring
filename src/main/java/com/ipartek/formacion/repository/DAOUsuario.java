@@ -24,4 +24,6 @@ public interface DAOUsuario {
 
 	boolean delete(long id) throws DataIntegrityViolationException;
 
+	List<Usuario> getAllUsuarios();
+
 }

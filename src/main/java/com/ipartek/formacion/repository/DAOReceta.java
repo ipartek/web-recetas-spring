@@ -24,4 +24,8 @@ public interface DAOReceta {
 
 	Receta getByName(String nombre);
 
+	List<Receta> getAllWithUser();
+
+	boolean updateUserOfRecipe(Receta receta);
+
 }

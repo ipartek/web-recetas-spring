@@ -17,6 +17,11 @@
 	<!-- Custom -->
 	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<link href="resources/css/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+
 	
 </head>
 <body>

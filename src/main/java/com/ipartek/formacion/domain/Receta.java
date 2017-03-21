@@ -31,7 +31,7 @@ public class Receta implements Serializable,Comparable<Receta>  {
 		this.imagen = "";
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
-		this.usuario = null;
+		this.usuario = new Usuario();
 	}
 
 	public long getId() {

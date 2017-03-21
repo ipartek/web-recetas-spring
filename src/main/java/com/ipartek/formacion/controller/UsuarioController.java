@@ -28,7 +28,6 @@ public class UsuarioController {
 	public String listar(Model model) {
 
 		model.addAttribute("usuarios", serviceUsuario.listar());
-
 		return "usuario/index";
 	}
 
