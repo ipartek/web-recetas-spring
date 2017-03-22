@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ipartek.formacion.domain.Provincia;
-import com.ipartek.formacion.ws.client.mapper.MapperProvincia;
+import com.ipartek.formacion.ws.client.mapper.MapperProvinciaDom;
 
 public class OficinasBuzonesTest {
 
@@ -33,7 +33,7 @@ public class OficinasBuzonesTest {
 	}
 
 	@Test
-	public void testConsultaProvincias() {
+	public void testConsultaProvinciasDOM() {
 
 		/*
 		 * OficinasBuzones cliente = new OficinasBuzones(); OficinasBuzonesSoap
@@ -56,7 +56,8 @@ public class OficinasBuzonesTest {
 		 */
 
 		// Convertir String => ArrayList<Provincia>
-		ArrayList<Provincia> provincias = MapperProvincia.parse(xmlProvincias);
+		MapperProvinciaDom mapper = new MapperProvinciaDom();
+		ArrayList<Provincia> provincias = mapper.parse(xmlProvincias);
 
 		// testear numero de provincias == X
 		assertNotNull(provincias);
