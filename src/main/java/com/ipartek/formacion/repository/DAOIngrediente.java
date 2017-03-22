@@ -12,7 +12,7 @@ public interface DAOIngrediente {
 
 	int total();
 
-	List<Ingrediente> getAll( String orden );
+	List<Ingrediente> getAll();
 
 	List<Ingrediente> getAll(String filtroNombre, boolean ordenAscedente);
 
@@ -50,5 +50,7 @@ public interface DAOIngrediente {
 	boolean addIngrediente(long idReceta, Ingrediente i);
 
 	List<Ingrediente> listadoFueraDeReceta(long recetaId);
+
+	List<Ingrediente> getAllOrderBy(String orden);
 
 }

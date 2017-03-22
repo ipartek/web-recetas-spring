@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.mapper.UsuarioMapper;
 import com.ipartek.formacion.repository.mapper.UsuarioRecetaResultSetExtractor;
+import com.ipartek.formacion.repository.mapper.UsuarioRestringidoMapper;
 
 @Repository("daoUsuario")
 public class DAOUsuarioImpl implements DAOUsuario {
@@ -43,6 +44,7 @@ public class DAOUsuarioImpl implements DAOUsuario {
 
 	// Sentencias SQL
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_LIMITED = "SELECT `id`, `nombre`, `email`,`imagen` FROM `usuario` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` WHERE `id` = ?";
 	private static final String SQL_EXIST_BY_NAME = "SELECT `id`, `nombre`, `email`, `password`,`imagen` FROM `usuario` WHERE LOWER(`nombre`) = LOWER(?);";
 	private static final String SQL_GET_BY_RECETA_ID = "SELECT u.id, u.nombre, u.email, u.password, u.imagen FROM receta as r, usuario as u WHERE r.usuario_id = u.id AND r.id = ?;";
@@ -66,6 +68,27 @@ public class DAOUsuarioImpl implements DAOUsuario {
 		} catch (Exception e) {
 
 			this.LOG.error("Excepcion inesperada",e);
+
+		}
+
+		return lista;
+	}
+	
+	@Override
+	public List<Usuario> getAllLimited() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+
+		try {
+
+			lista = (ArrayList<Usuario>) this.jdbcTemplate.query(SQL_GET_ALL_LIMITED, new UsuarioRestringidoMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia");
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage());
 
 		}
 

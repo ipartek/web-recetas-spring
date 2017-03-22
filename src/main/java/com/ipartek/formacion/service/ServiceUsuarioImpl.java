@@ -17,7 +17,7 @@ import com.ipartek.formacion.repository.DAOUsuario;
 @Service("serviceUsuario")
 public class ServiceUsuarioImpl implements ServiceUsuario {
 
-	private final Log LOG = LogFactory.getLog(getClass());
+	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DAOUsuario daoUsuario;
@@ -27,28 +27,26 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public List<Usuario> listar() {
-		LOG.trace("listar usuario");
+		logger.trace("listar recetas");
 		return daoUsuario.getAll();
 	}
-	
+
 	@Override
-	public List<Usuario> listarConRecetas() {
-		LOG.trace("listar usuario con recetas");
-		return daoUsuario.getAllConRecetas();
+	public List<Usuario> listarSinPassword() {
+		logger.trace("listar recetas");
+		return daoUsuario.getAllLimited();
 	}
-
 	
-
 	@Override
 	public Usuario buscarPorId(long id) {
-		LOG.trace("Buscamos usuario por id: " + id);
+		logger.trace("Buscamos usuario por id: " + id);
 		Usuario usuario = daoUsuario.getById(id);
 		return usuario;
 	}
 
 	@Override
 	public Usuario buscarPorIdConRecetas(long id) {
-		LOG.trace("Buscamos usuario por id: " + id + " y sus recetas");
+		logger.trace("Buscamos usuario por id: " + id + " y sus recetas");
 		Usuario usuario = daoUsuario.getById(id);
 		usuario.setRecetas((ArrayList<Receta>) daoReceta.getAllByUser(id));
 		return usuario;
@@ -56,27 +54,33 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public boolean crear(Usuario u) {
-		LOG.trace("Creando usuario: " + u);
+		logger.trace("Creando usuario: " + u);
 		return daoUsuario.insert(u);
 	}
 
 	@Override
 	public boolean modificar(Usuario u) {
-		LOG.trace("Modificando usuario: " + u);
+		logger.trace("Modificando usuario: " + u);
 		return daoUsuario.update(u);
 	}
 
 	@Override
 	public boolean eliminar(long id) throws DataIntegrityViolationException {
-		LOG.trace("Eliminando por id: " + id);
+		logger.trace("Eliminando por id: " + id);
 		return daoUsuario.delete(id);
 	}
 
 	@Override
 	public Usuario existe(String nombre) {
-		LOG.trace("Buscando usuario por nombre: " + nombre);
 		return daoUsuario.existe(nombre);
 	}
 
+	@Override
+	public List<Usuario> listarConRecetas() {
+		logger.trace("listar usuario con recetas");
+		return daoUsuario.getAllConRecetas();
+	}
 	
+	
+
 }

@@ -28,4 +28,6 @@ public interface DAOUsuario {
 
 	Usuario existe(String nombre);
 
+	List<Usuario> getAllLimited();
+
 }

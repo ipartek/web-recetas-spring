@@ -41,7 +41,8 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	// Sentencias SQL
-	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` ORDER BY `id` ASC LIMIT 1000;";
+	private static final String SQL_GET_ALL_DESC = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_TOTAL = "select count('id') from `ingrediente`;";
 	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `gluten` FROM `ingrediente` WHERE `nombre` LIKE '%' ? '%' ORDER BY `nombre` ASC LIMIT 1000;";
 	private static final String SQL_GET_ALL_FILTER_DESC = "SELECT id, nombre, gluten FROM ingrediente WHERE nombre LIKE '%' ? '%' ORDER BY nombre DESC LIMIT 1000;";
@@ -63,12 +64,30 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 	}
 
 	@Override
-	public List<Ingrediente> getAll( String orden ) {
+	public List<Ingrediente> getAll() {
 		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
 
 		try {
-			// TODO ordenar con el parametro de entrada
 			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes todavia");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
+	}
+	
+	@Override
+	public List<Ingrediente> getAllOrderBy(String orden) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+			if ("desc".equals(orden)) {
+				lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL_DESC, new IngredienteMapper());
+			} else if ("asc".equals(orden)) {
+				lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_GET_ALL, new IngredienteMapper());
+			}
 		} catch (EmptyResultDataAccessException e) {
 			this.logger.warn("No existen ingredientes todavia");
 		} catch (Exception e) {

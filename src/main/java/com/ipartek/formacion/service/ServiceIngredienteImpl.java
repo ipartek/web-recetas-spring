@@ -26,9 +26,9 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	}
 
 	@Override
-	public List<Ingrediente> listar( String orden ) {
+	public List<Ingrediente> listar() {
 		logger.trace("listar ingredientes");
-		return daoIngrediente.getAll( orden );
+		return daoIngrediente.getAll();
 	}
 
 	@Override
@@ -59,6 +59,11 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 	public boolean eliminar(long id) {
 		logger.trace("eliminar " + id);
 		return daoIngrediente.delete(id);
+	}
+
+	@Override
+	public List<Ingrediente> listarOrdenado(String orden) {
+		return daoIngrediente.getAllOrderBy(orden);
 	}
 
 }

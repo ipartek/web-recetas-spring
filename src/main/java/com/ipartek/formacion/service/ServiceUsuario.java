@@ -51,4 +51,6 @@ public interface ServiceUsuario {
 	 */
 	Usuario existe(String nombre);
 
+	List<Usuario> listarSinPassword();
+
 }
