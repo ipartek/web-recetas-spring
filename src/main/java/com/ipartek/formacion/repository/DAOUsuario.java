@@ -13,6 +13,8 @@ public interface DAOUsuario {
 	void setDatasource(DataSource ds);
 
 	List<Usuario> getAll();
+	
+	List<Usuario> getAllWithRecetas();
 
 	Usuario getById(long id);
 

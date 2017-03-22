@@ -1,5 +1,6 @@
 package com.ipartek.formacion.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -21,5 +22,7 @@ public interface DAOReceta {
 	boolean update(Receta r);
 
 	boolean delete(long id);
+
+	List<Receta> getAllWithUser();
 
 }

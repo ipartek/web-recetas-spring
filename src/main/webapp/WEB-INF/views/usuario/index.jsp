@@ -6,15 +6,33 @@
 
 <p>${msg}</p>
 
-<ul>
+
+<table class="tablePlugin" cellspacing="0" width="100%">
+  <thead>
+      <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Nº de Recetas</th>          
+      </tr>
+  </thead>
+  <tbody>        
 <c:forEach items="${usuarios}" var="u">
-	<li>
-		<a href="/usuario/edit/${u.id}">${u.id} </a> 
-		<img class="tamImg"  alt="imagen ${u.nombre}" src="${u.imagen}"> 
-		<a href="usuario/edit/${u.id}">${u.nombre}</a>
-	</li>
+	<tr>
+		<td>
+			<a href="usuario/edit/${u.id}">
+				<img class="tamImg img-thumbnail"  alt="imagen ${u.nombre}" src="${u.imagen}">			
+			</a>	
+		</td>
+		<td>
+			<a href="usuario/edit/${u.id}">${u.nombre}</a>
+		</td>
+		<td>
+			<span class="label label-primary">${fn:length(u.recetas)}</span>
+		</td>
+	</tr>	
 </c:forEach>
-</ul>
+</tbody>
+</table>
 
 
 <%@ include file="../includes/footer.jsp" %> 

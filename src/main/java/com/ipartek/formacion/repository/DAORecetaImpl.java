@@ -22,11 +22,12 @@ import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
+import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
 
 @Repository("daoReceta")
 public class DAORecetaImpl implements DAOReceta {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log LOG = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DataSource dataSource;
@@ -47,6 +48,7 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
+	private static final String SQL_GET_ALL_BY_RECETA = "SELECT r.nombre AS receta_nombre, r.id AS receta_id, r.imagen AS receta_imagen, r.descripcion AS receta_descripcion, u.id AS usuario_id, u.nombre AS usuario_nombre, u.email AS usuario_email, u.imagen AS usuario_imagen FROM usuario AS u INNER JOIN receta AS r ON u.id = r.usuario_id;";
 
 	@Override
 	public List<Receta> getAll() {
@@ -59,11 +61,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -81,11 +83,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -103,11 +105,11 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (EmptyResultDataAccessException e) {
 
-			this.logger.warn("No existen recetas todavia");
+			this.LOG.warn("No existen recetas todavia");
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -117,7 +119,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean insert(final Receta r) {
 
-		logger.trace("insert " + r);
+		LOG.trace("insert " + r);
 		boolean resul = false;
 
 		try {
@@ -143,7 +145,7 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -153,7 +155,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean update(Receta r) {
 
-		logger.trace("update " + r);
+		LOG.trace("update " + r);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -169,7 +171,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
@@ -179,7 +181,7 @@ public class DAORecetaImpl implements DAOReceta {
 	@Override
 	public boolean delete(long id) {
 
-		logger.trace("eliminar " + id);
+		LOG.trace("eliminar " + id);
 		boolean resul = false;
 		int affectedRows = -1;
 
@@ -192,15 +194,36 @@ public class DAORecetaImpl implements DAOReceta {
 			}
 		} catch (DataIntegrityViolationException e) {
 
-			this.logger.warn(e.getMessage());
+			this.LOG.warn(e.getMessage());
 
 		} catch (Exception e) {
 
-			this.logger.error(e.getMessage());
+			this.LOG.error(e.getMessage());
 
 		}
 
 		return resul;
+	}
+
+	@Override
+	public List<Receta> getAllWithUser() {
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+
+		try {
+
+			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_BY_RECETA, new RecetaUsuarioMapper());
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia");
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage());
+
+		}
+
+		return lista;
 	}
 
 }

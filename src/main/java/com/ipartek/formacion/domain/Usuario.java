@@ -74,6 +74,15 @@ public class Usuario {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+	
+	public void addReceta(Receta receta) {
+		if ( this.recetas == null ){
+			this.recetas = new ArrayList<Receta>();
+		}
+		if ( receta != null ){
+			this.recetas.add(receta);
+		}	
+	}
 
 	@Override
 	public String toString() {

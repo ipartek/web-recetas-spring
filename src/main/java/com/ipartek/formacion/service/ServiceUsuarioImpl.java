@@ -17,7 +17,7 @@ import com.ipartek.formacion.repository.DAOUsuario;
 @Service("serviceUsuario")
 public class ServiceUsuarioImpl implements ServiceUsuario {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Log LOG = LogFactory.getLog(getClass());
 
 	@Autowired
 	private DAOUsuario daoUsuario;
@@ -27,20 +27,26 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public List<Usuario> listar() {
-		logger.trace("listar recetas");
+		LOG.trace("listar usuarios");
 		return daoUsuario.getAll();
+	}
+	
+	@Override
+	public List<Usuario> listarPorRecetas() {
+		LOG.trace("Listando recetas con usuarios");
+		return daoUsuario.getAllWithRecetas();
 	}
 
 	@Override
 	public Usuario buscarPorId(long id) {
-		logger.trace("Buscamos usuario por id: " + id);
+		LOG.trace("Buscamos usuario por id: " + id);
 		Usuario usuario = daoUsuario.getById(id);
 		return usuario;
 	}
 
 	@Override
 	public Usuario buscarPorIdConRecetas(long id) {
-		logger.trace("Buscamos usuario por id: " + id + " y sus recetas");
+		LOG.trace("Buscamos usuario por id: " + id + " y sus recetas");
 		Usuario usuario = daoUsuario.getById(id);
 		usuario.setRecetas((ArrayList<Receta>) daoReceta.getAllByUser(id));
 		return usuario;
@@ -48,26 +54,28 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
 	@Override
 	public boolean crear(Usuario u) {
-		logger.trace("Creando usuario: " + u);
+		LOG.trace("Creando usuario: " + u);
 		return daoUsuario.insert(u);
 	}
 
 	@Override
 	public boolean modificar(Usuario u) {
-		logger.trace("Modificando usuario: " + u);
+		LOG.trace("Modificando usuario: " + u);
 		return daoUsuario.update(u);
 	}
 
 	@Override
 	public boolean eliminar(long id) throws DataIntegrityViolationException {
-		logger.trace("Eliminando por id: " + id);
+		LOG.trace("Eliminando por id: " + id);
 		return daoUsuario.delete(id);
 	}
 
 	@Override
 	public Usuario existe(String nombre) {
-		logger.trace("Buscando usuario por nombre: " + nombre);
+		LOG.trace("Buscando usuario por nombre: " + nombre);
 		return daoUsuario.existe(nombre);
 	}
+
+	
 
 }
