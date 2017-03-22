@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.ipartek.formacion.domain.Provincia;
 
-public class MapperProvincia {
+public interface MapperProvincia {
 
 	/**
 	 * Parsea un String con formato XML a ArrayList<Provincia>
@@ -14,9 +14,6 @@ public class MapperProvincia {
 	 * 				ArrayList<Provincia> si falla return null
 	 * 
 	 */
-	public static ArrayList<Provincia> parse ( String xmlProvincias ){
-		
-		return null;
-	}
+	ArrayList<Provincia> parse ( String xmlProvincias );
 	
 }

@@ -1,5 +1,8 @@
 package com.ipartek.formacion.domain;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
+
 public class Provincia {
 
 	private int id;
@@ -13,6 +16,7 @@ public class Provincia {
 		this.nombre = "";
 	}
 
+	@XmlAttribute(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -21,6 +25,7 @@ public class Provincia {
 		this.id = id;
 	}
 
+	@XmlAttribute(name = "comaut")
 	public String getCod() {
 		return cod;
 	}
@@ -29,6 +34,7 @@ public class Provincia {
 		this.cod = cod;
 	}
 
+	@XmlValue
 	public String getNombre() {
 		return nombre;
 	}
