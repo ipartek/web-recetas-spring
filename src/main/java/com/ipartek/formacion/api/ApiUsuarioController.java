@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.service.ServiceUsuario;
@@ -26,8 +27,9 @@ public class ApiUsuarioController {
 	@Autowired
 	private ServiceUsuario serviceUsuario;
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<Usuario>> listar() {
+	public @ResponseBody ResponseEntity<ArrayList<Usuario>> listar() {
 
 		ResponseEntity<ArrayList<Usuario>> response = null;
 
@@ -53,8 +55,9 @@ public class ApiUsuarioController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ResponseEntity<Usuario> detalle(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Usuario> detalle(@PathVariable int id) {
 
 		ResponseEntity<Usuario> response = null;
 
@@ -83,8 +86,9 @@ public class ApiUsuarioController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> altaIngrediente(@RequestBody Usuario usuario) {
+	public @ResponseBody ResponseEntity<Usuario> altaIngrediente(@RequestBody Usuario usuario) {
 
 		ResponseEntity<Usuario> response = null;
 
@@ -112,8 +116,9 @@ public class ApiUsuarioController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> eliminar(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Usuario> eliminar(@PathVariable int id) {
 
 		ResponseEntity<Usuario> response = null;
 
@@ -140,8 +145,9 @@ public class ApiUsuarioController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Usuario> modificar(@RequestBody Usuario usuario) {
+	public @ResponseBody ResponseEntity<Usuario> modificar(@RequestBody Usuario usuario) {
 
 		ResponseEntity<Usuario> response = null;
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
@@ -27,8 +28,9 @@ public class ApiRecetaController {
 	@Autowired
 	private ServiceReceta serviceReceta;
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<Receta>> listar() {
+	public @ResponseBody ResponseEntity<ArrayList<Receta>> listar() {
 
 		ResponseEntity<ArrayList<Receta>> response = null;
 
@@ -54,8 +56,9 @@ public class ApiRecetaController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ResponseEntity<Receta> detalle(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Receta> detalle(@PathVariable int id) {
 
 		ResponseEntity<Receta> response = null;
 
@@ -84,8 +87,9 @@ public class ApiRecetaController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Receta> altaReceta(@RequestBody Receta receta) {
+	public @ResponseBody ResponseEntity<Receta> altaReceta(@RequestBody Receta receta) {
 
 		ResponseEntity<Receta> response = null;
 
@@ -118,8 +122,9 @@ public class ApiRecetaController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Receta> eliminar(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Receta> eliminar(@PathVariable int id) {
 
 		ResponseEntity<Receta> response = null;
 
@@ -146,8 +151,9 @@ public class ApiRecetaController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Receta> modificar(@RequestBody Receta receta) {
+	public @ResponseBody ResponseEntity<Receta> modificar(@RequestBody Receta receta) {
 
 		ResponseEntity<Receta> response = null;
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.service.ServiceIngrediente;
@@ -28,8 +29,9 @@ public class ApiIngredienteController {
 	@Autowired
 	private ServiceIngrediente serviceIngrediente;
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<Ingrediente>> listar(
+	public @ResponseBody ResponseEntity<ArrayList<Ingrediente>> listar(
 			@RequestParam(value = "order", required = false) String order) {
 
 		ResponseEntity<ArrayList<Ingrediente>> response = null;
@@ -69,8 +71,9 @@ public class ApiIngredienteController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ResponseEntity<Ingrediente> detalle(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Ingrediente> detalle(@PathVariable int id) {
 
 		ResponseEntity<Ingrediente> response = null;
 
@@ -99,8 +102,9 @@ public class ApiIngredienteController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Ingrediente> altaIngrediente(@RequestBody Ingrediente ingrediente) {
+	public @ResponseBody ResponseEntity<Ingrediente> altaIngrediente(@RequestBody Ingrediente ingrediente) {
 
 		ResponseEntity<Ingrediente> response = null;
 
@@ -128,8 +132,9 @@ public class ApiIngredienteController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Ingrediente> eliminar(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<Ingrediente> eliminar(@PathVariable int id) {
 
 		ResponseEntity<Ingrediente> response = null;
 
@@ -161,8 +166,9 @@ public class ApiIngredienteController {
 
 	}
 
+	@SuppressWarnings("finally")
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Ingrediente> modificar(@RequestBody Ingrediente ingrediente) {
+	public @ResponseBody ResponseEntity<Ingrediente> modificar(@RequestBody Ingrediente ingrediente) {
 
 		ResponseEntity<Ingrediente> response = null;
 
