@@ -1,10 +1,14 @@
-.tamImg{
-	width: 150px;
-	height: 150px;
+.tamImg {
+	width: 300px;
+	height: 250px;
+	margin: 0px 0px 25px 0px;
+}
+
+.row {
 	margin: 0 auto;
 }
 
-.tamImg75{
+.tamImg75 {
 	width: 75px;
 	height: 75px;
 	display: block;
@@ -15,34 +19,130 @@ textarea {
 	width: 100%;
 }
 
-.img_icon{
+.img_icon {
 	width: 35px;
-	height: 35px;	
+	height: 35px;
 	-ms-transform: rotate(45deg); /* IE 9 */
-    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-    transform: rotate(45deg);
+	-webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+	transform: rotate(45deg);
 }
 
-tr:hover{
+tr:hover {
 	background: pink !important;
 }
 
-.error{
+.error {
 	color: red;
 }
 
+/* CARD */
+.card {
+	padding-top: 20px;
+	margin: 10px 0 20px 0;
+	background-color: #ffffff;
+	border: 1px solid #d8d8d8;
+	border-top-width: 0;
+	border-bottom-width: 2px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
+.card.hovercard {
+	position: relative;
+	width: 300px;
+	padding-top: 0;
+	overflow: hidden;
+	text-align: center;
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+}
 
+.card.hovercard img {
+	width: 300px;
+	height: 200px;
+}
 
+.card.hovercard .avatar {
+	position: relative;
+	top: -40px;
+	margin-bottom: -40px;
+}
 
+.card.hovercard .avatar .icono {
+	margin: 0 auto;
+	width: 80px;
+	height: 80px;
+	max-width: 80px;
+	max-height: 80px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	background: #7DCC7D;
+	padding: 23.5px;
+	border: 1px solid #000000;
+}
 
+.card.hovercard .avatar .icono i {
+	font-size: xx-large;
+	color: #CC0000;
+}
 
+.card.hovercard .avatar .icono i:hover {
+	font-size: xx-large;
+	color: #FF91AF;
+	cursor: pointer;
+}
 
+.card.hovercard .avatar .icono #likes {
+	position: absolute;
+	margin: -18px 0px;
+	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 17px;
+}
 
+.card.hovercard .info {
+	padding: 4px 8px 10px;
+}
 
+.card.hovercard .info .title {
+	margin-bottom: 4px;
+	font-size: 24px;
+	line-height: 1;
+	color: #262626;
+	vertical-align: middle;
+}
 
+.card.hovercard .info .desc {
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	color: #737373;
+	text-overflow: ellipsis;
+}
 
+.card.hovercard .bottom {
+	padding: 0 20px;
+	margin-bottom: 17px;
+}
 
-
-
-
+.card.people .card-bottom {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	display: inline-block;
+	width: 100%;
+	padding: 10px 20px;
+	line-height: 29px;
+	text-align: center;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}

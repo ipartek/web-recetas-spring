@@ -18,6 +18,8 @@
 	<!-- Custom -->
 	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">
 	
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+	
 </head>
 <body>
 
