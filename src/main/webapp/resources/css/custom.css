@@ -36,11 +36,14 @@ tr:hover {
 }
 
 /* CARD */
+.avatar{
+	position: relative;
+}
+
 .card {
 	padding-top: 20px;
 	margin: 10px 0 20px 0;
-	background-color: #ffffff;
-	border: 1px solid #d8d8d8;
+	background-color: #ffffff;	
 	border-top-width: 0;
 	border-bottom-width: 2px;
 	-webkit-border-radius: 3px;
@@ -71,7 +74,7 @@ tr:hover {
 
 .card.hovercard .avatar {
 	position: relative;
-	top: -40px;
+	top: -65px;
 	margin-bottom: -40px;
 }
 
@@ -84,9 +87,9 @@ tr:hover {
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	background: #7DCC7D;
+	background: rgba(0,0,0,0.6);
 	padding: 23.5px;
-	border: 1px solid #000000;
+	border: 1px solid #FFF;
 }
 
 .card.hovercard .avatar .icono i {
@@ -145,4 +148,43 @@ tr:hover {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* pulse */
+.pulse:hover:before {
+  content: '';
+  border-radius: 50px;
+  background: red;
+  width: 100px;
+  height: 100px;
+  opacity: 0;  
+  position: absolute;
+  top: 25%;
+  left: 40%;  
+  animation: pulse-animate 2s 0.5s infinite;
+  margin: -25px 0 0 -25px;
+}
+.pulse:hover:after {
+  content: '';
+  border-radius: 50px;
+  background: red;
+  width: 100px;
+  height: 100px;
+  opacity: 0; 
+  position: absolute;
+  top: 25%;
+  left: 40%;  
+  animation: pulse-animate 2s 1s infinite;
+  margin: -25px;
+}
+
+@keyframes pulse-animate {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
 }

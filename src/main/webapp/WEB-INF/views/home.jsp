@@ -9,7 +9,7 @@
 				<img class="img-responsive img-rounded img-thumbnail tamImg"
 					alt="imagen ${r.nombre}" src="${r.imagen}">
 
-				<div class="avatar">
+				<div class="avatar pulse">
 					<div class="icono">
 						<i class="fa fa-heart" aria-hidden="true"></i><span id="likes">27</span>
 					</div>
