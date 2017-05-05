@@ -164,6 +164,7 @@ tr:hover {
   animation: pulse-animate 2s 0.5s infinite;
   margin: -25px 0 0 -25px;
 }
+
 .pulse:hover:after {
   content: '';
   border-radius: 50px;

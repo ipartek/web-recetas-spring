@@ -24,6 +24,8 @@ public class Receta implements Serializable {
 
 	private Usuario usuario;
 
+	private int likes;
+
 	public Receta() {
 		super();
 		this.id = -1;
@@ -32,6 +34,7 @@ public class Receta implements Serializable {
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
 		this.usuario = null;
+		this.likes = 0;
 	}
 
 	public long getId() {
@@ -80,6 +83,14 @@ public class Receta implements Serializable {
 
 	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
 		this.ingredientes = ingredientes;
+	}
+
+	public int getLikes() {
+		return this.likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 
 	@Override

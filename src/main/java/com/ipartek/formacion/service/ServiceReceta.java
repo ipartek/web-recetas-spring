@@ -27,6 +27,8 @@ public interface ServiceReceta {
 
 	boolean modificar(Receta r);
 
+	boolean modificarLikes(long idReceta);
+
 	boolean eliminar(long id);
 
 	boolean eliminarIngrediente(long idReceta, long idIngrediente);

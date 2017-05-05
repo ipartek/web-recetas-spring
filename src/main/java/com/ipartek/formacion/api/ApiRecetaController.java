@@ -26,13 +26,13 @@ public class ApiRecetaController {
 	private static final Logger LOG = LoggerFactory.getLogger(ApiRecetaController.class);
 
 	@Autowired
-	ServiceReceta servideReceta;
+	ServiceReceta serviceReceta;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<Receta> listar() {
 
 		// TODO Fallo seguridad mostrar informacion del usuario privada
-		return (ArrayList<Receta>) this.servideReceta.listarConUsuarios();
+		return (ArrayList<Receta>) this.serviceReceta.listarConUsuarios();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -40,7 +40,7 @@ public class ApiRecetaController {
 
 		// TODO controlar si no existe receta
 
-		Receta receta = this.servideReceta.buscarPorID(id);
+		Receta receta = this.serviceReceta.buscarPorID(id);
 		return receta;
 	}
 
@@ -64,16 +64,44 @@ public class ApiRecetaController {
 			client.setId(1);
 			receta.setUsuario(client);
 
-			if (this.servideReceta.crear(receta)) {
+			if (this.serviceReceta.crear(receta)) {
 				response = new ResponseEntity<Receta>(receta, HttpStatus.CREATED);
 			}
 
 		} catch (Exception e) {
 			LOG.error("Excepcion sin controlar", e);
 			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
-		} finally {
-			return response;
 		}
+		return response;
+
+	}
+
+	@RequestMapping(value = "{id}/likes", method = RequestMethod.PUT)
+	public @ResponseBody ResponseEntity<String> modificarLikes(@PathVariable int id) {
+
+		ResponseEntity<String> response = null;
+
+		try {
+			LOG.info("Autoincrementar en 1 los likes una Receta" + id);
+
+			response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+
+			if (this.serviceReceta.modificarLikes(id)) {
+
+				Receta r = this.serviceReceta.buscarPorID(id);
+
+				String likes = "{\"likes\": " + r.getLikes() + "}";
+				response = new ResponseEntity<String>(likes, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return response;
+
 	}
 
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
-import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.repository.DAOIngrediente;
 import com.ipartek.formacion.repository.DAOReceta;
 import com.ipartek.formacion.repository.DAOUsuario;
@@ -61,6 +60,12 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	public boolean modificar(Receta r) {
 		logger.trace("Modificando receta: " + r);
 		return daoReceta.update(r);
+	}
+
+	@Override
+	public boolean modificarLikes(long idReceta) {
+		logger.trace("Modificando likes de: " + idReceta);
+		return daoReceta.updateLikes(idReceta);
 	}
 
 	@Override

@@ -42,12 +42,13 @@ public class DAORecetaImpl implements DAOReceta {
 
 	// Sentencias SQL
 
-	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen,r.descripcion as receta_descripcion,u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
-	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion` FROM `receta` WHERE `id` = ?";
+	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen, r.descripcion as receta_descripcion, r.likes as receta_likes, u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
+	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
+	private static final String SQL_UPDATE_LIKES = "UPDATE `receta` SET `likes`= `likes` + 1  WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
 
 	@Override
@@ -71,40 +72,40 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
-	
+
 	@Override
 	public List<Receta> getAllWithUSer() {
-		
+
 		this.LOG.trace("Recuperando Recetas con Usuarios");
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
 			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USER, new RecetaUsuarioMapper());
-			this.LOG.debug("Recuperandas " + lista.size()  + " Recetas"  );
-			
+			this.LOG.debug("Recuperandas " + lista.size() + " Recetas");
+
 		} catch (EmptyResultDataAccessException e) {
 
 			this.LOG.warn("No existen recetas todavia", e);
 
 		} catch (Exception e) {
 
-			this.LOG.error("Excepion inseperada" , e);
+			this.LOG.error("Excepion inseperada", e);
 
 		}
 
 		return lista;
 	}
-	
-	
+
 	public List<Receta> getAllwithUsers() {
 
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
-			//lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new RecetaUsuarioMapper());
+			// lista = (ArrayList<Receta>)
+			// this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new
+			// RecetaUsuarioMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -118,7 +119,6 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
 
 	@Override
 	public List<Receta> getAllByUser(long idUsuario) {
@@ -227,6 +227,28 @@ public class DAORecetaImpl implements DAOReceta {
 	}
 
 	@Override
+	public boolean updateLikes(long idReceta) {
+		LOG.trace("update likes " + idReceta);
+		boolean resul = false;
+
+		try {
+
+			int affectedRows = this.jdbcTemplate.update(SQL_UPDATE_LIKES, idReceta);
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.LOG.error(e);
+
+		}
+
+		return resul;
+	}
+
+	@Override
 	public boolean delete(long id) {
 
 		LOG.trace("eliminar " + id);
@@ -252,8 +274,5 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return resul;
 	}
-
-
-	
 
 }

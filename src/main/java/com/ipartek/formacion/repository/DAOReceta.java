@@ -12,12 +12,14 @@ public interface DAOReceta {
 
 	/**
 	 * Listado de todas las Recetas sin Usuarios
-	 * @return List<Recetas> si hay datos, si no List inicializada not null 
+	 * 
+	 * @return List<Recetas> si hay datos, si no List inicializada not null
 	 */
 	List<Receta> getAll();
-	
+
 	/**
 	 * Listado de todas las Recetas con Usuarios
+	 * 
 	 * @return List<Recetas> si hay datos, si no List inicializada not null
 	 */
 	List<Receta> getAllWithUSer();
@@ -29,6 +31,8 @@ public interface DAOReceta {
 	boolean insert(Receta r);
 
 	boolean update(Receta r);
+
+	boolean updateLikes(long idReceta);
 
 	boolean delete(long id);
 
