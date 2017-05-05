@@ -2,6 +2,10 @@ package com.ipartek.formacion.api;
 
 import java.util.ArrayList;
 
+import org.codehaus.jackson.annotate.JsonIgnoreType;
+import org.codehaus.jackson.map.util.JSONPObject;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,15 +98,18 @@ public class ApiRecetaController {
 	@RequestMapping(value = "{id}/likes", method = RequestMethod.PUT)
 	public @ResponseBody ResponseEntity<?> addtLike(@PathVariable int id) {
 		boolean resul;
-		ResponseEntity<String> response = null;
+		ResponseEntity<ObjectNode> response = null;
 		resul = this.servideReceta.addLikes(id);
+		
 		if (resul) {
 			int cantidad = this.servideReceta.getLikes(id);
-			String likes = "{\"likes\": " + cantidad + "}";
-			response = new ResponseEntity<String>(likes, HttpStatus.OK);
+			ObjectNode responseBody = JsonNodeFactory.instance.objectNode();
+			responseBody.put("likes", cantidad);
+			response = new ResponseEntity<ObjectNode>(responseBody, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+			response = new ResponseEntity<ObjectNode>(HttpStatus.NO_CONTENT);
 		}
 		return response;
 	}
+		
 }
