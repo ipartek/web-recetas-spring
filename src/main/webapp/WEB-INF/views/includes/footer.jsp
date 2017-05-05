@@ -111,20 +111,10 @@
 	    		language: idioma	    
 	    });
 	    
-	    
-	    //detectar cambio foco en input 
-	    /*
-	    var inputUsuario = document.getElementById("nombreUsuario");
-	    inputUsuario.value = "Pepe";
-	    */
-	    
-	    //.text   = text
-	    //.val    = value
-	    //.html   = InnerHTML
-	    
-	    //$("h1").text("YUjuuuuuuuuuuuuu");
-	    
-	    //$("#nombreUsuario").val("Pepe");
+	   //detectamos click en boton para añadir ingrediente
+	   //mostramos Modal para rellenar y luego enviamos por ajax
+	   //si todo va bien refrescamos la lista
+	   add_ingrediente();
 	    
 	    var iUsuario = $("#nombreUsuario"); 
 	    var msgUSuario = $("#msgNombreUsuario");
@@ -190,6 +180,26 @@
 				
 		console.log('finalizado like');
 	}
+	
+	
+	function add_ingrediente(){
+		
+		$("#btn_guardar_ingrediente").click(function(){
+			console.log('clik boton guardar ingredientes');
+			
+			
+			//llamada ajax
+			
+				//refrescar lista
+				$("#list_ingredientes").append("<li>PEPE</li>");
+			
+				//cerrar Modal
+				$('#modal_ingrediente').modal('hide');
+			
+		});
+		
+	}
+	
 	
 </script>
 
