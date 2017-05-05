@@ -46,4 +46,8 @@ public interface ServiceReceta {
 	 */
 	List<Ingrediente> listarIngredientesFueraReceta(long idReceta);
 
+	int getLikes(long idReceta);
+
+	boolean addLikes(long idReceta);
+
 }

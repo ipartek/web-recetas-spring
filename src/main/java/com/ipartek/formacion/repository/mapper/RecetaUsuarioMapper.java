@@ -19,6 +19,7 @@ public class RecetaUsuarioMapper implements RowMapper<Receta> {
 		r.setNombre(rs.getString("receta_nombre"));
 		r.setImagen(rs.getString("receta_imagen"));
 		r.setDescripcion(rs.getString("receta_descripcion"));
+		r.setLikes(rs.getInt("likes"));
 		
 		Usuario u = new Usuario();
 		u.setId(rs.getLong("usuario_id"));

@@ -75,5 +75,34 @@ public class ApiRecetaController {
 			return response;
 		}
 	}
+	
+	@RequestMapping(value = "{id}/likes", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<String> getLike(@PathVariable int id) {
+		ResponseEntity<String> response = null;
+		int resul = 0;
+	    resul = this.servideReceta.getLikes(id);
+	    String likes = "{\"likes\": " + resul + "}";
+	    if (resul > -1) {
+	    	response = new ResponseEntity<String>(likes, HttpStatus.OK);
+	    } else {
+	    	response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+	    }
+	    return response;
 
+	}
+
+	@RequestMapping(value = "{id}/likes", method = RequestMethod.PUT)
+	public @ResponseBody ResponseEntity<?> addtLike(@PathVariable int id) {
+		boolean resul;
+		ResponseEntity<String> response = null;
+		resul = this.servideReceta.addLikes(id);
+		if (resul) {
+			int cantidad = this.servideReceta.getLikes(id);
+			String likes = "{\"likes\": " + cantidad + "}";
+			response = new ResponseEntity<String>(likes, HttpStatus.OK);
+		} else {
+			response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		}
+		return response;
+	}
 }
