@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ipartek.formacion.domain.Receta;
-import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
-import com.ipartek.formacion.service.ServiceUsuario;
 
 /**
  * Handles requests for the application home page.
@@ -28,19 +26,13 @@ public class HomeController {
 	@Autowired
 	private ServiceReceta serviceReceta;
 
-	@Autowired
-	private ServiceIngrediente serviceIngrediente;
-
-	@Autowired
-	private ServiceUsuario serviceUsuario;
-
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
-		// request.setAtribute
+
 		ArrayList<Receta> recetas = (ArrayList<Receta>) serviceReceta.listarConUsuarios();
 		model.addAttribute("recetas", recetas);
 

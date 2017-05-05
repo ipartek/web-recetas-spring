@@ -1,4 +1,4 @@
-<%@ include file="includes/header.jsp"%>
+<%@ include file="includes/header.jsp" %> 
 
 
 <div class="row">
@@ -11,7 +11,7 @@
 
 				<div class="avatar pulse">
 					<div class="icono">
-						<i class="fa fa-heart" aria-hidden="true"></i><span id="likes">27</span>
+						<i class="fa fa-heart" aria-hidden="true"></i><span id="likes">${r.likes}</span>
 					</div>
 				</div>
 				<div class="info">

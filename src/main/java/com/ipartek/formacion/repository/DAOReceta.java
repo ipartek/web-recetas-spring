@@ -32,4 +32,8 @@ public interface DAOReceta {
 
 	boolean delete(long id);
 
+	int getLikes(long id);
+
+	boolean addLikes(long id);
+
 }

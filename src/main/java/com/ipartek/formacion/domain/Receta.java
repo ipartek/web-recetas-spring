@@ -23,6 +23,8 @@ public class Receta implements Serializable {
 	private ArrayList<Ingrediente> ingredientes;
 
 	private Usuario usuario;
+	
+	private int likes;
 
 	public Receta() {
 		super();
@@ -32,6 +34,7 @@ public class Receta implements Serializable {
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
 		this.usuario = null;
+		this.likes = 0;
 	}
 
 	public long getId() {
@@ -81,11 +84,21 @@ public class Receta implements Serializable {
 	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
+	
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
 
 	@Override
 	public String toString() {
 		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
-				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
+				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + ", likes=" + likes + "]";
 	}
+
+	
 
 }
