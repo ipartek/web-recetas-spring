@@ -35,6 +35,10 @@ public interface ServiceReceta {
 
 	boolean modificarIngrediente(long idReceta, Ingrediente i);
 
+	Ingrediente buscarNombreIngrediente(Ingrediente i);
+
+	boolean crearIngrediente(Ingrediente i);
+
 	boolean addIngrediente(long idReceta, Ingrediente i);
 
 	Ingrediente recuperarIngrediente(long idReceta, long idIngrediente);

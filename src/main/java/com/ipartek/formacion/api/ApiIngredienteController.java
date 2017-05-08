@@ -1,7 +1,5 @@
 package com.ipartek.formacion.api;
 
-
-
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -30,8 +28,8 @@ public class ApiIngredienteController {
 	private ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<Ingrediente>> listar(
-			@RequestParam(value = "order", required = false) String order) {
+	public ResponseEntity<ArrayList<Ingrediente>> listar(@RequestParam(value = "order", required = false) String order,
+			@RequestParam(value = "disponibles", required = false) String disponibles) {
 
 		ResponseEntity<ArrayList<Ingrediente>> response = null;
 		ArrayList<Ingrediente> ingredientes = null;
@@ -39,6 +37,13 @@ public class ApiIngredienteController {
 		try {
 
 			LOG.info("Listar todos los ingredientes");
+
+			if (disponibles != null && ("DIS".equals(order.toUpperCase()))) {
+
+			} else {
+
+				response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.BAD_REQUEST);
+			}
 
 			if (order == null) {
 
@@ -64,9 +69,8 @@ public class ApiIngredienteController {
 
 			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-		} finally {
-			return response;
 		}
+		return response;
 
 	}
 
@@ -92,11 +96,8 @@ public class ApiIngredienteController {
 		} catch (Exception e) {
 			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-		} finally {
-
-			return response;
-
 		}
+		return response;
 
 	}
 
@@ -123,9 +124,8 @@ public class ApiIngredienteController {
 			LOG.error("Excepcion sin controlar", e);
 			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-		} finally {
-			return response;
 		}
+		return response;
 
 	}
 
@@ -154,11 +154,9 @@ public class ApiIngredienteController {
 			LOG.error("Excepcion sin controlar", e);
 			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-		} finally {
-
-			return response;
-
 		}
+
+		return response;
 
 	}
 
@@ -184,9 +182,8 @@ public class ApiIngredienteController {
 			LOG.error("Excepcion sin controlar", e);
 			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-		} finally {
-			return response;
 		}
+		return response;
 
 	}
 }

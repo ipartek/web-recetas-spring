@@ -112,6 +112,12 @@
 	    });
 	    
 	    
+	    //Detectamos click en boton para añadir ingrediente
+	    //mostramos Modal para rellenar y luego enviamos por ajax
+	    //si todo va bien refrescamos la lista
+	    
+	    add_ingrediente();
+	    
 	    //detectar cambio foco en input 
 	    /*
 	    var inputUsuario = document.getElementById("nombreUsuario");
@@ -173,6 +179,55 @@
 	    
 	});//$(document).ready
 	
+	function like(id_receta){
+		console.log('click para hacer like en receta %s', id_receta);
+		$span = $("#like" + id_receta);
+		
+		//Llamada a la API
+		
+		var url = "/formacion/api/receta/" + id_receta + "/likes/";
+		$.ajax(url, {
+			"type" : "put",
+			"success" : function(result) {
+				console.log("Llego el contenido %o y no hubo error", result);
+				$span.text(result.likes);
+			},
+			"error" : function(result) {
+				console.error("Este callback maneja los errores", result);
+			}
+		});
+
+		console.log('finalizado like');
+	}
+	
+	
+	function add_ingrediente(){
+		
+		$('#btn_guardar_ingrediente').click(function(){
+			console.log('click boton guardar ingredientes');
+			
+			//llamada ajax
+			var url = "/formacion/api/ingrediente/" + id_receta + "";	
+			$.ajax(url, {
+				"type" : "get",
+				"success" : function(result) {
+					console.log(
+							"Llego el contenido %o y no hubo error",
+							result);
+					$span.text(result.likes);
+				},
+				"error" : function(result) {
+					console.error("Este callback maneja los errores",
+							result);
+				}
+			});
+					//refrescar lista
+					$("#list_ingredientes").append("<li>PEPE</li>");
+
+					//cerrar modal
+					$('#modal_ingrediente').modal('hide');
+				});
+	}
 </script>
 
 </body>

@@ -103,7 +103,7 @@ tr:hover {
 	cursor: pointer;
 }
 
-.card.hovercard .avatar .icono #likes {
+.card.hovercard .avatar .icono .likes_number {
 	position: absolute;
 	margin: -18px 0px;
 	font-weight: bold;

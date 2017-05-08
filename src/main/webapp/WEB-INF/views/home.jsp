@@ -9,9 +9,9 @@
 				<img class="img-responsive img-rounded img-thumbnail tamImg"
 					alt="imagen ${r.nombre}" src="${r.imagen}">
 
-				<div class="avatar pulse">
+				<div class="avatar pulse" onClick="like(${r.id})">
 					<div class="icono">
-						<i class="fa fa-heart" aria-hidden="true"></i><span id="likes">${r.likes}</span>
+						<i class="fa fa-heart" aria-hidden="true"></i><span id="like${r.id}" class="likes_number">${r.likes}</span>
 					</div>
 				</div>
 				<div class="info">

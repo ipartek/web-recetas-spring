@@ -87,6 +87,18 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	}
 
 	@Override
+	public Ingrediente buscarNombreIngrediente(Ingrediente i) {
+		logger.trace("buscar Ingrediente" + i);
+		return daoIngrediente.getByName(i.getNombre());
+	}
+
+	@Override
+	public boolean crearIngrediente(Ingrediente i) {
+		logger.trace("Crear nuevo Ingrediente" + i);
+		return daoIngrediente.insert(i);
+	}
+
+	@Override
 	public boolean addIngrediente(long idReceta, Ingrediente i) {
 
 		logger.trace("Añadiendo Ingrediente" + i + "a receta " + idReceta);

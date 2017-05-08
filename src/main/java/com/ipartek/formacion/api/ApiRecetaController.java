@@ -2,6 +2,8 @@ package com.ipartek.formacion.api;
 
 import java.util.ArrayList;
 
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
 import com.ipartek.formacion.service.ServiceReceta;
@@ -77,27 +80,168 @@ public class ApiRecetaController {
 	}
 
 	@RequestMapping(value = "{id}/likes", method = RequestMethod.PUT)
-	public @ResponseBody ResponseEntity<String> modificarLikes(@PathVariable int id) {
+	public @ResponseBody ResponseEntity<ObjectNode> modificarLikes(@PathVariable int id) {
 
-		ResponseEntity<String> response = null;
+		ResponseEntity<ObjectNode> response = null;
 
 		try {
 			LOG.info("Autoincrementar en 1 los likes una Receta" + id);
 
-			response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+			response = new ResponseEntity<ObjectNode>(HttpStatus.NO_CONTENT);
 
 			if (this.serviceReceta.modificarLikes(id)) {
 
 				Receta r = this.serviceReceta.buscarPorID(id);
 
-				String likes = "{\"likes\": " + r.getLikes() + "}";
-				response = new ResponseEntity<String>(likes, HttpStatus.OK);
+				ObjectNode likes = JsonNodeFactory.instance.objectNode(); // initializing
+				likes.put("likes", r.getLikes()); // building
+
+				response = new ResponseEntity<ObjectNode>(likes, HttpStatus.OK);
 			}
 
 		} catch (Exception e) {
 
 			LOG.error("Excepcion sin controlar", e);
-			response = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			response = new ResponseEntity<ObjectNode>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return response;
+
+	}
+
+	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<ArrayList<Ingrediente>> listarIngredientes(@PathVariable int id) {
+
+		ResponseEntity<ArrayList<Ingrediente>> response = null;
+
+		try {
+			LOG.info("listar ingredientes disponibles" + id);
+
+			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.NO_CONTENT);
+
+			ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) this.serviceReceta
+					.listarIngredientesFueraReceta(id);
+
+			response = new ResponseEntity<ArrayList<Ingrediente>>(ingredientes, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return response;
+
+	}
+
+	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> crearIngrediente(@PathVariable int id,
+			@RequestBody() Ingrediente ingrediente) {
+
+		ResponseEntity<?> response = null;
+		ObjectNode mensaje;
+
+		try {
+			LOG.info("añadir ingrediente nuevo a la receta " + id);
+
+			mensaje = JsonNodeFactory.instance.objectNode(); // initializing
+			mensaje.put("mensaje", "Bad Request"); // building
+
+			response = new ResponseEntity<ObjectNode>(mensaje, HttpStatus.BAD_REQUEST);
+
+			// buscar si existe el ingrediente
+			Ingrediente iExiste = this.serviceReceta.buscarNombreIngrediente(ingrediente);
+
+			if (iExiste == null) {
+
+				// El ingrediente no existe. Insertar nueva
+				if (this.serviceReceta.crearIngrediente(ingrediente)) {
+
+					// añadir el ingrediente nuevo a la receta
+					if (this.serviceReceta.addIngrediente(id, ingrediente)) {
+						response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.CREATED);
+					}
+				}
+
+			} else {
+
+				// Buscar si el ingrediente si se encuentra insertada en la
+				// receta
+				ingrediente.setId(iExiste.getId());
+				Ingrediente iExisteReceta = this.serviceReceta.recuperarIngrediente(id, ingrediente.getId());
+
+				if (iExisteReceta == null) {
+					if (this.serviceReceta.addIngrediente(id, ingrediente)) {
+						response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.CREATED);
+					}
+
+				} else {
+					// si existe en la receta
+					mensaje = JsonNodeFactory.instance.objectNode(); // initializing
+					mensaje.put("mensaje", "El ingrediente ya existe en la receta"); // building
+
+					response = new ResponseEntity<ObjectNode>(mensaje, HttpStatus.ACCEPTED);
+				}
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return response;
+
+	}
+
+	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody() ResponseEntity<Ingrediente> modificarIngrediente(@PathVariable() int id,
+			@RequestBody() Ingrediente ingrediente) {
+
+		ResponseEntity<Ingrediente> response = null;
+
+		try {
+			LOG.info("modificar ingrediente " + id);
+
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+
+			if (this.serviceReceta.modificarIngrediente(id, ingrediente)) {
+
+				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
+
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		return response;
+
+	}
+
+	@RequestMapping(value = "{id}/ingrediente/{idIngrediente}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody() ResponseEntity<Ingrediente> EliminarIngrediente(@PathVariable() int id,
+			@PathVariable() int idIngrediente) {
+
+		ResponseEntity<Ingrediente> response = null;
+
+		try {
+			LOG.info("eliminar ingrediente " + id);
+
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+
+			if (this.serviceReceta.eliminarIngrediente(id, idIngrediente)) {
+
+				response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
+
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 		return response;

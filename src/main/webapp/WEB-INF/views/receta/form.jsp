@@ -78,7 +78,7 @@ ${msg}
 
 
 <h2>Listado Ingredientes</h2>
-<ol>
+<ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
 	<li>
 		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
@@ -89,11 +89,30 @@ ${msg}
 </c:forEach>
 </ol>
 
-<h3 style="color:red;">
-<a  href="receta/${receta.id}/add/ingrediente/">Añadir ingrediente a la receta</a>
-</h3>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_ingrediente">Añadir ingrediente</button>
 
+<!-- Modal -->
+<div class="modal fade" id="modal_ingrediente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Nuevo ingrediente</h4>
+			</div>
+			<div class="modal-body">
 
+				...... formulario .....
 
+ 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				<button id="btn_guardar_ingrediente" type="button" class="btn btn-primary">Guardar Ingrediente</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <%@ include file="../includes/footer.jsp" %> 
