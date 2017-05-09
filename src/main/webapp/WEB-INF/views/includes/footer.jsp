@@ -110,10 +110,7 @@
 	    $('.tablePlugin').DataTable({
 	    		language: idioma	    
 	    });
-	    
-	   //detectamos click en boton para añadir ingrediente
-	   //mostramos Modal para rellenar y luego enviamos por ajax
-	   //si todo va bien refrescamos la lista
+	   	   
 	   add_ingrediente();
 	    
 	    var iUsuario = $("#nombreUsuario"); 
@@ -183,22 +180,49 @@
 	
 	
 	function add_ingrediente(){
+		console.info('add_ingrediente');
+		$msj = $("#form1_msg");
+		var disabled;
+		var flag = false;
+		
+		$("#form1_nombre").keyup(function(){
+			var longitud = $(this).val().length;
+			
+			console.log('pulsada tecla, longitud nombre %s', longitud);
+			if ( longitud >= 2){
+				disabled = true;
+				$("#btn_guardar_ingrediente").removeClass("disabled");				
+				$(this).parent().addClass("has-success");
+				if ( !flag ){
+					$(this).after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+					flag = true;
+				}				
+			}else{
+				disabled = false;				
+				flag=false;
+				$("#btn_guardar_ingrediente").addClass("disabled");
+				$(this).parent().removeClass("has-success");				
+				$(this).siblings().remove();
+			}						
+		});
+		
+		
 		
 		$("#btn_guardar_ingrediente").click(function(){
-			console.log('clik boton guardar ingredientes');
 			
-			
-			//llamada ajax
-			
-				//refrescar lista
-				$("#list_ingredientes").append("<li>PEPE</li>");
-			
-				//cerrar Modal
-				$('#modal_ingrediente').modal('hide');
+			disabled = $(this).hasClass("disabled");
+			console.log('btn_guardar_ingrediente clicked, disabled: ' + disabled);
+							
+			if ( disabled ){
+				$msj.html('Nombre Ingrdiente es obligatorio(mínimo 2 letras)');
+			}else{
+				console.info("llamada Ajax");
+			}
 			
 		});
 		
 	}
+
 	
 	
 </script>
