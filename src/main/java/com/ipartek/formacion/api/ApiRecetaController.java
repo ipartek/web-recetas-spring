@@ -160,7 +160,11 @@ public class ApiRecetaController {
 					// añadir el ingrediente nuevo a la receta
 					if (this.serviceReceta.addIngrediente(id, ingrediente)) {
 						response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.CREATED);
+					} else {
+						mensaje = JsonNodeFactory.instance.objectNode(); // initializing
+						mensaje.put("mensaje", "No es posible insertar un nuevo ingrediente"); // building
 					}
+
 				}
 
 			} else {
@@ -173,6 +177,9 @@ public class ApiRecetaController {
 				if (iExisteReceta == null) {
 					if (this.serviceReceta.addIngrediente(id, ingrediente)) {
 						response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.CREATED);
+					} else {
+						mensaje = JsonNodeFactory.instance.objectNode(); // initializing
+						mensaje.put("mensaje", "No es posible añadir ingrediente a la receta"); // building
 					}
 
 				} else {
