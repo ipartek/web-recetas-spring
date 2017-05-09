@@ -68,10 +68,10 @@ ${msg}
 
 
 <c:if test="${receta.id != -1}">
-						<button type="button" class="btn btn-danger">
-						<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
-						</button>
-					</c:if>
+	<button type="button" class="btn btn-danger">
+	<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
+	</button>
+</c:if>
 
 
 
@@ -101,14 +101,42 @@ ${msg}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Nuevo Ingrdiente</h4>
+        <h4 class="modal-title" id="myModalLabel">Nuevo Ingrediente</h4>
       </div>
       <div class="modal-body">
-        ...  formulario ...
+      
+      		<!-- mensajes para el usuario -->	
+      		<div id="form1_msg"></div>
+      
+        	<form action="#" class="form-horizontal">
+        	
+	        	<!-- nombre ingredientes -->
+	        	 <div class="form-group">        	
+	        	 	<label for="form1_nombre" class="col-sm-2 control-label">Ingrediente</label>
+	        	 	<div class="col-sm-10 has-success">	
+	        			<input type="text" value="" id="form1_nombre"	        			       
+	        			       class="form-control"
+	        			       placeholder="Obligatorio">
+	        			<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>	        			       
+	        		</div>	
+	        	 </div>
+	        	 
+	        	 <!-- cantidad  -->
+	        	 <div class="form-group">        	
+	        	 	<label for="form1_cantidad" class="col-sm-2 control-label">Cantidad</label>
+	        	 	<div class="col-sm-10">	
+	        			<input type="text" value=""
+	        				   class="form-control" 
+	        				   id="form1_cantidad" 
+	        				   placeholder="Si no pones nada a Ojimetro">
+	        		</div>	
+	        	 </div>
+        	
+        	</form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button id="btn_guardar_ingrediente" type="button" class="btn btn-primary">Guardar</button>
+        <button id="btn_guardar_ingrediente" type="button" class="disabled btn btn-primary">Guardar</button>
       </div>
     </div>
   </div>
