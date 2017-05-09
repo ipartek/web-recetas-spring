@@ -163,6 +163,8 @@ public class ApiRecetaController {
 					} else {
 						mensaje = JsonNodeFactory.instance.objectNode(); // initializing
 						mensaje.put("mensaje", "No es posible insertar un nuevo ingrediente"); // building
+
+						response = new ResponseEntity<ObjectNode>(mensaje, HttpStatus.BAD_REQUEST);
 					}
 
 				}
@@ -180,6 +182,8 @@ public class ApiRecetaController {
 					} else {
 						mensaje = JsonNodeFactory.instance.objectNode(); // initializing
 						mensaje.put("mensaje", "No es posible añadir ingrediente a la receta"); // building
+
+						response = new ResponseEntity<ObjectNode>(mensaje, HttpStatus.BAD_REQUEST);
 					}
 
 				} else {
