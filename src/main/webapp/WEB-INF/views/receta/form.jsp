@@ -103,13 +103,39 @@ ${msg}
 				<h4 class="modal-title" id="myModalLabel">Nuevo ingrediente</h4>
 			</div>
 			<div class="modal-body">
-
-				...... formulario .....
-
+				
+				<!-- mensajes para el usuario -->
+				<div id="form1_msg"></div><br>
+				
+				<form id="crear-ingrediente" class="form-horizontal" action="#">
+				
+					<input id="id_receta" type="hidden" value="${receta.id}">
+					
+					<!-- Nombre Ingrediente -->
+					<div class="form-group">
+						<label for="form1_nombre" class="col-sm-2 control-label">Nombre:</label>
+						<div class="col-sm-10">
+							<input id="form1_nombre" class="form-control" type="text" value="" placeholder="Obligatorio" required pattern="[A-Za-z]{2}" autofocus>
+						</div>
+					</div>
+										
+					<!-- cantidad -->
+					<div class="form-group">
+						<label for="form1_cantidad" class="col-sm-2 control-label">Cantidad:</label>
+						<div class="col-sm-10">
+							<input id="form1_cantidad" class="form-control" type="text" value="" placeholder="Si no se indica nada, a ojimetro...">
+						</div>
+					</div>
+					
+					
+					<label for="form1_gluten">¿Contiene gluten?</label>
+					<input id="form1_gluten" type="checkbox" checked>
+					
+				</form>
  			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button id="btn_guardar_ingrediente" type="button" class="btn btn-primary">Guardar Ingrediente</button>
+				<button id="btn_guardar_ingrediente" type="button" class="disabled btn btn-primary">Guardar Ingrediente</button>
 			</div>
 		</div>
 	</div>

@@ -202,32 +202,82 @@
 	
 	
 	function add_ingrediente(){
+		console.info('add_ingrediente');
+		$msj = $("#form1_msg");
+		var disabled;
+		var flag = false;
+		$idReceta = $('#id_receta').val();
 		
-		$('#btn_guardar_ingrediente').click(function(){
-			console.log('click boton guardar ingredientes');
+		$("#form1_nombre").keyup(function(){
+			var longitud = $(this).val().length;
 			
-			//llamada ajax
-			var url = "/formacion/api/ingrediente/" + id_receta + "";	
-			$.ajax(url, {
-				"type" : "get",
-				"success" : function(result) {
-					console.log(
-							"Llego el contenido %o y no hubo error",
-							result);
-					$span.text(result.likes);
-				},
-				"error" : function(result) {
-					console.error("Este callback maneja los errores",
-							result);
-				}
-			});
-					//refrescar lista
-					$("#list_ingredientes").append("<li>PEPE</li>");
-
-					//cerrar modal
-					$('#modal_ingrediente').modal('hide');
+			console.log('pulsada tecla, longitud nombre %s', longitud);
+			if ( longitud >= 2){
+				disabled = true;
+				$("#btn_guardar_ingrediente").removeClass("disabled");				
+				$(this).parent().addClass("has-success");
+				if ( !flag ){
+					$(this).after('<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>');
+					flag = true;
+				}				
+			}else{
+				disabled = false;				
+				flag=false;
+				$("#btn_guardar_ingrediente").addClass("disabled");
+				$(this).parent().removeClass("has-success");				
+				$(this).siblings().remove();
+			}						
+		});
+		
+		
+		
+		$("#btn_guardar_ingrediente").click(function(){
+			
+			disabled = $(this).hasClass("disabled");
+			console.log('btn_guardar_ingrediente clicked, disabled: ' + disabled);
+							
+			if ( disabled ){
+				$msj.html('Nombre Ingrdiente es obligatorio(mínimo 2 letras)');
+			}else{
+				console.info("llamada Ajax");
+				
+				var url = "/formacion/api/receta/" + $idReceta + "/ingrediente";
+				console.log('url: %s', url);
+				
+				var inputNombre = $("#form1_nombre").val();
+				var inputCantidad = $("#form1_cantidad").val();
+				var inputGluten = $("#form1_gluten").prop("checked");
+		    	
+				
+				var formData = {
+						nombre : inputNombre,
+						gluten : inputGluten,
+						cantidad : inputCantidad
+			    	};
+				
+				$.ajax(url, {
+					"type" : "POST",
+					"data" : JSON.stringify(formData),
+					"processData" : false,
+					"contentType" : "application/json",
+					"success" : function(result) {
+						console.log(
+								"Llego el contenido %o y no hubo error",
+								result);
+						
+					},
+					
+					"error" : function(result) {
+						console.error("Este callback maneja los errores",
+								result);
+					}
 				});
+			}
+			
+		});
+		
 	}
+	
 </script>
 
 </body>

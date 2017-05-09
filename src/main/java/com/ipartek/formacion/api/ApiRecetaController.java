@@ -144,6 +144,11 @@ public class ApiRecetaController {
 		try {
 			LOG.info("añadir ingrediente nuevo a la receta " + id);
 
+			// si la cantidad viene vacia, poner a null.
+			if (ingrediente.getCantidad() == "") {
+				ingrediente.setCantidad("a ojimetro...");
+			}
+
 			mensaje = JsonNodeFactory.instance.objectNode(); // initializing
 			mensaje.put("mensaje", "Bad Request"); // building
 
