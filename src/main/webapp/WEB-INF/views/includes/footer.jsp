@@ -209,10 +209,10 @@
 		$idReceta = $('#id_receta').val();
 		
 		$("#form1_nombre").keyup(function(){
-			var longitud = $(this).val().length;
+			var longitud = $(this).val().trim().length
 			
 			console.log('pulsada tecla, longitud nombre %s', longitud);
-			if ( longitud >= 2){
+			if ( longitud >= 2 && longitud <=255){
 				disabled = true;
 				$("#btn_guardar_ingrediente").removeClass("disabled");				
 				$(this).parent().addClass("has-success");
@@ -237,7 +237,7 @@
 			console.log('btn_guardar_ingrediente clicked, disabled: ' + disabled);
 							
 			if ( disabled ){
-				$msj.html('Nombre Ingrdiente es obligatorio(mínimo 2 letras)');
+				$msj.html('Nombre Ingrediente es obligatorio(mínimo 2 letras y maximo 255)');
 			}else{
 				console.info("llamada Ajax");
 				
@@ -261,15 +261,35 @@
 					"processData" : false,
 					"contentType" : "application/json",
 					"success" : function(result) {
-						console.log(
-								"Llego el contenido %o y no hubo error",
-								result);
+						console.log("Llego el contenido %o y no hubo error", result);
 						
+						if(result.mensaje == null){
+							console.log('refrescar listado de ingredientes');
+							
+							//refrescar lista
+		 					$("#list_ingredientes").append("<li>" +
+		 							"<a href='receta/" + $idReceta + "/edit/ingrediente/" + result.id + "'>" + result.nombre + "</a> - " + result.cantidad +
+		 							"<span style='color:red;'>" +
+		 							"<a href='receta/" + $idReceta + "/delete/ingrediente/" + result.id + "'>[ Eliminar ]</a>" +
+		 							"</span>" + 
+		 							"</li>");
+
+		 					//cerrar modal
+		 					$('#modal_ingrediente').modal('hide');
+		 					
+		 					
+						}else{
+							console.log('Hay mensaje para el usuario');
+							$msj.html(result.mensaje);
+						}
 					},
 					
 					"error" : function(result) {
 						console.error("Este callback maneja los errores",
 								result);
+						if(result.mensaje == null){
+							$msj.html(result.mensaje);
+						}
 					}
 				});
 			}

@@ -2,6 +2,8 @@ package com.ipartek.formacion.api;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
@@ -136,18 +138,13 @@ public class ApiRecetaController {
 
 	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> crearIngrediente(@PathVariable int id,
-			@RequestBody() Ingrediente ingrediente) {
+			@RequestBody() @Valid() Ingrediente ingrediente) {
 
 		ResponseEntity<?> response = null;
 		ObjectNode mensaje;
 
 		try {
 			LOG.info("añadir ingrediente nuevo a la receta " + id);
-
-			// si la cantidad viene vacia, poner a null.
-			if (ingrediente.getCantidad() == "") {
-				ingrediente.setCantidad("a ojimetro...");
-			}
 
 			mensaje = JsonNodeFactory.instance.objectNode(); // initializing
 			mensaje.put("mensaje", "Bad Request"); // building
