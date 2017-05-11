@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
@@ -162,7 +163,25 @@ public class ApiRecetaController {
 			response = new ResponseEntity<ObjectNode>(responseBody, HttpStatus.BAD_REQUEST);
 		}
 		return response;
-
 	}
+	
+	/**
+	 * Listado de ingredientes para una Receta
+	 * @param idReceta identificador Receta
+	 * @param disponibles false => ingredientes de la Receta; true=> ingredientes que NO tiene la Receta 
+	 * @return listado ingredientes
+	 */
+	@RequestMapping(
+			value = "{idReceta}/ingrediente", 
+			method = RequestMethod.GET, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ArrayList<Ingrediente> recuperarIngredientes(
+				@PathVariable int idReceta, 
+				@RequestParam(value = "disponibles", required = false) String disponibles) 
+			
+	{
+		return (ArrayList<Ingrediente>) this.servideReceta.listarIngredientesFueraReceta(idReceta);
+	}
+	
 
 }

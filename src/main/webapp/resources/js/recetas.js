@@ -95,6 +95,33 @@ function gestion_recetas(){
 		});
 		//btn_guardar_ingrediente
 		
+		
+		/* autocomplete */		
+		
+		console.log('autocomplete ingrediente disponibles');
+		url = "/formacion/api/receta/"+$("#id").val()+"/ingrediente?disponibles=true"
+		$("#form1_nombre").autocomplete({
+		     		
+			source: function( request, response ) {
+		        $.ajax( {
+		          url: url,
+		          dataType: "json",		          
+		          success: function( data ) {
+		        	var array_solo_nombres = [];
+		        	$.each(data, function(i, v){
+		        		array_solo_nombres.push(v.nombre);
+		        	});	
+		            response( array_solo_nombres );
+		          }
+		        } );
+		      },
+			
+		      minLength: 2
+	    });
+		
+		
+		
+		
 	}
 
 	
