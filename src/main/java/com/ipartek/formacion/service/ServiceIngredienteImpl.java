@@ -42,6 +42,13 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 		logger.trace("Buscamos ingrediente id: " + id);
 		return daoIngrediente.getById(id);
 	}
+	
+	@Override
+	public Ingrediente buscarPorNombre(String name) {
+		logger.trace("Buscamos ingrediente nombre: " + name);
+		return daoIngrediente.getByName(name);
+	}
+
 
 	@Override
 	public boolean crear(Ingrediente i) {

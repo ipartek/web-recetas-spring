@@ -2,6 +2,8 @@ package com.ipartek.formacion.api;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.codehaus.jackson.annotate.JsonIgnoreType;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.node.JsonNodeFactory;
@@ -13,14 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
+import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
 
 @Controller
@@ -31,6 +36,9 @@ public class ApiRecetaController {
 
 	@Autowired
 	ServiceReceta servideReceta;
+
+	@Autowired
+	ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<Receta> listar() {
@@ -79,19 +87,19 @@ public class ApiRecetaController {
 			return response;
 		}
 	}
-	
+
 	@RequestMapping(value = "{id}/likes", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<String> getLike(@PathVariable int id) {
 		ResponseEntity<String> response = null;
 		int resul = 0;
-	    resul = this.servideReceta.getLikes(id);
-	    String likes = "{\"likes\": " + resul + "}";
-	    if (resul > -1) {
-	    	response = new ResponseEntity<String>(likes, HttpStatus.OK);
-	    } else {
-	    	response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
-	    }
-	    return response;
+		resul = this.servideReceta.getLikes(id);
+		String likes = "{\"likes\": " + resul + "}";
+		if (resul > -1) {
+			response = new ResponseEntity<String>(likes, HttpStatus.OK);
+		} else {
+			response = new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		}
+		return response;
 
 	}
 
@@ -100,7 +108,7 @@ public class ApiRecetaController {
 		boolean resul;
 		ResponseEntity<ObjectNode> response = null;
 		resul = this.servideReceta.addLikes(id);
-		
+
 		if (resul) {
 			int cantidad = this.servideReceta.getLikes(id);
 			ObjectNode responseBody = JsonNodeFactory.instance.objectNode();
@@ -111,5 +119,50 @@ public class ApiRecetaController {
 		}
 		return response;
 	}
+
+	@RequestMapping(value = "{idReceta}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> addIngrediente(
+					@PathVariable int idReceta, 
+					@Valid @RequestBody Ingrediente ingred		
+				) {
+
+		ResponseEntity<?> response = null;
+		Ingrediente i = null;
+		Receta r = null;
 		
+		
+		r = this.servideReceta.buscarPorID(idReceta);
+		if (r.getId() != -1 && ingred.getNombre() != "") {
+
+			i = this.serviceIngrediente.buscarPorNombre(ingred.getNombre());
+			if (i == null) {
+				this.serviceIngrediente.crear(ingred);
+			} else {
+				ingred.setId(i.getId());
+			}
+
+			if (this.servideReceta.recuperarIngrediente(idReceta, ingred.getId()) == null) {
+
+				if (this.servideReceta.addIngrediente(idReceta, ingred)) {
+					response = new ResponseEntity<Ingrediente>(ingred, HttpStatus.CREATED);
+				}
+			} else {
+
+				ObjectNode responseBody = JsonNodeFactory.instance.objectNode();
+				responseBody.put("error", "El ingrediente ya existe en la receta");
+				response = new ResponseEntity<ObjectNode>(responseBody, HttpStatus.ACCEPTED);
+
+			}
+		} // End if de si la receta existe
+		else {
+			// Si la receta no exite le hago saber al cliente que la receta no
+			// existe
+			ObjectNode responseBody = JsonNodeFactory.instance.objectNode();
+			responseBody.put("error", "La receta no existe o el nombre del ingrediente esta vacio");
+			response = new ResponseEntity<ObjectNode>(responseBody, HttpStatus.BAD_REQUEST);
+		}
+		return response;
+
+	}
+
 }

@@ -1,10 +1,7 @@
 package com.ipartek.formacion.api;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.net.URI;
-import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,15 +9,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
 
 public class ApiRecetaControllerTest {
 
+	
+	//TODO inyectar contesto de spring para test
+	
 	static final String END_POINT = "http://localhost:8080/formacion/api/";
 
+	static ApiRecetaController apiReceta;
+	
 	// receta de prueba
 	static Receta recetaMock = null;
 	static final String NOMBRE_RECETA_MOCK = "Mojito Mock";
@@ -38,20 +42,13 @@ public class ApiRecetaControllerTest {
 		recetaMock.setNombre(NOMBRE_RECETA_MOCK);
 		recetaMock.setUsuario(usuarioMock);
 
-		// llamar Api para realizar insert
-		RestTemplate restTemplate = new RestTemplate();
-		String uri = END_POINT + "receta/";
-
-		// TODO retorna null, acordarse de borrar a mano de la bbdd el recurso
-		// creado
-		URI uriLocation = restTemplate.postForLocation(uri, recetaMock);
-
-		assertNotNull(uriLocation);
-
+		apiReceta = new ApiRecetaController();
+		
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		apiReceta = null;
 	}
 
 	@Before
@@ -65,26 +62,19 @@ public class ApiRecetaControllerTest {
 	@Test
 	public void testListar() {
 
-		RestTemplate restTemplate = new RestTemplate();
-		String uri = END_POINT + "receta/";
-
-		ArrayList responseData = restTemplate.getForObject(uri, ArrayList.class);
-
-		assertNotNull(responseData);
-		assertTrue(responseData.size() >= 0);
+		assertNotNull(apiReceta.listar());		
 
 	}
 
 	@Ignore
-	public void testDetalle() {
-		/*
-		 * RestTemplate restTemplate = new RestTemplate(); String uri =
-		 * END_POINT + "receta/{id}/";
-		 * 
-		 * 
-		 * restTemplate.getForObject(uri,Receta.class, );
-		 */
-
+	public void testAddIngrediente() {
+		
+		
+		ResponseEntity<Ingrediente> response = (ResponseEntity<Ingrediente>) apiReceta.addIngrediente(2, new Ingrediente());
+		assertEquals( HttpStatus.NO_CONTENT , response.getStatusCode());
+		assertNotNull( response.getBody() );
+		
+		
 	}
 
 }

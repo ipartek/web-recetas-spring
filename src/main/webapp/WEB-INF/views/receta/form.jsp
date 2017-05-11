@@ -112,12 +112,11 @@ ${msg}
         	
 	        	<!-- nombre ingredientes -->
 	        	 <div class="form-group">        	
-	        	 	<label for="form1_nombre" class="col-sm-2 control-label">Ingrediente</label>
-	        	 	<div class="col-sm-10 has-success">	
+	        	 	<label for="form1_nombre" class="col-sm-2 control-label">Nombre</label>
+	        	 	<div class="col-sm-10">	
 	        			<input type="text" value="" id="form1_nombre"	        			       
 	        			       class="form-control"
-	        			       placeholder="Obligatorio">
-	        			<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>	        			       
+	        			       placeholder="Obligatorio">	        				        			       
 	        		</div>	
 	        	 </div>
 	        	 

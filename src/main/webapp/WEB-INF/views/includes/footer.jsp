@@ -214,9 +214,61 @@
 			console.log('btn_guardar_ingrediente clicked, disabled: ' + disabled);
 							
 			if ( disabled ){
-				$msj.html('Nombre Ingrdiente es obligatorio(mínimo 2 letras)');
+				$msj.html('<i>*Nombre Ingrediente es obligatorio(mínimo 2 letras)</i>');
 			}else{
 				console.info("llamada Ajax");
+				
+				var id_receta = $("#id").val();
+				var url  = "/formacion/api/receta/"+id_receta+"/ingrediente";
+				var form = $("#formulario_nuevo_ingrediente");
+				var li = "<li>"+
+							"<a href='##enlace##'>##nombre## - ##cantidad##</a>"+ 
+					      	"<span style='color:red;'>" +
+								"<a href='#'>[ Eliminar ]</a>"+
+						   	"</span>"+
+						  "</li>";
+								
+				$.ajax( url, {
+					"type": "post",
+					"contentType": "application/json",
+					"dataType": "json",
+					"data": JSON.stringify(
+								{									
+									"nombre": $("#form1_nombre").val(),
+									"cantidad": $("#form1_cantidad").val()
+								}),
+					"success": function(data) {
+						
+						console.log("Llego el contenido %o", data);
+						
+						if ( data.error == undefined ){
+						
+							//refrescar lista
+							liAppend = li;
+							liAppend = liAppend.replace("##nombre##", data.nombre);
+							liAppend = liAppend.replace("##cantidad##", data.cantidad);							
+							$("#list_ingredientes").append( liAppend );
+							
+							//limpiar campos
+							$msj.html("");
+							$("#form1_nombre").val("");
+							$("#form1_cantidad").val("");
+							
+							//cerrar Modal
+							$('#modal_ingrediente').modal('hide');
+							
+						}else{
+							$msj.html("");
+							$msj.html(data.error);
+						}	
+						
+					},
+					"error": function(result) {
+						console.error("Este callback maneja los errores", result);
+						$msj.html("");
+						$msj.html(result.responseJSON.error);
+					}			
+				});
 			}
 			
 		});

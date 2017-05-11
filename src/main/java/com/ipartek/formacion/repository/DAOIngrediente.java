@@ -27,6 +27,8 @@ public interface DAOIngrediente {
 	 * @return Ingrediente, null si no existe
 	 */
 	Ingrediente getById(long id);
+	
+	Ingrediente getByName(String name);
 
 	boolean insert(Ingrediente i);
 

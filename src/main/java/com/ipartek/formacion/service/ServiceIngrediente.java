@@ -13,6 +13,8 @@ public interface ServiceIngrediente {
 	List<Ingrediente> listar(String filtroNombre, boolean ordenAscedente);
 
 	Ingrediente buscarPorId(long id);
+	
+	Ingrediente buscarPorNombre(String name);
 
 	boolean crear(Ingrediente i);
 
