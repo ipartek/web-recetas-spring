@@ -21,7 +21,6 @@
 $(document).ready(function() {
 	gestion_recetas();	   
 });	
-
 </script>
 
 </body>
