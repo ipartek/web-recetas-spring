@@ -8,6 +8,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreType;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.hibernate.validator.internal.engine.ServiceLoaderBasedConstraintDefinitionContributor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
@@ -163,6 +165,25 @@ public class ApiRecetaController {
 		}
 		return response;
 
+	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ArrayList<Ingrediente> recuperarIngrediente(
+									@PathVariable int idReceta, 
+									@RequestParam(required=false, value="disponibles") boolean disp,
+									@RequestParam(required=false, value="filter") String filter
+									){
+		ArrayList<Ingrediente> ingredientes = null;
+		if(disp){
+			if(filter!=null){
+				ingredientes=(ArrayList<Ingrediente>) servideReceta.listarlikeIngredientesFueraReceta(idReceta, filter);
+			}else{
+				ingredientes=(ArrayList<Ingrediente>) servideReceta.listarIngredientesFueraReceta(idReceta);
+			}
+		}else{
+			ingredientes=(ArrayList<Ingrediente>) serviceIngrediente.listar("asc");
+		}
+		return ingredientes;
 	}
 
 }

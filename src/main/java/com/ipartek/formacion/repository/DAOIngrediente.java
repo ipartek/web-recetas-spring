@@ -52,5 +52,7 @@ public interface DAOIngrediente {
 	boolean addIngrediente(long idReceta, Ingrediente i);
 
 	List<Ingrediente> listadoFueraDeReceta(long recetaId);
+	
+	List<Ingrediente> listarLikeFueraDeReceta(long idReceta, String like);
 
 }

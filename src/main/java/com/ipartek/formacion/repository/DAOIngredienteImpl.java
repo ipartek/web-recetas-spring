@@ -57,6 +57,7 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 
 	private static final String SQL_INSERT_ADD_INGREDIENTE = "INSERT INTO `receta_ingrediente` (`receta_id`, `ingrediente_id`,`cantidad`) VALUES (?, ?,?);";
 	private static final String SQL_INGREDIENTES_FUERA_RECETA = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?)ORDER BY nombre ASC;";
+	private static final String SQL_INGREDIENTES_LIKE_FUERA_RECETA = "SELECT `id`, `nombre`, `gluten` from `ingrediente` WHERE id NOT IN (SELECT ingrediente_id FROM receta_ingrediente WHERE receta_id = ?) AND nombre LIKE '%' ? '%' ORDER BY nombre ASC;";
 
 	@Override
 	public int total() {
@@ -299,6 +300,22 @@ public class DAOIngredienteImpl implements DAOIngrediente {
 			this.logger.error(e.getMessage());
 		}
 		return resul;
+	}
+
+	@Override
+	public List<Ingrediente> listarLikeFueraDeReceta(long idReceta, String like) {
+		ArrayList<Ingrediente> lista = new ArrayList<Ingrediente>();
+
+		try {
+			lista = (ArrayList<Ingrediente>) this.jdbctemplate.query(SQL_INGREDIENTES_LIKE_FUERA_RECETA,
+					new Object[] { idReceta, like }, new IngredienteMapper());
+		} catch (EmptyResultDataAccessException e) {
+			this.logger.warn("No existen ingredientes para receta");
+		} catch (Exception e) {
+			this.logger.error(e.getMessage());
+		}
+
+		return lista;
 	}
 
 }

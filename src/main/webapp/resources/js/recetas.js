@@ -6,8 +6,8 @@ function gestion_recetas(){
 		var flag = false;
 		
 		$("#form1_nombre").keyup(function(){
+			var filter = $("#form1_nombre").val();
 			var longitud = $(this).val().length;
-			
 			console.log('pulsada tecla, longitud nombre %s', longitud);
 			if ( longitud >= 2){
 				disabled = true;
@@ -94,7 +94,29 @@ function gestion_recetas(){
 			
 		});
 		//btn_guardar_ingrediente
-		
+			var id_receta = $("#id").val();
+			
+
+	       $("#form1_nombre").autocomplete({
+	    	   source: function( request, response ) {
+	    	        $.ajax( {
+	    	          url: "/formacion/api/receta/"+id_receta+"/ingrediente?disponibles=true&filter="+$("#form1_nombre").val(),
+	    	          dataType: "json",
+	    	          success: function( data ) {
+	    	        	  nombres = [];
+	    	        	  $.each(data, function(i,v){
+	    	        		  nombres.push(v.nombre);
+	    	        	  });
+	    	        	  response( nombres );
+	    	        	  console.log(nombres);
+	    	          },
+						error: function(data) {
+							console.error("Este callback maneja los errores", data);
+
+						}	
+	    	        } );
+	    	      }
+	    	    } );
 	}
 
 	

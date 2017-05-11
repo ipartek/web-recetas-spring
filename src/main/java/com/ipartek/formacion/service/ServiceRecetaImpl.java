@@ -115,4 +115,10 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return daoReceta.addLikes(idReceta);
 	}
 
+	@Override
+	public List<Ingrediente> listarlikeIngredientesFueraReceta(long idReceta, String like) {
+		
+		return daoIngrediente.listarLikeFueraDeReceta(idReceta, like);
+	}
+
 }
