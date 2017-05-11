@@ -2,8 +2,6 @@ package com.ipartek.formacion.api;
 
 import java.util.ArrayList;
 
-import javax.validation.Valid;
-
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
@@ -138,7 +136,7 @@ public class ApiRecetaController {
 
 	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> crearIngrediente(@PathVariable int id,
-			@RequestBody() @Valid() Ingrediente ingrediente) {
+			@RequestBody() Ingrediente ingrediente) {
 
 		ResponseEntity<?> response = null;
 		ObjectNode mensaje;
