@@ -123,7 +123,7 @@ public class ApiRecetaController {
 	@RequestMapping(value = "{idReceta}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> addIngrediente(
 					@PathVariable int idReceta, 
-					@Valid @RequestBody Ingrediente ingred		
+					@RequestBody Ingrediente ingred		
 				) {
 
 		ResponseEntity<?> response = null;
