@@ -50,6 +50,6 @@ public interface ServiceReceta {
 	 * @param idReceta
 	 * @return listado de ingredientes disponibles
 	 */
-	List<Ingrediente> listarIngredientesFueraReceta(long idReceta);
+	List<Ingrediente> listarIngredientesFueraReceta(long idReceta, String filter);
 
 }

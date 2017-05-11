@@ -189,3 +189,12 @@ tr:hover {
     transform: scale(3);
   }
 }
+
+/* autocomplete modal 
+***************************************************************/
+
+.ui-autocomplete {
+	z-index: 1051 !important;
+}
+
+/* end: autocomplete modal */

@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
+import com.ipartek.formacion.service.ServiceIngrediente;
 import com.ipartek.formacion.service.ServiceReceta;
 
 @Controller
@@ -30,6 +32,9 @@ public class ApiRecetaController {
 
 	@Autowired
 	ServiceReceta serviceReceta;
+
+	@Autowired
+	ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<Receta> listar() {
@@ -109,18 +114,49 @@ public class ApiRecetaController {
 
 	}
 
-	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<ArrayList<Ingrediente>> listarIngredientes(@PathVariable int id) {
+	/**
+	 * Recupera los ingredientes que se encuentran en la BBDD. Si se envia el
+	 * parametro "disponible" recuperaremos los ingredientes que estan
+	 * disponibles sin incluir en la receta. Sino, recuperaremos todos los
+	 * ingredientes de la BBDD.
+	 * 
+	 * @param id
+	 *            id de la Receta
+	 * @param disponibles
+	 *            Parametro que nos indica si queremos todos los ingredientes o
+	 *            solo los ingredientes que no esten incluidos en la receta
+	 * 
+	 * @return Retorna el codigo de estado Http y List<Ingrediente> en caso de
+	 *         que todo valla OK.
+	 */
+	@RequestMapping(value = "{id}/ingrediente", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<ArrayList<Ingrediente>> recuperarIngredientes(@PathVariable int id,
+			@RequestParam(value = "disponibles", required = false) boolean disponibles,
+			@RequestParam(value = "filter", required = false) String filter) {
 
 		ResponseEntity<ArrayList<Ingrediente>> response = null;
 
 		try {
-			LOG.info("listar ingredientes disponibles" + id);
 
 			response = new ResponseEntity<ArrayList<Ingrediente>>(HttpStatus.NO_CONTENT);
 
-			ArrayList<Ingrediente> ingredientes = (ArrayList<Ingrediente>) this.serviceReceta
-					.listarIngredientesFueraReceta(id);
+			ArrayList<Ingrediente> ingredientes;
+
+			if (disponibles) {
+				LOG.info("listar ingredientes disponibles" + id);
+
+				if (filter != null) {
+					ingredientes = (ArrayList<Ingrediente>) this.serviceReceta.listarIngredientesFueraReceta(id,
+							filter);
+				} else {
+					ingredientes = null;
+				}
+
+			} else {
+
+				ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar("ASC");
+
+			}
 
 			response = new ResponseEntity<ArrayList<Ingrediente>>(ingredientes, HttpStatus.OK);
 

@@ -202,7 +202,7 @@ public class RecetaController {
 		logger.info("Añadiendoo ingrediente " + ingrediente + " a Receta " + idReceta);
 
 		model.addAttribute("ingrediente", new Ingrediente());
-		model.addAttribute("disponibles", serviceReceta.listarIngredientesFueraReceta(idReceta));
+		model.addAttribute("disponibles", serviceReceta.listarIngredientesFueraReceta(idReceta, null));
 		model.addAttribute("receta", serviceReceta.buscarPorID(idReceta));
 
 		return "receta/formIngrediente";

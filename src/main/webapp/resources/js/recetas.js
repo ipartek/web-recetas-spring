@@ -102,7 +102,7 @@ function gestion_recetas(){
 					"error" : function(result) {
 						console.error("Este callback maneja los errores",
 								result);
-						if(result.mensaje == null){
+						if(result.mensaje != null){
 							$msj.html(result.mensaje);
 						}
 					}
@@ -110,4 +110,39 @@ function gestion_recetas(){
 			}
 			
 		}); //#btn_guardar_ingrediente
+		
+		
+		/*** Autocomplete ***/
+		
+		console.log ('autocomplete ingrediente disponibles');
+		$("#form1_nombre").autocomplete({
+			source: function( request, response){
+				var url = "/formacion/api/receta/" + $idReceta + "/ingrediente?disponibles=true&filter=" + $("#form1_nombre").val().trim() + "";
+				//console.log("url para autocomplete: %s", url);
+				
+				$.ajax( {
+					"url" : url,
+					"type" : "GET",
+					"dataType": "json",					
+					"success" : function(data) {
+						
+						var ingredientes_disponibles = [];
+						
+						$.each(data, function(i, v){
+							ingredientes_disponibles.push(v.nombre)	;
+						});
+						
+						response (ingredientes_disponibles);
+						
+						console.log("Llego el contenido %o y no hubo error", ingredientes_disponibles);
+						
+					},
+					
+					"minLength": 2
+					
+				});
+			}
+		});
+		
+		
 }
