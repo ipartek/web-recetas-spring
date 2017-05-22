@@ -120,6 +120,30 @@ public class ApiRecetaController {
 		}
 		return response;
 	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente/{idIngrediente}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> removeIngrediente(
+					@PathVariable int idReceta,
+					@PathVariable int idIngrediente) {
+
+		ResponseEntity<?> response = null;
+		Ingrediente i = serviceIngrediente.buscarPorId(idIngrediente);
+		Receta r = servideReceta.buscarPorID(idReceta);
+		
+		if((i==null)||r.getId()==-1){
+			response = new ResponseEntity<Ingrediente>( HttpStatus.NO_CONTENT);
+		}
+		else{
+			if(this.servideReceta.eliminarIngrediente(idReceta,idIngrediente)){
+				response = new ResponseEntity<Ingrediente>( HttpStatus.ACCEPTED);
+			}
+			else{
+				response = new ResponseEntity<Ingrediente>( HttpStatus.NO_CONTENT);
+			}
+		}
+
+		return response;
+	}
 
 	@RequestMapping(value = "{idReceta}/ingrediente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<?> addIngrediente(

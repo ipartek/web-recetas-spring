@@ -118,10 +118,36 @@ function gestion_recetas(){
 			
 		      minLength: 2
 	    });
-		
-		
-		
-		
+
 	}
 
+function eliminar_ingrediente( id , nombre ){
+	
+	console.info('eliminar_ingrediente ' + id + ' ' + nombre );
+	$("#modal-elimnar").modal();
+	$("#modal_eliminar_ingrediente_nombre").text(nombre);
+	
+	$("#btn_eliminar_ingrediente").click(function(){
+		var id_receta = $("#id").val();
+		
+		url = "/formacion/api/receta/"+id_receta+"/ingrediente/"+ id;
+		console.info('boton pulsado')
+		console.info("llamada Ajax");
+		$.ajax({
+			 url: url,
+			 "type": "delete",
+			 success: function( data ){
+				 console.info("Borroooooooooo ingrediente: " +id )
+				 $("#ingrediente"+id+"_list").remove();
+				 
+			 }
+			
+		});
+	});
+	
+	
+	
+	
+	
+}
 	

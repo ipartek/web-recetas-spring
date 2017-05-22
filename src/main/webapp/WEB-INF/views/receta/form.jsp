@@ -69,7 +69,7 @@ ${msg}
 
 <c:if test="${receta.id != -1}">
 	<button type="button" class="btn btn-danger">
-	<a style="color:red;" href="receta/delete/${receta.id}">Eliminar</a>
+	<a style="color:red;" href="#" >Eliminar</a>
 	</button>
 </c:if>
 
@@ -80,19 +80,41 @@ ${msg}
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
-	<li>
+	<li id="ingrediente${ingrediente.id}_list">
 		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
 		<span style="color:red;">
-			<a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a>
+			<button type="button" 
+					title="Botón para eliminar ingrediente ${ingrediente.id}"
+					class="btn btn-default" 
+					onClick="eliminar_ingrediente(${ingrediente.id},'${ingrediente.nombre}')">
+			  	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
+
 		</span>
 	</li>
 </c:forEach>
 </ol>
 
+<!-- Modal Eliminar Ingrediente -->
+<div id="modal-elimnar" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">      
+      <div class="modal-body">
+        <p>¿Desea eliminar el ingrediente <b id="modal_eliminar_ingrediente_nombre"></b> ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button id="btn_eliminar_ingrediente"type="button" class="btn btn-danger" data-dismiss="modal">Si estoy seguro</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End: Modal Eliminar Ingrediente -->
+
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">
-  A�adir Ingrediente
+  Añadir Ingrediente
 </button>
 
 <!-- Modal -->
@@ -140,5 +162,6 @@ ${msg}
     </div>
   </div>
 </div>
+
 
 <%@ include file="../includes/footer.jsp" %> 
