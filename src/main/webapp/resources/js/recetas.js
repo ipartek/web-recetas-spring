@@ -56,9 +56,13 @@ function gestion_recetas(){
 						cantidad : inputCantidad
 			    	};
 				
-				var li = "<li>" +
-							"<a href='##enlaceModificar##'>##nombre##</a> - ##cantidad##<span style='color:red;'>" +
-							"<a href='##enlaceBorrar##'>[ Eliminar ]</a></span>" + 
+				var li = "<li id='ingrediente##idNombre##'>" +
+							"<a href='##enlaceModificar##'>##nombre##</a> - ##cantidad##" +
+							"<span style='color:red;'>" +
+								"<button type='button' class='btn btn-default' title='Botón para eliminar ingrediente ##ingrediente##' onclick='eliminar_ingrediente(##id##,\"##ingrediente##\")'>" +
+					  				"<span class='glyphicon glyphicon-trash'></span>" +
+					  				"</button>" +
+							"</span>" +
 						"</li>";
 				
 				$.ajax(url, {
@@ -73,19 +77,15 @@ function gestion_recetas(){
 							console.log('refrescar listado de ingredientes');
 							
 							//refrescar lista
-/*		 					$("#list_ingredientes").append("<li>" +
-		 							"<a href='receta/" + $idReceta + "/edit/ingrediente/" + result.id + "'>" + result.nombre + "</a> - " + result.cantidad +
-		 							"<span style='color:red;'>" +
-		 							"<a href='receta/" + $idReceta + "/delete/ingrediente/" + result.id + "'>[ Eliminar ]</a>" +
-		 							"</span>" + 
-		 							"</li>");
-*/
-
 							liAppend = li;
+							liAppend = liAppend.replace("##idNombre##", result.id);
+							liAppend = liAppend.replace("##enlaceModificar##", "receta/" + $idReceta + "/edit/ingrediente/" + result.id + "");
 							liAppend = liAppend.replace("##nombre##", result.nombre);
 							liAppend = liAppend.replace("##cantidad##", result.cantidad);
-							liAppend = liAppend.replace("##enlaceModificar##", "receta/" + $idReceta + "/edit/ingrediente/" + result.id + "");
-							liAppend = liAppend.replace("##enlaceBorrar##", "receta/" + $idReceta + "/delete/ingrediente/" + result.id + "");
+							liAppend = liAppend.replace("##ingrediente##", result.nombre);
+							liAppend = liAppend.replace("##id##", result.id);
+							liAppend = liAppend.replace("##ingrediente##", result.nombre);
+							//liAppend = liAppend.replace("##enlaceBorrar##", "receta/" + $idReceta + "/delete/ingrediente/" + result.id + "");
 
 							$("#list_ingredientes").append(liAppend);
 							
@@ -144,5 +144,44 @@ function gestion_recetas(){
 			}
 		});
 		
+}
+
+function eliminar_ingrediente(id, nombre) {
+	console.info('eliminar_ingrediente ' + id + ' ' + nombre);
+	$("#modal-elimnar").modal();
+	$("#modal_eliminar_ingrediente_nombre").text(nombre);
+
+	$("#modal-elimnar .btn-danger" ).click(function(){
+		console.log('se ha pulsado el boton eliminar');
 		
+		var url = "/formacion/api/receta/" + $idReceta + "/ingrediente/" + id + "";
+
+		$.ajax(url, {
+			"type" : "DELETE",
+//			"data" : JSON.stringify(formData),
+//			"processData" : false,
+			"contentType" : "application/json",
+			"success" : function(result) {
+				console.log("Llego el contenido %o y no hubo error", result);
+				
+				
+				console.log('refrescar listado de ingredientes');
+				
+				//refrescar lista
+				$("#ingrediente" + id).remove();
+				
+				//cerrar modal
+				$('#modal_ingrediente').modal('hide');
+				
+			},
+			
+			"error" : function(result) {
+				console.error("Este callback maneja los errores",
+						result);
+				if(result.mensaje != null){
+					$msj.html(result.mensaje);
+				}
+			}
+		});
+	});	
 }
