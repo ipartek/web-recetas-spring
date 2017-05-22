@@ -185,3 +185,13 @@ function eliminar_ingrediente(id, nombre) {
 		});
 	});	
 }
+
+function modificar_ingrediente(id, nombre, cantidad, gluten) {
+	console.info('modificar_ingrediente ' + id + ' ' + nombre + ' ' + cantidad + ' ' + gluten);
+	
+	//var modificarModal = 
+	
+	$("#modal_ingrediente").modal();
+	//$("#modal_eliminar_ingrediente_nombre").text(nombre);
+
+}

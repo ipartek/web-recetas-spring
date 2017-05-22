@@ -81,7 +81,12 @@ ${msg}
 <ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
 	<li id="ingrediente${ingrediente.id}">
-		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
+		<!-- <a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad}  -->
+		${ingrediente.nombre} - ${ingrediente.cantidad} 
+		<button type="button" class="btn btn-default" title="Botón para modificar ingrediente ${ingrediente.nombre}" onclick="modificar_ingrediente(${ingrediente.id}, '${ingrediente.nombre}', '${ingrediente.cantidad}', ${ingrediente.gluten})">
+	  		<span class="glyphicon glyphicon-pencil"></span>
+		</button>
+			
 		<span style="color:red;">
 			<button type="button" class="btn btn-default" title="Botón para eliminar ingrediente ${ingrediente.nombre}" onclick="eliminar_ingrediente(${ingrediente.id},'${ingrediente.nombre}')">
 	  			<span class="glyphicon glyphicon-trash"></span>
