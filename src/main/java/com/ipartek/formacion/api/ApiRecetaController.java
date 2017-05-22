@@ -12,6 +12,7 @@ import org.hibernate.validator.internal.engine.ServiceLoaderBasedConstraintDefin
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -185,5 +186,65 @@ public class ApiRecetaController {
 		}
 		return ingredientes;
 	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente/{idIngrediente}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Ingrediente> eliminarRecetaIngrediente(@PathVariable int idReceta, @PathVariable int idIngrediente) {
 
+		ResponseEntity<Ingrediente> response = null;
+
+		try {
+			LOG.info("Eliminar un ingrediente" + idIngrediente);
+
+			// TODO comprobar que los parametros son validos.
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+
+			if (this.servideReceta.eliminarIngrediente(idReceta, idIngrediente)) {
+				response = new ResponseEntity<Ingrediente>(HttpStatus.OK);
+			}
+
+		} catch (DataIntegrityViolationException e) {
+
+			LOG.error("error", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.ACCEPTED);
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} 
+		
+		return response;
+
+
+	}
+
+	@RequestMapping(value = "{idReceta}/ingrediente/{idIngrediente}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Ingrediente> modificar(@PathVariable int idReceta, @RequestBody Ingrediente ingrediente) {
+
+		ResponseEntity<Ingrediente> response = null;
+
+		try {
+			LOG.info("Modificar un ingrediente" + ingrediente);
+
+			// TODO validar datos
+			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+
+			// TODO llamar al servicio
+
+			if (this.serviceIngrediente.modificar(ingrediente)) {
+				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		} finally {
+			return response;
+		}
+
+	}
+	
 }

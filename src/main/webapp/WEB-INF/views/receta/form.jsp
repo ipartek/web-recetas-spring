@@ -80,15 +80,35 @@ ${msg}
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
-	<li>
+	<li id="${ingrediente.id}-list">
 		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
 		<span style="color:red;">
-			<a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a>
+			<button type="button" class="btn btn-default" onclick="eliminar_ingrediente(${ingrediente.id}, '${ingrediente.nombre}', ${receta.id})">
+				<span class="glyphicon glyphicon-trash"></span>
+			</button>
 		</span>
 	</li>
 </c:forEach>
 </ol>
 
+<!-- MODAL ELIMIAR INGREDIENTE -->
+<div  id="modal-eliminar"class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Seguro que desea eliminar el ingrediente: <b><span id="modal_eliminar_ingrediente_nombre"></span></b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete">Si, estoy seguro</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END_:MODAL ELIMIAR INGREDIENTE -->
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">

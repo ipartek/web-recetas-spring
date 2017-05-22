@@ -42,10 +42,12 @@ function gestion_recetas(){
 				var id_receta = $("#id").val();
 				var url  = "/formacion/api/receta/"+id_receta+"/ingrediente";
 				var form = $("#formulario_nuevo_ingrediente");
-				var li = "<li>"+
-							"<a href='##enlace##'>##nombre## - ##cantidad##</a>"+ 
+				var li = "<li id='##id-ingrediente2##-list'>"+
+							"<a href='#'>##nombre##</a> - ##cantidad##"+ 
 					      	"<span style='color:red;'>" +
-								"<a href='#'>[ Eliminar ]</a>"+
+					      	'<button type="button" class="btn btn-default" onclick="eliminar_ingrediente(##id-ingrediente##, \'##nombre2##\', ##id-receta##)">'+
+							'<span class="glyphicon glyphicon-trash"></span>'+
+							'</button>'+
 						   	"</span>"+
 						  "</li>";
 								
@@ -67,7 +69,11 @@ function gestion_recetas(){
 							//refrescar lista
 							liAppend = li;
 							liAppend = liAppend.replace("##nombre##", data.nombre);
-							liAppend = liAppend.replace("##cantidad##", data.cantidad);							
+							liAppend = liAppend.replace("##nombre2##", data.nombre);
+							liAppend = liAppend.replace("##cantidad##", data.cantidad);		
+							liAppend = liAppend.replace("##id-ingrediente##", data.id);	
+							liAppend = liAppend.replace("##id-ingrediente2##", data.id);	
+							liAppend = liAppend.replace("##id-receta##", id_receta);	
 							$("#list_ingredientes").append( liAppend );
 							
 							//limpiar campos
@@ -118,5 +124,24 @@ function gestion_recetas(){
 	    	      }
 	    	    } );
 	}
+
+function eliminar_ingrediente ( id_ingrediente, nombre, id_receta ){
+	console.info('eliminando: INGREDIENTE:ID:' + id_ingrediente +' NOMBRE: '+ nombre + ' RECETA ID : '+id_receta);
+	$("#modal-eliminar").modal();
+	$("#modal_eliminar_ingrediente_nombre").text(nombre);
+	$("#confirm-delete").click(function(){
+		$.ajax({
+		    url: "/formacion/api/receta/"+id_receta+"/ingrediente/"+id_ingrediente,
+		    type: 'DELETE',
+		    success: function(result) {
+		        console.info('eliminado INGREDIENTE:ID:' + id_ingrediente +' NOMBRE: '+ nombre + ' RECETA ID : '+id_receta)
+		        var css_id_ingrediente = "#" + id_ingrediente + '-list';
+		        $(css_id_ingrediente).remove();
+		    }
+		});
+	})
+	
+	
+}
 
 	
