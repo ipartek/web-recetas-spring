@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ipartek.formacion.domain.Ingrediente;
@@ -83,6 +84,27 @@ public class ApiRecetaController {
 		} catch (Exception e) {
 			LOG.error("Excepcion sin controlar", e);
 			response = new ResponseEntity<Receta>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} finally {
+			return response;
+		}
+	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente/{idIngrediente}/", method = RequestMethod.DELETE)
+	public @ResponseBody ResponseEntity<Void> eliminarIngredienteDeReceta(@PathVariable int idReceta, @PathVariable int idIngrediente) {
+
+		ResponseEntity<Void> response = null;
+		try {
+			boolean resul;
+			resul = this.servideReceta.eliminarIngrediente(idReceta, idIngrediente);
+			if(resul){
+				response = new ResponseEntity<Void>(HttpStatus.OK);
+			}else{
+				response = new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+			
+		} catch (Exception e) {
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} finally {
 			return response;
 		}
@@ -164,5 +186,25 @@ public class ApiRecetaController {
 		return response;
 
 	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente", 
+			method = RequestMethod.GET, 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ArrayList<Ingrediente> recuperarngrediente(
+			@PathVariable int idReceta,
+			@RequestParam(value = "disponibles", required = false) boolean disp){
+			
+		ArrayList<Ingrediente> ingredientes = null;
+		
+		if(disp){
+			ingredientes = (ArrayList<Ingrediente>) servideReceta.listarIngredientesFueraReceta(idReceta);
+		}else{
+			ingredientes = (ArrayList<Ingrediente>) serviceIngrediente.listar("asc");
+		}
+		
+		return ingredientes;
+	}
+	
+	
 
 }

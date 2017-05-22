@@ -80,14 +80,58 @@ ${msg}
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
-	<li>
+	<li id="${ingrediente.id}listaing">
 		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
 		<span style="color:red;">
-			<a href="receta/${receta.id}/delete/ingrediente/${ingrediente.id}">[ Eliminar ]</a>
+			<button type="button" class="btn btn-default" title="Boton para modificar ingrediente ${ingrediente.nombre}" onclick="modificar_ingrediente(${ingrediente.id})" aria-label="Left Align">
+  				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default" title="Boton para eliminar ingrediente ${ingrediente.nombre}" onclick="eliminar_ingrediente(${ingrediente.id},'${ingrediente.nombre}',${receta.id})" aria-label="Left Align">
+  				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
 		</span>
 	</li>
 </c:forEach>
 </ol>
+
+<!--  Modal Eliminar Ingrediente -->
+<div id="modal-eliminar" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<p>¿Desea eliminar el ingrediente <span id="modal_eliminar_ing_nombre"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" id="borrado_seguro" class="btn btn-danger" data-dismiss="modal">Si, estoy seguro</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--  END: Modal Eliminar Ingrediente -->
+
+
+
+<!--  Modal Modificar Ingrediente -->
+<div id="modal-modificar" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Ingrediente</h4>
+      </div>
+      <div class="modal-body">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" id="modificado_seguro" class="btn btn-danger" data-dismiss="modal">Si, estoy seguro</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--  END: Modal Modificar Ingrediente -->
+
 
 
 <!-- Button trigger modal -->
