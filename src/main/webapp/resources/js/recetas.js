@@ -4,6 +4,7 @@ function gestion_recetas(){
 		$msj = $("#form1_msg");
 		var disabled;
 		var flag = false;
+
 		
 		$("#form1_nombre").keyup(function(){
 			var filter = $("#form1_nombre").val();
@@ -137,7 +138,11 @@ function eliminar_ingrediente ( id_ingrediente, nombre, id_receta ){
 	console.info('eliminando: INGREDIENTE:ID:' + id_ingrediente +' NOMBRE: '+ nombre + ' RECETA ID : '+id_receta);
 	$("#modal-eliminar").modal();
 	$("#modal_eliminar_ingrediente_nombre").text(nombre);
+	$("#dismiss-delete").click(function(){
+		$("#confirm-delete").unbind();
+	})
 	$("#confirm-delete").click(function(){
+		
 		$.ajax({
 		    url: "/formacion/api/receta/"+id_receta+"/ingrediente/"+id_ingrediente,
 		    type: 'DELETE',
@@ -156,7 +161,11 @@ function editar_ingrediente (id_ingrediente, nombre, cantidad, id_receta){
 	console.info('editando: INGREDIENTE:ID:' + id_ingrediente +' NOMBRE: '+ nombre + ' RECETA ID : '+id_receta + ' CANTIDAD :' + cantidad);
 	$("#modal-editar").modal();
 	$("#modal-ingrediente-editar-nombre").text(nombre);
-	$("#modal-ingrediente-editar-cantidad").val(cantidad);
+	//$("#modal-ingrediente-editar-cantidad").val(cantidad);
+	$("#modal-ingrediente-editar-cantidad").val($("#ingrediente-cantidad-"+id_ingrediente).text());
+	$("#dismiss-edit").click(function(){
+		$("#confirm-edit").unbind();
+	})
 	$("#confirm-edit").click(function(){
 		$.ajax({
 			url: "/formacion/api/receta/"+id_receta+"/ingrediente/",

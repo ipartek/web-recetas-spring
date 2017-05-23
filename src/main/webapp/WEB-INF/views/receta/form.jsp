@@ -105,7 +105,7 @@ ${msg}
         <p>Seguro que desea eliminar el ingrediente: <b><span id="modal_eliminar_ingrediente_nombre"></span></b></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss-delete">No</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-delete">Si, estoy seguro</button>
       </div>
     </div><!-- /.modal-content -->
@@ -127,7 +127,7 @@ ${msg}
         <input id="modal-ingrediente-editar-cantidad" type="text">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"  id="dismiss-edit">No</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-edit">Modificar</button>
       </div>
     </div><!-- /.modal-content -->

@@ -105,6 +105,9 @@ public class IngredienteController {
 		model.addAttribute("msg", msg);
 		//comprobar ordenacion
 		model.addAttribute("ingredientes", serviceIngrediente.listar(""));
+		model.addAttribute("formularioBusqueda", new FormularioBusqueda());
+		model.addAttribute("total", serviceIngrediente.total());
+		model.addAttribute("ingredientes", serviceIngrediente.listar(""));
 		return "ingrediente/index";
 	}
 

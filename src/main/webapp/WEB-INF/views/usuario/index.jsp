@@ -18,12 +18,12 @@
 		<c:forEach items="${usuarios}" var="u">
 			<tr>
 				<td>
-					<a href="/usuario/edit/${u.id}"> 
+					<a href="usuario/edit/${u.id}"> 
 						<img class="tamImg"  alt="imagen ${u.nombre}" src="${u.imagen}">
 					</a>
 				</td>				
 				<td>
-					<a href="/usuario/edit/${u.id}">${u.nombre}</a>
+					<a href="usuario/edit/${u.id}">${u.nombre}</a>
 				</td>
 				<td>
 					<span class="label label-primary">${fn:length(u.recetas)}</span>
