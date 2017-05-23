@@ -43,10 +43,13 @@ function gestion_recetas(){
 				var url  = "/formacion/api/receta/"+id_receta+"/ingrediente";
 				var form = $("#formulario_nuevo_ingrediente");
 				var li = "<li id='##id-ingrediente2##-list'>"+
-							"<a href='#'>##nombre##</a> - ##cantidad##"+ 
+							"##nombre## - <span id='ingrediente-cantidad-##id-ingrediente3##'>##cantidad##</span>"+ 
 					      	"<span style='color:red;'>" +
 					      	'<button type="button" class="btn btn-default" onclick="eliminar_ingrediente(##id-ingrediente##, \'##nombre2##\', ##id-receta##)">'+
-							'<span class="glyphicon glyphicon-trash"></span>'+
+					      		'<span class="glyphicon glyphicon-trash"></span>'+
+							'<button type="button" class="btn btn-default" onclick="editar_ingrediente(##id-ingrediente4##, \'##nombre3##\', \'##cantidad2##\', ##id-receta2##)">'+
+								'<span class="glyphicon glyphicon-pencil"></span>'+
+							'</button>'+
 							'</button>'+
 						   	"</span>"+
 						  "</li>";
@@ -70,10 +73,15 @@ function gestion_recetas(){
 							liAppend = li;
 							liAppend = liAppend.replace("##nombre##", data.nombre);
 							liAppend = liAppend.replace("##nombre2##", data.nombre);
+							liAppend = liAppend.replace("##nombre3##", data.nombre);
 							liAppend = liAppend.replace("##cantidad##", data.cantidad);		
+							liAppend = liAppend.replace("##cantidad2##", data.cantidad);	
 							liAppend = liAppend.replace("##id-ingrediente##", data.id);	
 							liAppend = liAppend.replace("##id-ingrediente2##", data.id);	
-							liAppend = liAppend.replace("##id-receta##", id_receta);	
+							liAppend = liAppend.replace("##id-ingrediente3##", data.id);
+							liAppend = liAppend.replace("##id-ingrediente4##", data.id);
+							liAppend = liAppend.replace("##id-receta##", id_receta);
+							liAppend = liAppend.replace("##id-receta2##", id_receta);
 							$("#list_ingredientes").append( liAppend );
 							
 							//limpiar campos
@@ -142,6 +150,37 @@ function eliminar_ingrediente ( id_ingrediente, nombre, id_receta ){
 	})
 	
 	
+}
+
+function editar_ingrediente (id_ingrediente, nombre, cantidad, id_receta){
+	console.info('editando: INGREDIENTE:ID:' + id_ingrediente +' NOMBRE: '+ nombre + ' RECETA ID : '+id_receta + ' CANTIDAD :' + cantidad);
+	$("#modal-editar").modal();
+	$("#modal-ingrediente-editar-nombre").text(nombre);
+	$("#modal-ingrediente-editar-cantidad").val(cantidad);
+	$("#confirm-edit").click(function(){
+		$.ajax({
+			url: "/formacion/api/receta/"+id_receta+"/ingrediente/",
+			"type": "put",
+			"contentType": "application/json",
+			"dataType": "json",
+			"data": JSON.stringify(
+						{									
+							"id": id_ingrediente,
+							"nombre": nombre,
+							"cantidad" : $("#modal-ingrediente-editar-cantidad").val()
+						}),
+			"success": function(data) {			
+				console.log("Llego el contenido %o", data);		
+				var css_cantidad_ingrediente = "#ingrediente-cantidad-" + data.id;
+		        $(css_cantidad_ingrediente).text(data.cantidad);
+				
+			},
+			"error": function(result) {
+				console.error("Este callback maneja los errores", result);
+				
+			}			
+		});
+	})
 }
 
 	

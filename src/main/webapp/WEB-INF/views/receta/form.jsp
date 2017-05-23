@@ -81,12 +81,15 @@ ${msg}
 <ol id="list_ingredientes">
 <c:forEach items="${receta.ingredientes}" var="ingrediente">
 	<li id="${ingrediente.id}-list">
-		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
+		${ingrediente.nombre}-  <span id="ingrediente-cantidad-${ingrediente.id}">${ingrediente.cantidad}</span>
 		<span style="color:red;">
 			<button type="button" class="btn btn-default" onclick="eliminar_ingrediente(${ingrediente.id}, '${ingrediente.nombre}', ${receta.id})">
 				<span class="glyphicon glyphicon-trash"></span>
-			</button>
+			</button>	
 		</span>
+			<button type="button" class="btn btn-default" onclick="editar_ingrediente(${ingrediente.id}, '${ingrediente.nombre}', '${ingrediente.cantidad}', ${receta.id})">
+				<span class="glyphicon glyphicon-pencil"></span>
+			</button>
 	</li>
 </c:forEach>
 </ol>
@@ -109,6 +112,29 @@ ${msg}
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- END_:MODAL ELIMIAR INGREDIENTE -->
+
+
+<!-- MODAL EDITAR INGREDIENTE -->
+<div  id="modal-editar"class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editar Ingrediente</h4>
+      </div>
+      <div class="modal-body">
+        <h2 id="modal-ingrediente-editar-nombre"></h2>
+        <input id="modal-ingrediente-editar-cantidad" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-edit">Modificar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- END_:MODAL EDITAR INGREDIENTE -->
+
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">

@@ -162,8 +162,8 @@ public class ApiIngredienteController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Ingrediente> modificar(@RequestBody Ingrediente ingrediente) {
+	@RequestMapping(value = "{idRecta}/ingrediente/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Ingrediente> modificar(@PathVariable int idReceta, @RequestBody Ingrediente ingrediente) {
 
 		ResponseEntity<Ingrediente> response = null;
 

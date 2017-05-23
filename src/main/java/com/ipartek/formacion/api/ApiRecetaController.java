@@ -219,20 +219,20 @@ public class ApiRecetaController {
 
 	}
 
-	@RequestMapping(value = "{idReceta}/ingrediente/{idIngrediente}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "{idReceta}/ingrediente/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Ingrediente> modificar(@PathVariable int idReceta, @RequestBody Ingrediente ingrediente) {
 
 		ResponseEntity<Ingrediente> response = null;
 
 		try {
-			LOG.info("Modificar un ingrediente" + ingrediente);
+			LOG.info("Modificar un ingrediente en receta" + ingrediente);
 
 			// TODO validar datos
 			response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
 
 			// TODO llamar al servicio
 
-			if (this.serviceIngrediente.modificar(ingrediente)) {
+			if (this.servideReceta.modificarIngrediente(idReceta, ingrediente)) {
 				response = new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
 			}
 
