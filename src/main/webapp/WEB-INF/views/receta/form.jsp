@@ -88,7 +88,7 @@ ${msg}
   <div class="modal-dialog" role="document">
     <div class="modal-content">      
       <div class="modal-body">
-        <p>¿Desea eliminar el ingrediente <b id="modal_eliminar_ingrediente_nombre"></b> ?</p>
+        <p>Â¿Desea eliminar el ingrediente?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -102,7 +102,7 @@ ${msg}
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">
-  Añadir Ingrediente
+  Aï¿½adir Ingrediente
 </button>
 
 <!-- Modal -->

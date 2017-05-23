@@ -93,6 +93,12 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		logger.trace("recuperando Ingrediente" + idIngrediente + "de una receta " + idReceta);
 		return daoIngrediente.getByReceta(idReceta, idIngrediente);
 	}
+	@Override
+	public List<Ingrediente> listarIngredientes(long idReceta) {
+
+		logger.trace("recuperando Ingredientes usados en la siguiente receta " + idReceta);
+		return daoIngrediente.getAllByReceta(idReceta);
+	}
 
 	@Override
 	public List<Ingrediente> listarIngredientesFueraReceta(long idReceta) {

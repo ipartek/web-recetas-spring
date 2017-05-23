@@ -201,11 +201,17 @@ public class ApiRecetaController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ArrayList<Ingrediente> recuperarIngredientes(
 				@PathVariable int idReceta, 
-				@RequestParam(value = "disponibles", required = false) String disponibles) 
-			
-	{
-		return (ArrayList<Ingrediente>) this.servideReceta.listarIngredientesFueraReceta(idReceta);
+				@RequestParam(value = "disponibles", required = false) boolean disponibles) {
+		
+	ArrayList<Ingrediente> resul =new ArrayList<Ingrediente>();
+	if(!disponibles){
+		resul=(ArrayList<Ingrediente>) servideReceta.listarIngredientes(idReceta);
 	}
-	
+	else
+	{
+		resul=(ArrayList<Ingrediente>) this.servideReceta.listarIngredientesFueraReceta(idReceta);
+	}
+	return resul;
 
+}
 }
