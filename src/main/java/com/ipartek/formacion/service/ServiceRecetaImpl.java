@@ -118,4 +118,10 @@ public class ServiceRecetaImpl implements ServiceReceta {
 		return daoIngrediente.listadoFueraDeReceta(idReceta, filter);
 	}
 
+	@Override
+	public List<Ingrediente> listarIngredientes(long idReceta) {
+		logger.trace("buscar ingredientes de la receta " + idReceta);
+		return daoIngrediente.getAllByReceta(idReceta);
+	}
+
 }

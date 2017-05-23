@@ -154,7 +154,7 @@ public class ApiRecetaController {
 
 			} else {
 
-				ingredientes = (ArrayList<Ingrediente>) this.serviceIngrediente.listar("ASC");
+				ingredientes = (ArrayList<Ingrediente>) this.serviceReceta.listarIngredientes(id);
 
 			}
 

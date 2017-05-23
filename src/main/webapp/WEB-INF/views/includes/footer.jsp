@@ -19,18 +19,5 @@
  <script src="resources/js/likes.js"></script>
  <script src="resources/js/recetas.js"></script>
 
-<script>
-
-	//Esperara a que todo el DOM este cargado
-	$(document).ready(function() {
-		
-		console.log('Documento Ready');		
-		
-		gestion_recetas();
-
-	});//$(document).ready
-	
-</script>
-
 </body>
 </html>

@@ -8,7 +8,7 @@ public interface ServiceIngrediente {
 
 	int total();
 
-	List<Ingrediente> listar( String order );
+	List<Ingrediente> listar(String order);
 
 	List<Ingrediente> listar(String filtroNombre, boolean ordenAscedente);
 

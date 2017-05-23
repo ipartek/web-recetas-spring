@@ -52,4 +52,5 @@ public interface ServiceReceta {
 	 */
 	List<Ingrediente> listarIngredientesFueraReceta(long idReceta, String filter);
 
+	List<Ingrediente> listarIngredientes(long idReceta);
 }
