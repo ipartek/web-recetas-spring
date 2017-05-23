@@ -18,13 +18,6 @@
  <script src="resources/js/likes.js"></script>
  <script src="resources/js/recetas.js"></script>
 
-
-<script>
-$(document).ready(function() {
-	gestion_recetas();	   
-});	
-</script>
-
 </body>
 </html>
 

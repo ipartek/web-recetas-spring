@@ -12,7 +12,7 @@ ${msg}
 	
 		<div class="row">
 			<div class="col-md-6">
-				<form:hidden id="id" path="id"/><br>
+				<form:hidden path="id"/><br>
 				
 				<form:label path="nombre">Nombre</form:label>
 				<form:input path="nombre"/><br>	
@@ -79,9 +79,21 @@ ${msg}
 
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">
+<c:forEach items="${receta.ingredientes}" var="ingrediente">
+	<li id="ingrediente${ingrediente.id}_list">
+		<a href="receta/${receta.id}/edit/ingrediente/${ingrediente.id}">${ingrediente.nombre}</a> - ${ingrediente.cantidad} 
+		<span style="color:red;">
+			<button type="button" 
+					title="Botón para eliminar ingrediente ${ingrediente.id}"
+					class="btn btn-default" 
+					onClick="show_modal_eliminar_ingrediente(${ingrediente.id},'${ingrediente.nombre}')">
+			  	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
+
+		</span>
+	</li>
+</c:forEach>
 </ol>
-
-
 
 <!-- Modal Eliminar Ingrediente -->
 <div id="modal-elimnar" class="modal fade" tabindex="-1" role="dialog">
