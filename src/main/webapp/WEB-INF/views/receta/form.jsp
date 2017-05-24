@@ -84,7 +84,7 @@ ${msg}
 
 
 <!-- Modal Eliminar Ingrediente -->
-<div id="modal-elimnar" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal-eliminar" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">      
       <div class="modal-body">
@@ -99,6 +99,36 @@ ${msg}
 </div><!-- /.modal -->
 <!-- End: Modal Eliminar Ingrediente -->
 
+
+<!-- Modal Modificar Ingrediente -->
+<div id="modal-modificar" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">      
+      <div class="modal-header">
+		<h4>Modificar Ingrediente <b id="modal_eliminar_ingrediente_nombre"></b> </h4>
+	</div>
+      
+      <div class="modal-body">
+      	<br>
+		<form id="crear-ingrediente" class="form-horizontal" action="#">
+	        <!-- cantidad -->
+			<div class="form-group">
+				<label for="form2_cantidad" class="col-sm-2 control-label">Cantidad:</label>
+				<div class="col-sm-10">
+					<input id="form2_cantidad" class="form-control" type="text" value="" placeholder="Si no se indica nada, a ojimetro...">
+				</div>
+			</div>
+		</form>
+		<br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button onClick="modificar_ingrediente();" type="button" class="btn btn-primary'" data-dismiss="modal">Modificar Ingrediente</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End: Modal Eliminar Ingrediente -->
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_ingrediente">Añadir ingrediente</button>
@@ -147,7 +177,7 @@ ${msg}
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 				<!-- <button id="btn_guardar_ingrediente" type="button" class="disabled btn btn-primary">Guardar Ingrediente</button> -->
-				<button id="btn_guardar_ingrediente" type="button" class="btn btn-primary" onclick="insertar_ingrediente()">Guardar Ingrediente</button>
+				<button id="btn_guardar_ingrediente" type="button" class="disabled btn btn-primary" onclick="insertar_ingrediente()">Guardar Ingrediente</button>
 			</div>
 		</div>
 	</div>
