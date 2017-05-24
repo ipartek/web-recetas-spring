@@ -69,26 +69,27 @@ ${msg}
 
 <c:if test="${receta.id != -1}">
 	<button type="button" class="btn btn-danger">
-	<a style="color:red;" href="#" >Eliminar</a>
+	<a style="color:red;" href="#" >Eliminar Receta</a>
 	</button>
 </c:if>
-
-
-
 
 
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">
 </ol>
 
+<!-- Button abrir modal añadir ingrediente -->
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">
+  A&ntilde;adir Ingrediente
+</button>
 
 
 <!-- Modal Eliminar Ingrediente -->
-<div id="modal-elimnar" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal-eliminar" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">      
       <div class="modal-body">
-        <p>¿Desea eliminar el ingrediente?</p>
+        <p>Desea eliminar el ingrediente?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -99,13 +100,47 @@ ${msg}
 </div><!-- /.modal -->
 <!-- End: Modal Eliminar Ingrediente -->
 
+<!-- Modal Editar Ingrediente -->
+<div id="modal-editar" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">      
+      <form action="#" class="form-horizontal">
+        	<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editar Ingrediente</h4>
+      </div>
+      <div class="modal-body">
+	        	<!-- nombre ingredientes -->
+	        	 <div class="form-group">        	
+	        	 	<label for="form1_nombre" class="col-sm-2 control-label">Nombre</label>
+	        	 	<div class="col-sm-10">	
+	        			<input type="text" value="" id="form_editar_nombre"	        			       
+	        			       class="form-control">	        				        			       
+	        		</div>	
+	        	 </div>
+	        	 
+	        	 <!-- cantidad  -->
+	        	 <div class="form-group">        	
+	        	 	<label for="form1_cantidad" class="col-sm-2 control-label">Cantidad</label>
+	        	 	<div class="col-sm-10">	
+	        			<input type="text" value=""
+	        				   class="form-control" 
+	        				   id="form_editar_cantidad" >
+	        		</div>	
+	        	 </div>
+        	
+        	</form>
+        	</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button onClick="eliminar_ingrediente();" type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End: Modal Editar Ingrediente -->
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">
-  A�adir Ingrediente
-</button>
-
-<!-- Modal -->
+<!-- Modal Añadir Ingrediente-->
 <div class="modal fade" id="modal_ingrediente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -151,5 +186,6 @@ ${msg}
   </div>
 </div>
 
+<!-- End: Modal Añadir Ingrediente -->
 
 <%@ include file="../includes/footer.jsp" %> 
