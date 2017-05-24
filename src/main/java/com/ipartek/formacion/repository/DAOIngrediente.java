@@ -51,4 +51,8 @@ public interface DAOIngrediente {
 
 	List<Ingrediente> listadoFueraDeReceta(long recetaId);
 
+	Ingrediente existe(String nombre);
+
+	List<Ingrediente> filtradoFueraDeReceta(String filtro, long recetaId);
+
 }

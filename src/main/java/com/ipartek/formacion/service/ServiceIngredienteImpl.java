@@ -60,5 +60,11 @@ public class ServiceIngredienteImpl implements ServiceIngrediente {
 		logger.trace("eliminar " + id);
 		return daoIngrediente.delete(id);
 	}
+	
+	@Override
+	public Ingrediente existe(String nombre) {
+
+		return daoIngrediente.existe(nombre);
+	}
 
 }

@@ -103,7 +103,7 @@ tr:hover {
 	cursor: pointer;
 }
 
-.card.hovercard .avatar .icono #likes {
+.card .likes_number {
 	position: absolute;
 	margin: -18px 0px;
 	font-weight: bold;
@@ -187,4 +187,11 @@ tr:hover {
     opacity: 0;
     transform: scale(3);
   }
+}
+
+/* autocomplete modal 
+***************************************************************/
+
+.ui-autocomplete {
+  z-index: 1051 !important;
 }

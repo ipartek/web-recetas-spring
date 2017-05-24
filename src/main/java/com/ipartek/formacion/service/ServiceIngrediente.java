@@ -20,4 +20,6 @@ public interface ServiceIngrediente {
 
 	boolean eliminar(long id);
 
+	Ingrediente existe(String nombre);
+
 }

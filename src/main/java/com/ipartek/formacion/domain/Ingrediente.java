@@ -4,6 +4,8 @@ import javax.validation.constraints.Size;
 
 public class Ingrediente {
 
+	public static final String CANTIDAD_POR_DEFECTO = "A Ojimetro";
+	
 	private long id;
 
 	@Size(min = 3, max = 255)
@@ -18,7 +20,7 @@ public class Ingrediente {
 		this.id = -1;
 		this.nombre = "";
 		this.gluten = true;
-		this.cantidad = "";
+		this.cantidad = CANTIDAD_POR_DEFECTO;
 	}
 
 	public Ingrediente(long id, String nombre, boolean gluten) {
@@ -41,7 +43,13 @@ public class Ingrediente {
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		if ( nombre == null ){
+			this.nombre = "";
+		}else{
+			nombre = nombre.trim();
+			nombre = nombre.replaceAll(" +", " ");
+			this.nombre = nombre;	
+		}
 	}
 
 	public boolean isGluten() {
@@ -57,7 +65,15 @@ public class Ingrediente {
 	}
 
 	public void setCantidad(String cantidad) {
-		this.cantidad = cantidad;
+		if ( cantidad == null ){
+			this.cantidad = CANTIDAD_POR_DEFECTO;
+		}else{
+			if ( "".equals(cantidad.trim())){
+			  this.cantidad = CANTIDAD_POR_DEFECTO;
+			}else{
+				this.cantidad = cantidad;
+			}	
+		}	
 	}
 
 	@Override

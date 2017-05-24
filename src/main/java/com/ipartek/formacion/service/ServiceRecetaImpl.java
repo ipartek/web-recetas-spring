@@ -104,15 +104,23 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public int getLikes(long idReceta) {
 
-		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
 		return daoReceta.getLikes(idReceta);
 	}
 	
 	@Override
 	public boolean addLikes(long idReceta) {
 
-		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
 		return daoReceta.addLikes(idReceta);
 	}
+	
+	@Override
+	public List<Ingrediente> FiltrarIngredientesFueraReceta(String filtro, long idReceta) {
 
+		return daoIngrediente.filtradoFueraDeReceta(filtro, idReceta);
+	}
+
+	@Override
+	public List<Ingrediente> listarIngredientes(long idReceta){
+		return daoIngrediente.getAllByReceta(idReceta);
+	}
 }

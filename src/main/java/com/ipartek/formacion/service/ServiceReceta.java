@@ -50,4 +50,8 @@ public interface ServiceReceta {
 
 	boolean addLikes(long idReceta);
 
+	List<Ingrediente> FiltrarIngredientesFueraReceta(String filtro, long idReceta);
+
+	List<Ingrediente> listarIngredientes(long idReceta);
+
 }
