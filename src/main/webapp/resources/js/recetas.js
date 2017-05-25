@@ -80,14 +80,15 @@ function eliminar_ingrediente(){
 		"success": function(data) {				
 			console.info("Eliminado ingrediente %o", ingrediente_seleccionado);
 			console.debug('%o', ingredientes);
-
+			
 			ingredientes.splice(posicion,1);
 			console.debug('%o', ingredientes);
-
+			show_toast(ingrediente_seleccionado.nombre + " eliminado correctamente");
 			refrescar_lista();
 		},
 		"error": function(result) {
 			console.error("No se ha podido eliminar");
+			show_toast("No se ha podido eliminar " + ingrediente_seleccionado.nombre);
 		}			
 	});
 }
@@ -114,18 +115,16 @@ function anadir_ingrediente(){
 				//refrescar lista
 				ingredientes.push(data);
 				refrescar_lista();
-
 				$('#modal_crear').modal('hide');
+				show_toast("Ingrediente " + data.nombre + " añadido");
 			}else{
-				$msj.html("");
-				$msj.html(data.error);
+				show_toast("Error: "+ data.error);
 			}	
 			
 		},
 		"error": function(result) {
 			console.error("Este callback maneja los errores", result);
-			$msj.html("");
-			$msj.html(result.responseJSON.error);
+			show_toast("Error: "+ result.responseJSON.error);
 		}			
 	});
 }
@@ -149,11 +148,37 @@ function modificar_ingrediente(){
 				ingredientes[posicion] = data;
 				//Alternativa = ingredientes.splice(posicion,1,data);
 				refrescar_lista();
+				show_toast("Ingrediente " + data.nombre + " modificada la cantidad a " + data.cantidad);
 				console.log("Modificado");
 			},
 			"error": function(result) {
-				console.error("No se ha podido eliminar");
+				console.error("No se ha podido modificar");
+				show_toast("Error: No se ha podido Modificar " + ingrediente_seleccionado.nombre);
 			}			
 		
 	}); 
 }
+
+$("#form1_nombre").autocomplete({
+    source: function( request, response ){
+  	  var id_receta = $("#id_receta").val();
+
+  	  var url  = "/formacion/api/receta/"+id_receta+"/ingrediente?disponibles=true&filter="+$("#form1_nombre").val();
+  	  $.ajax( {
+  		  url: url,
+  		  dataType: "json",
+            success: function( data ) {
+
+          	var array_solo_nombres = [];
+          	$.each(data, function(index, ing){
+          		array_solo_nombres.push(ing.nombre);
+          	});
+              response( array_solo_nombres );
+            }
+  	 });
+  	 
+    },
+    
+    minLength: 2
+   
+  });   

@@ -124,8 +124,9 @@ function gestion_recetas(){
 	                response( array_solo_nombres );
 	              }
 	    	 });
+	    	 minLenght: 2
 	      },
-	      minLenght: 2
+	     
 	    });   
 	    
 	    

@@ -217,7 +217,7 @@ public class ApiRecetaController {
 		ArrayList<Ingrediente> ingredientes = null;
 		if ("true".equals(disp) && filtro == null){
 			ingredientes = (ArrayList<Ingrediente>) servideReceta.listarIngredientesFueraReceta(idReceta);
-		} else if ("true".equals(disp) && filtro.length() > 1 ){
+		} else if ("true".equals(disp) && filtro.length() > 0 ){
 			ingredientes = (ArrayList<Ingrediente>) servideReceta.FiltrarIngredientesFueraReceta(filtro, idReceta);
 		} else {
 			ingredientes = (ArrayList<Ingrediente>) servideReceta.listarIngredientes(idReceta);
