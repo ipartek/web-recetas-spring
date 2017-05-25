@@ -6,7 +6,16 @@
 
 ${msg}
 
-
+	<form action="upload" method="post" enctype="multipart/form-data">
+	
+		<input type="hidden" name="ruta" value="receta/edit/${receta.id}">
+		
+		<label for="imagen">Selecciona una imagen</label>
+		<input type="file" name="imagen">
+		<br>
+		<input type="submit" value="Subir Nueva Foto">
+	
+	</form>
 
 	<form:form action="receta/crear" modelAttribute="receta">
 	

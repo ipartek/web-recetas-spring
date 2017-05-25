@@ -37,7 +37,10 @@
 	</interceptors>
 	<!-- end: i18n Internacionalitation -->
 	
-	
+	<!-- gestion subida ficheros -->
+ 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 		<beans:property name="maxUploadSize" value="1048576" /> <!-- 1Mb -->
+ 	</beans:bean>
 	
 	<context:component-scan base-package="com.ipartek.formacion" />
 	
