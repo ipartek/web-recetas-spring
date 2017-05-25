@@ -47,7 +47,7 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
-	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ?, `likes`= ? WHERE `id`= ? ;";
+	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_GET_LIKES = "SELECT `likes` FROM receta WHERE id=?;";
 	private static final String SQL_ADD_LIKES = "UPDATE `receta` SET `likes` = `likes` +1 WHERE id = ?;";
@@ -211,7 +211,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		try {
 
-			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(),r.getLikes() , r.getUsuario().getId(),
+			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion() , r.getUsuario().getId(),
 					r.getId() };
 			affectedRows = this.jdbcTemplate.update(SQL_UPDATE, argumentos);
 

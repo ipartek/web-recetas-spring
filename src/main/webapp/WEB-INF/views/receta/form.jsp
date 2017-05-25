@@ -6,9 +6,16 @@
 
 ${msg}
 
+	<form action="upload" method="post" enctype="multipart/form-data">
+	
+		<label for="imagen">Selecciona una imagen</label>
+		<input type="file" name="imagen">
+		<input type="hidden" name="rutaId" value="receta/edit/${receta.id}">
+		<input type="submit" value="Subir nueva foto">
+	
+	</form>
 
-
-	<form:form action="receta/crear" modelAttribute="receta">
+	<form:form action="receta/crear" modelAttribute="receta" >
 	
 		<div class="row">
 			<div class="col-md-6">
@@ -23,6 +30,7 @@ ${msg}
 				<form:input path="imagen"/><br>	
 				<form:errors path="imagen" cssStyle="color:red;"/>
 				<br>
+			
 				
 				<form:label path="descripcion">Descripcion</form:label>
 				<form:textarea rows="8" cols="80" path="descripcion"/><br>	
