@@ -278,6 +278,7 @@ ${msg}
 		console.debug('show_toast: ' + texto);
 		
 		var toast = document.getElementById('toast');
+		toast.innerHTML = texto;
 		toast.style.animation = "show 2s";
 		toast.style.animationFillMode = "forwards";
 		

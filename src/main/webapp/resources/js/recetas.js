@@ -89,6 +89,7 @@
 				ingredientes.splice(posicion,1);
 				refrescar_lista();
 				
+				show_toast('El ingrediente se ha eliminado correctamente');
 			},
 			
 			"error" : function(result) {
@@ -96,6 +97,9 @@
 						result);
 				if(result.mensaje != null){
 					$msj.html(result.mensaje);
+					show_toast(result.mensaje);
+				}else{
+					show_toast('No se ha podido modificar. Intentelo de nuevo.');
 				}
 			}
 		});
@@ -133,10 +137,12 @@
  					//cerrar modal
  					$('#modal_ingrediente').modal('hide');
  					
+ 					show_toast('El ingrediente se ha insertado correctamente');
  					
 				}else{
 					console.log('Hay mensaje para el usuario');
 					$msj.html(result.mensaje);
+					show_toast(result.mensaje);
 				}
 			},
 			
@@ -145,6 +151,9 @@
 						result);
 				if(result.mensaje != null){
 					$msj.html(result.mensaje);
+					show_toast(result.mensaje);
+				}else{
+					show_toast('No se ha podido insertar. Compruebe que los datos son correctos.');
 				}
 			}
 		});
@@ -180,6 +189,7 @@
  					//cerrar modal
  					$('#modal_ingrediente').modal('hide');
  					
+ 					show_toast('El ingrediente se ha modificado correctamente');
  					
 				}else{
 					console.log('Hay mensaje para el usuario');
@@ -192,6 +202,9 @@
 						result);
 				if(result.mensaje != null){
 					$msj.html(result.mensaje);
+					show_toast(result.mensaje);
+				}else{
+					show_toast('No se ha podido modificar. Intentelo de nuevo.');
 				}
 			}
 		});
