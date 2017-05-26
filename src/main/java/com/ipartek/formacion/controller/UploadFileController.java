@@ -58,7 +58,7 @@ public class UploadFileController  /*implements HandlerExceptionResolver*/ {
 				Imagen i = new Imagen();
 				i.setId_receta(idReceta);
 				i.setUrl(file.getOriginalFilename());
-				serviceReceta.InsertarImagen(i);
+				serviceReceta.insertarImagen(i);
 			} else {
 				LOG.warn("Fichero vacio");
 				mensaje = "fichero vacio";

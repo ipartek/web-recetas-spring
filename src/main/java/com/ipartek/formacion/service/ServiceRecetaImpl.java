@@ -136,7 +136,7 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	}
 	
 	@Override
-	public boolean InsertarImagen(Imagen i) {
+	public boolean insertarImagen(Imagen i) {
 		return daoReceta.addImage(i);
 	}
 }

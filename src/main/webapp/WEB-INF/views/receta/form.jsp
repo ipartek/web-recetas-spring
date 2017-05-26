@@ -82,9 +82,20 @@ ${msg}
 						</button>
 					</c:if>
 
-
-
-
+<c:if test="${not empty imagenes}">
+		<br>
+		<h3>Listado de imagenes</h3>
+		<div class="row">
+		<c:forEach items="${imagenes}" var="i">
+			<div class="col-md-4">
+						<img class="tamImg img-thumbnail"  alt="imagen" src="http://localhost:8080/uploads/${i.url}">			
+				<p>
+					<a href="receta/${receta.id}/eliminarImagen/${i.id}">Eliminar imagen</a>
+				</p>
+			</div>	
+		</c:forEach>
+		</div>
+</c:if>
 
 <h2>Listado Ingredientes</h2>
 <ol id="list_ingredientes">

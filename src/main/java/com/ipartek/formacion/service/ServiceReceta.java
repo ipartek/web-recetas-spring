@@ -59,6 +59,6 @@ public interface ServiceReceta {
 
 	boolean eliminarImagen(long id);
 
-	boolean InsertarImagen(Imagen i);
+	boolean insertarImagen(Imagen i);
 
 }
