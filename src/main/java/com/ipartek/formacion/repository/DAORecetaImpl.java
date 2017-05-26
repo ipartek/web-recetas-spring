@@ -20,7 +20,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.repository.mapper.ImagenMapper;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
 import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
 
@@ -47,10 +49,14 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `id` = ?";
 	private static final String SQL_DELETE = "DELETE FROM `receta` WHERE `id` = ?;";
-	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ?, `likes`= ? WHERE `id`= ? ;";
+	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_GET_LIKES = "SELECT `likes` FROM receta WHERE id=?;";
 	private static final String SQL_ADD_LIKES = "UPDATE `receta` SET `likes` = `likes` +1 WHERE id = ?;";
+
+	private static final String SQL_INSERT_IMG = "INSERT INTO `imagenes` (`id_receta`,`url`) VALUES(?,?)";
+	private static final String SQL_DELETE_IMG = "DELETE FROM `imagenes` WHERE `id` = ?";
+	private static final String SQL_GET_ALL_IMG = "SELECT  `id`,`id_receta`,`url` FROM imagenes WHERE `id_receta` = ?";
 	
 	@Override
 	public List<Receta> getAll() {
@@ -73,40 +79,40 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
-	
+
 	@Override
 	public List<Receta> getAllWithUSer() {
-		
+
 		this.LOG.trace("Recuperando Recetas con Usuarios");
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
 			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USER, new RecetaUsuarioMapper());
-			this.LOG.debug("Recuperandas " + lista.size()  + " Recetas"  );
-			
+			this.LOG.debug("Recuperandas " + lista.size() + " Recetas");
+
 		} catch (EmptyResultDataAccessException e) {
 
 			this.LOG.warn("No existen recetas todavia", e);
 
 		} catch (Exception e) {
 
-			this.LOG.error("Excepion inseperada" , e);
+			this.LOG.error("Excepion inseperada", e);
 
 		}
 
 		return lista;
 	}
-	
-	
+
 	public List<Receta> getAllwithUsers() {
 
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
-			//lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new RecetaUsuarioMapper());
+			// lista = (ArrayList<Receta>)
+			// this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new
+			// RecetaUsuarioMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -120,7 +126,6 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
 
 	@Override
 	public List<Receta> getAllByUser(long idUsuario) {
@@ -211,8 +216,8 @@ public class DAORecetaImpl implements DAOReceta {
 
 		try {
 
-			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(),r.getLikes() , r.getUsuario().getId(),
-					r.getId() };
+			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(),
+					r.getUsuario().getId(), r.getId() };
 			affectedRows = this.jdbcTemplate.update(SQL_UPDATE, argumentos);
 
 			if (affectedRows == 1) {
@@ -274,7 +279,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return resul;
 	}
-	
+
 	@Override
 	public boolean addLikes(long id) {
 
@@ -299,6 +304,90 @@ public class DAORecetaImpl implements DAOReceta {
 		}
 
 		return resul;
+	}
+	
+	@Override
+	public boolean insertImagen(Imagen img) {
+
+		boolean resul = false;
+
+		try {
+			int affectedeRows = -1;
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+
+			affectedeRows = this.jdbcTemplate.update(new PreparedStatementCreator() {
+
+				@Override
+				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+					PreparedStatement ps = conn.prepareStatement(SQL_INSERT_IMG, Statement.RETURN_GENERATED_KEYS);
+					ps.setLong(1, img.getId_receta());
+					ps.setString(2, img.getUrl());
+					return ps;
+				}
+			}, keyHolder);
+
+			if (affectedeRows == 1) {
+				img.setId(keyHolder.getKey().longValue());
+				resul = true;
+			}
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage());
+
+		}
+
+		return resul;
+	}
+	
+	@Override
+	public boolean deleteImagen(long id) {
+
+		LOG.trace("eliminar " + id);
+		boolean resul = false;
+		int affectedRows = -1;
+
+		try {
+
+			affectedRows = this.jdbcTemplate.update(SQL_DELETE_IMG, id);
+
+			if (affectedRows == 1) {
+				resul = true;
+			}
+		} catch (DataIntegrityViolationException e) {
+
+			this.LOG.warn(e.getMessage());
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage());
+
+		}
+
+		return resul;
+	}
+	
+	@Override
+	public List<Imagen> getAllImg(long idReceta) {
+
+		this.LOG.trace("Recuperando Recetas con Usuarios");
+		ArrayList<Imagen> lista = new ArrayList<Imagen>();
+
+		try {
+
+			lista = (ArrayList<Imagen>) this.jdbcTemplate.query(SQL_GET_ALL_IMG, new Object[] {idReceta}, new ImagenMapper());
+			this.LOG.debug("Recuperandas " + lista.size() + " Recetas");
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia", e);
+
+		} catch (Exception e) {
+
+			this.LOG.error("Excepion inseperada", e);
+
+		}
+
+		return lista;
 	}
 
 }

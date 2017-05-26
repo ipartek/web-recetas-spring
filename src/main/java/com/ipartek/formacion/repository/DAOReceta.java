@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Receta;
 
 public interface DAOReceta {
@@ -35,5 +36,11 @@ public interface DAOReceta {
 	int getLikes(long id);
 
 	boolean addLikes(long id);
+
+	boolean insertImagen(Imagen img);
+
+	boolean deleteImagen(long id);
+
+	List<Imagen> getAllImg(long idReceta);
 
 }

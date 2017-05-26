@@ -109,6 +109,27 @@ public class ApiRecetaController {
 			return response;
 		}
 	}
+	
+	@RequestMapping(value = "{idReceta}/ingrediente/", method = RequestMethod.PUT)
+	public @ResponseBody ResponseEntity<Ingrediente> modificarIngredienteDeReceta(@RequestBody Ingrediente i,@PathVariable int idReceta) {
+
+		ResponseEntity<Ingrediente> response = null;
+		try {
+			boolean resul;
+			resul = this.servideReceta.modificarIngrediente(idReceta, i);
+			if(resul){
+				response = new ResponseEntity<Ingrediente>(i,HttpStatus.OK);
+			}else{
+				response = new ResponseEntity<Ingrediente>(HttpStatus.NO_CONTENT);
+			}
+			
+		} catch (Exception e) {
+			LOG.error("Excepcion sin controlar", e);
+			response = new ResponseEntity<Ingrediente>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} finally {
+			return response;
+		}
+	}
 
 	@RequestMapping(value = "{id}/likes", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<String> getLike(@PathVariable int id) {
@@ -199,7 +220,7 @@ public class ApiRecetaController {
 		if(disp){
 			ingredientes = (ArrayList<Ingrediente>) servideReceta.listarIngredientesFueraReceta(idReceta);
 		}else{
-			ingredientes = (ArrayList<Ingrediente>) serviceIngrediente.listar("asc");
+			ingredientes = (ArrayList<Ingrediente>) servideReceta.listaringredientesdereceta(idReceta);
 		}
 		
 		return ingredientes;

@@ -264,3 +264,25 @@ tr:hover {
 
 /* end: autocomplete modal */
 
+.margenarriba{
+	margin-top:50px;
+}
+
+.margenbotoneliminar{
+	margin-top: -7px;
+}
+
+.imagengaleria{
+	position:relative;
+}
+
+.imagengaleria:hover .spangaleria{
+	display:block;
+}
+
+.spangaleria{
+	position:absolute;
+	top:0px;
+	right:0px;
+	display:none;
+}

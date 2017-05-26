@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
@@ -113,6 +114,26 @@ public class ServiceRecetaImpl implements ServiceReceta {
 
 		logger.trace("recuperando Ingredientes no usados en la siguiente receta " + idReceta);
 		return daoReceta.addLikes(idReceta);
+	}
+
+	@Override
+	public List<Ingrediente> listaringredientesdereceta(long idReceta) {
+		return daoIngrediente.getAllByReceta(idReceta);
+	}
+	
+	@Override
+	public boolean insertImagen(Imagen img) {
+		return daoReceta.insertImagen(img);
+	}
+	
+	@Override
+	public boolean deleteImagen(long id) {
+		return daoReceta.deleteImagen(id);
+	}
+	
+	@Override
+	public List<Imagen> getAllImg(long idReceta) {
+		return daoReceta.getAllImg(idReceta);
 	}
 
 }

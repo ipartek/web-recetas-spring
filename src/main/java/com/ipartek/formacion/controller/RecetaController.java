@@ -62,10 +62,16 @@ public class RecetaController {
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
-
+		model.addAttribute("imagenes", serviceReceta.getAllImg(id));
 		model.addAttribute("receta", serviceReceta.buscarPorID(id));
 		model.addAttribute("usuarios", serviceUsuario.listar());
 		return "receta/form";
+	}
+	
+	@RequestMapping(value = "/{idReceta}/eliminarImagen/{idImagen}", method = RequestMethod.GET)
+	public String eliminarImagen(@PathVariable int idReceta ,@PathVariable int idImagen, Model model) {
+		serviceReceta.deleteImagen(idImagen);
+		return "redirect:/receta/edit/"+idReceta+"/";
 	}
 
 	@RequestMapping(value = "/crear", method = RequestMethod.POST)
