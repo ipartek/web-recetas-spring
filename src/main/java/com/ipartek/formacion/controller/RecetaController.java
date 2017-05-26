@@ -63,7 +63,8 @@ public class RecetaController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id, Model model) {
 
-		model.addAttribute("receta", serviceReceta.buscarPorID(id));
+		// model.addAttribute("receta", serviceReceta.buscarPorID(id));
+		model.addAttribute("receta", serviceReceta.listarConImagenes(id));
 		model.addAttribute("usuarios", serviceUsuario.listar());
 		return "receta/form";
 	}

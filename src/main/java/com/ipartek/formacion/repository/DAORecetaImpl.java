@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -20,7 +21,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.repository.mapper.RecetaImagenesUsuarioResultSetExtractor;
 import com.ipartek.formacion.repository.mapper.RecetaMapper;
 import com.ipartek.formacion.repository.mapper.RecetaUsuarioMapper;
 
@@ -50,6 +53,8 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_UPDATE = "UPDATE `receta` SET `nombre`= ? , `imagen`= ?, `descripcion`= ?, `usuario_id` = ? WHERE `id`= ? ;";
 	private static final String SQL_UPDATE_LIKES = "UPDATE `receta` SET `likes`= `likes` + 1  WHERE `id`= ? ;";
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
+	private static final String SQL_UPLOAD_IMAGE = "INSERT INTO `imagen` (`nombre`, `receta_id`) VALUES (?, ?);";
+	private static final String SQL_GET_BY_ID_WITH_IMAGES_AND_USER = "SELECT `r`.`id` AS `receta_id`, `r`.`nombre` AS `receta_nombre`, `r`.`imagen` AS `receta_imagen`, `r`.`descripcion` AS `receta_descripcion`, `r`.`likes` AS `receta_likes`, `u`.`id` AS `usuario_id`, `u`.`nombre` AS `usuario_nombre`, `u`.`email` AS `usuario_email`, `u`.`imagen` AS `usuario_imagen`, `i`.`id` AS `imagen_id`, `i`.`nombre` AS `imagen_nombre` FROM `receta` AS `r` LEFT JOIN `imagen` AS `i` ON `r`.`id` = `i`.`receta_id`, `usuario` AS `u` WHERE `u`.`id` = `r`.`usuario_id` AND `r`.`id` = ?;";
 
 	@Override
 	public List<Receta> getAll() {
@@ -118,6 +123,33 @@ public class DAORecetaImpl implements DAOReceta {
 		}
 
 		return lista;
+	}
+
+	public Receta getByIdWithImages(long id) {
+
+		Receta r = new Receta();
+
+		try {
+
+			HashMap<Long, Receta> hmRecetas = this.jdbcTemplate.query(SQL_GET_BY_ID_WITH_IMAGES_AND_USER,
+					new Object[] { id }, new RecetaImagenesUsuarioResultSetExtractor());
+			if (hmRecetas.size() == 1) {
+				r = hmRecetas.get(id);
+			} else {
+				this.LOG.warn("Se ha producido un error o la receta solicitada no existe");
+			}
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia", e);
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage(), e);
+
+		}
+
+		return r;
 	}
 
 	@Override
@@ -269,6 +301,41 @@ public class DAORecetaImpl implements DAOReceta {
 		} catch (Exception e) {
 
 			this.LOG.error(e.getMessage());
+
+		}
+
+		return resul;
+	}
+
+	@Override
+	public boolean uploadImage(Imagen i) {
+		LOG.trace("subir imagen de la receta " + i);
+		boolean resul = false;
+
+		try {
+
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			int affectedRows = this.jdbcTemplate.update(new PreparedStatementCreator() {
+
+				@Override
+				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+
+					PreparedStatement ps = conn.prepareStatement(SQL_UPLOAD_IMAGE, Statement.RETURN_GENERATED_KEYS);
+					ps.setString(1, i.getNombre());
+					ps.setLong(2, i.getReceta().getId());
+
+					return ps;
+				}
+			}, keyHolder);
+
+			if (affectedRows == 1) {
+				i.setId(keyHolder.getKey().longValue());
+				resul = true;
+			}
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage(), e);
 
 		}
 

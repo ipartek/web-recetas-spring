@@ -26,6 +26,8 @@ public class Receta implements Serializable {
 
 	private int likes;
 
+	private ArrayList<Imagen> imagenes;
+
 	public Receta() {
 		super();
 		this.id = -1;
@@ -35,10 +37,11 @@ public class Receta implements Serializable {
 		this.ingredientes = new ArrayList<Ingrediente>();
 		this.usuario = null;
 		this.likes = 0;
+		this.imagenes = null;
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -46,7 +49,7 @@ public class Receta implements Serializable {
 	}
 
 	public Usuario getUsuario() {
-		return usuario;
+		return this.usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -54,7 +57,7 @@ public class Receta implements Serializable {
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -62,7 +65,7 @@ public class Receta implements Serializable {
 	}
 
 	public String getImagen() {
-		return imagen;
+		return this.imagen;
 	}
 
 	public void setImagen(String imagen) {
@@ -70,7 +73,7 @@ public class Receta implements Serializable {
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return this.descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
@@ -78,7 +81,7 @@ public class Receta implements Serializable {
 	}
 
 	public ArrayList<Ingrediente> getIngredientes() {
-		return ingredientes;
+		return this.ingredientes;
 	}
 
 	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
@@ -93,10 +96,28 @@ public class Receta implements Serializable {
 		this.likes = likes;
 	}
 
+	public ArrayList<Imagen> getImagenes() {
+		return this.imagenes;
+	}
+
+	public void setImagenes(ArrayList<Imagen> imagenes) {
+		this.imagenes = imagenes;
+	}
+
+	public void addImagen(Imagen imagenes) {
+		if (this.imagenes == null) {
+			this.imagenes = new ArrayList<Imagen>();
+		}
+		if (imagenes != null) {
+			this.imagenes.add(imagenes);
+		}
+	}
+
 	@Override
 	public String toString() {
-		return "Receta [id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", descripcion=" + descripcion
-				+ ", ingredientes=" + ingredientes + ", usuario=" + usuario + "]";
+		return "Receta [id=" + this.id + ", nombre=" + this.nombre + ", imagen=" + this.imagen + ", descripcion="
+				+ this.descripcion + ", ingredientes=" + this.ingredientes + ", usuario=" + this.usuario + ", imagenes="
+				+ this.imagenes + "]";
 	}
 
 }

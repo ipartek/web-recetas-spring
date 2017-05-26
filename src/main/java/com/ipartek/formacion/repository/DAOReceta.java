@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Receta;
 
 public interface DAOReceta {
@@ -24,6 +25,13 @@ public interface DAOReceta {
 	 */
 	List<Receta> getAllWithUSer();
 
+	/**
+	 * Busca una Receta con Imagenes
+	 * 
+	 * @return Recetas si hay datos, si no, null
+	 */
+	Receta getByIdWithImages(long id);
+
 	List<Receta> getAllByUser(long idUsuario);
 
 	Receta getById(long id);
@@ -35,5 +43,7 @@ public interface DAOReceta {
 	boolean updateLikes(long idReceta);
 
 	boolean delete(long id);
+
+	boolean uploadImage(Imagen i);
 
 }

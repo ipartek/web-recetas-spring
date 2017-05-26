@@ -3,16 +3,24 @@ package com.ipartek.formacion.controller;
 import java.io.File;
 import java.io.IOException;
 
+import javax.validation.Valid;
+
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.ipartek.formacion.domain.Imagen;
+import com.ipartek.formacion.domain.Receta;
+import com.ipartek.formacion.service.ServiceReceta;
 
 @Controller
 public class UploadFileController /* implements HandlerExceptionResolver */ {
@@ -24,6 +32,9 @@ public class UploadFileController /* implements HandlerExceptionResolver */ {
 
 	String mensaje = "Error subiendo imagen";
 
+	@Autowired
+	private ServiceReceta serviceReceta;
+
 	/**
 	 * Controlador para subida Imagenes formato 'image/jpeg', tamaño maximo 1Mb
 	 * 
@@ -33,13 +44,21 @@ public class UploadFileController /* implements HandlerExceptionResolver */ {
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String uploadFileHandler(@RequestParam("imagen") MultipartFile file, @RequestParam("ruta") String ruta,
-			Model model) throws SizeLimitExceededException {
+			@Valid Receta receta, BindingResult bindingResult, Model model) throws SizeLimitExceededException {
 		try {
 
 			if (!file.isEmpty()) {
 
 				validateImage(file);
 				saveImagen(file, model);
+
+				// guardar en la BBDD la ruta
+				Imagen i = new Imagen();
+				i.setNombre(file.getOriginalFilename());
+				i.setReceta(receta);
+
+				this.serviceReceta.subirImagen(i);
+
 			} else {
 				LOG.warn("Fichero vacio");
 				mensaje = "fichero vacio";

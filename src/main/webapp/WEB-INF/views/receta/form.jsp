@@ -7,15 +7,63 @@
 ${msg}
 
 	<form action="upload" method="post" enctype="multipart/form-data">
-	
-		<input type="hidden" name="ruta" value="receta/edit/${receta.id}">
+		<div class="box__input">
+			<input type="hidden" name="ruta" value="receta/edit/${receta.id}">
+			<input type="hidden" name="id" value="${receta.id}">
+			
+			<label for="imagen">Selecciona una imagen</label>
+			<input id="image_file" type="file" name="imagen">
+			<br>
+			<input type="submit" value="Subir Nueva Foto">
 		
-		<label for="imagen">Selecciona una imagen</label>
-		<input type="file" name="imagen">
-		<br>
-		<input type="submit" value="Subir Nueva Foto">
-	
+		</div>
+		<div id="preview"></div>
 	</form>
+
+
+	<script>
+		
+	document.getElementById("image_file").onchange = function(e){
+		console.log('imagen seleccionada');
+		var file = e.target.files[0];
+		
+		var preview = document.getElementById("preview");
+		var content ="";
+		
+		//validacion
+		var isvalid = true;
+		if ( file.size > (1024 * 1024 * 1) ){ //1Mb
+			content += '<p style="color:red">No puede ser superior a 1Mb</p>';
+			isvalid = false;
+		}
+		
+		var mime_types = ['image/jpeg', 'image/jpg']
+		if (mime_types.indexOf(file.type) == -1) {
+			content += '<p style="color:red">Solo se pueden subir fotos con formato .jpeg</p>';
+			isvalid = false;
+		}
+		
+		
+		
+		if(isvalid){
+			var reader = new FileReader();
+			reader.onload = function (event) {
+				var image = new Image();
+				image.src = event.target.result;
+				image.width = 250;
+				preview.appendChild(image);
+			};
+			reader.readAsDataURL(file);
+		}
+		
+		content += "<p>" + file.name + " " + Math.round(file.size / 1024) + "kb </p>";
+		preview.innerHTML = content;
+		
+	};
+		
+	</script>
+
+
 
 	<form:form action="receta/crear" modelAttribute="receta">
 	
@@ -70,6 +118,18 @@ ${msg}
 					</c:forEach>
 				</form:select>				
 			</div>	
+			
+			<div>
+				<ul id="galeria">
+					<c:forEach items="${receta.imagenes}" var="i">
+					
+						<li class="tamLiImg">
+							<img class="img-responsive img-thumbnail" alt="${i.nombre}" src="http://localhost:8080/uploads/${i.nombre}">
+						</li>
+			
+					</c:forEach>
+				</ul>
+			</div>
 		</div>
 		
 		
