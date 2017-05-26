@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 import com.ipartek.formacion.domain.Usuario;
@@ -122,5 +123,20 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	@Override
 	public List<Ingrediente> listarIngredientes(long idReceta){
 		return daoIngrediente.getAllByReceta(idReceta);
+	}
+	
+	@Override
+	public List<Imagen> listarImagenes(long idReceta){
+		return daoReceta.getAllImagenes(idReceta);
+	}
+	
+	@Override
+	public boolean eliminarImagen(long id) {
+		return daoReceta.deleteImagen(id);
+	}
+	
+	@Override
+	public boolean InsertarImagen(Imagen i) {
+		return daoReceta.addImage(i);
 	}
 }

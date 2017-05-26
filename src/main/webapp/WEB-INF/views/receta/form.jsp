@@ -10,6 +10,7 @@ ${msg}
 	
 		<label for="imagen">Selecciona una imagen</label>
 		<input type="file" name="imagen">
+		<input type="hidden" name="idReceta" value="${receta.id}">
 		<input type="hidden" name="rutaId" value="receta/edit/${receta.id}">
 		<input type="submit" value="Subir nueva foto">
 	

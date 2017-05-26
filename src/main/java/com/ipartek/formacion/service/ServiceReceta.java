@@ -2,6 +2,7 @@ package com.ipartek.formacion.service;
 
 import java.util.List;
 
+import com.ipartek.formacion.domain.Imagen;
 import com.ipartek.formacion.domain.Ingrediente;
 import com.ipartek.formacion.domain.Receta;
 
@@ -53,5 +54,11 @@ public interface ServiceReceta {
 	List<Ingrediente> FiltrarIngredientesFueraReceta(String filtro, long idReceta);
 
 	List<Ingrediente> listarIngredientes(long idReceta);
+
+	List<Imagen> listarImagenes(long idReceta);
+
+	boolean eliminarImagen(long id);
+
+	boolean InsertarImagen(Imagen i);
 
 }

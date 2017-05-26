@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ipartek.formacion.domain.Imagen;
+import com.ipartek.formacion.service.ServiceReceta;
+
 @Controller
 public class UploadFileController  /*implements HandlerExceptionResolver*/ {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UploadFileController.class);
 
+	@Autowired
+	private ServiceReceta serviceReceta;
+	
 	private static final String MIME_TYPE_JPEG = "image/jpeg";
 	static final String APP_IMAGES_RESOURCES = "uploads\\";
 
@@ -40,7 +47,7 @@ public class UploadFileController  /*implements HandlerExceptionResolver*/ {
 	 * @return index.jsp
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadFileHandler(@RequestParam("imagen") MultipartFile file, Model model, @RequestParam("rutaId") String rutaid)
+	public String uploadFileHandler(@RequestParam("imagen") MultipartFile file, Model model,@RequestParam("idReceta") int idReceta, @RequestParam("rutaId") String rutaid)
 			throws SizeLimitExceededException {
 		try {
 
@@ -48,6 +55,10 @@ public class UploadFileController  /*implements HandlerExceptionResolver*/ {
 
 				validateImage(file);
 				saveImagen(file, model);
+				Imagen i = new Imagen();
+				i.setId_receta(idReceta);
+				i.setUrl(file.getOriginalFilename());
+				serviceReceta.InsertarImagen(i);
 			} else {
 				LOG.warn("Fichero vacio");
 				mensaje = "fichero vacio";
