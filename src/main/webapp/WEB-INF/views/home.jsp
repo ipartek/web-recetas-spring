@@ -19,7 +19,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}">Ver detalle</a>
+						<a onclick="guardar('${r.nombre}')" href="receta/edit/${r.id}">Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -28,6 +28,17 @@
 
 </div>
 
+<div id="widget_consultadas">
+	<div></div>
+	<h3>Ultimas Recetas Consultadas</h3>
+	<ol>
+		<li>receta 1</li>
+		<li>receta 2</li>
+		<li>receta 3</li>
+		<li>receta 4</li>
+		<li>receta 5</li>
+	</ol>
+</div>
 
 
 

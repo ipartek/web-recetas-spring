@@ -205,3 +205,31 @@ tr:hover {
 }
 
 /* end: autocomplete modal */
+
+
+/* widget Ultimas Recetas Consultadas
+****************************************************************/
+
+#widget_consultadas{  
+	width: 350px;
+    height: 250px;
+    background-color: #C0C0FD;
+    position: fixed;
+    right: 0;
+    bottom: 300px;
+    padding: 15px;
+    border-radius: 0 10% 10% 0;
+}
+
+#widget_consultadas div{
+	background-color: blue;
+    width: 40;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    left: -35px;
+    top: 0;
+}
+
