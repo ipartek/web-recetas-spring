@@ -6,8 +6,6 @@
 
 ${msg}
 
-
-
 	<form:form action="receta/crear" modelAttribute="receta">
 	
 		<div class="row">
@@ -138,7 +136,7 @@ ${msg}
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_ingrediente">
-  Añadir Ingrediente
+  AÃ±adir Ingrediente
 </button>
 
 
@@ -189,5 +187,6 @@ ${msg}
     </div>
   </div>
 </div>
+
 
 <%@ include file="../includes/footer.jsp" %> 

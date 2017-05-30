@@ -19,7 +19,7 @@
 					<div class="title">${r.nombre}</div>
 				</div>
 				<div class="bottom">
-					<button class="btn btn-default">
+					<button class="btn btn-default" onClick="guardar(${r.nombre},${r.id})">
 						<a href="receta/edit/${r.id}">Ver detalle</a>
 					</button>
 				</div>

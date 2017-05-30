@@ -1,5 +1,7 @@
 function gestion_recetas(){
 	
+
+	
 		console.info('add_ingrediente');
 		$msj = $("#form1_msg");
 		var disabled;
