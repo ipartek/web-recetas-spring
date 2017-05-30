@@ -31,6 +31,50 @@
     100% {opacity:1;}
 }
 
+#widget {
+	position: fixed;
+    top: 250px;
+    right: -360px;
+    height: 200;
+    width: 400;
+    
+}
+
+#barra {
+	width: 40px;
+    background-color: grey;
+    height: 200px;
+    color: white;
+    position: relative;
+	border-radius: 15px 0 0 15px;
+	float: left;
+}
+
+.show {
+	right:0px !important;
+}
+
+.fa-caret-square-o-left {
+	position: absolute;
+	top: 48%;
+	left: 8px;
+}
+
+.fa-caret-square-o-right {
+	position: absolute;
+	top: 50%;
+	left: 8px;
+}
+
+#contenido {
+	width: 360px;
+	height: 200px;
+	background-color: #EEEEEE;
+	position: relative;
+	float: left;
+	border: 3px solid white;
+}
+
 .row {
 	margin: 0 auto;
 }
@@ -221,4 +265,8 @@ tr:hover {
 
 .ui-autocomplete {
   z-index: 1051 !important;
+}
+
+body {
+	overflow-x:hidden;
 }

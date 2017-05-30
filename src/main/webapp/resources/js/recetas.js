@@ -6,6 +6,7 @@ var posicion;
 $(function(){
 	console.info('ready recetas.js');
 	cargar_ingredientes();
+	desplegar();
 });
 
 
@@ -181,4 +182,32 @@ $("#form1_nombre").autocomplete({
     
     minLength: 2
    
-  });   
+  });  
+function desplegar() {
+	$('#barra').click(function() {
+		$('#widget').toggleClass("show" , 1000);
+		if( $(this).find('.fa').hasClass("fa-caret-square-o-left")) {
+			$('.fa-caret-square-o-left').removeClass( "fa-caret-square-o-left" ).addClass( "fa-caret-square-o-right" );
+		} else {
+			$('.fa-caret-square-o-right').removeClass( "fa-caret-square-o-right" ).addClass( "fa-caret-square-o-left" );
+		}
+	  });
+}
+
+var storage = localStorage;
+
+function guardar(clave, valor) {
+	
+	 storage.setItem(clave, valor);
+}
+function eliminar(clave) {
+	 storage.removeItem(clave);
+}
+function verTodos() {
+	 for (var i=0; i < storage.length; i++) {
+		 var clave = storage.key(i);
+		 var valor = storage.getItem(clave);
+		 alert('Valor obtenido ' + clave + '=' + valor);
+	 }
+}
+

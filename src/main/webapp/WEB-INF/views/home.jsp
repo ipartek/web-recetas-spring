@@ -20,7 +20,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}">Ver detalle</a>
+						<a href="receta/edit/${r.id}" onclick="guardarListaUltimasRecetas('${r.nombre}',' http://localhost:8080/formacion/receta/edit/${r.id}')">Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -29,7 +29,13 @@
 
 </div>
 
+<div id="widget">
+	<div id="barra"><i class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></i></div>
+	<div id="contenido">
+		<h3>Listado ultimas recetas</h3>
+		<ul id="listaUltimasRecetas"></ul>
+	</div>
+</div>
 
-
-
+<script src="resources/js/localStorage.js"></script>
 <%@ include file="includes/footer.jsp"%>
