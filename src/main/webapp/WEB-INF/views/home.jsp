@@ -19,8 +19,8 @@
 					<div class="title">${r.nombre}</div>
 				</div>
 				<div class="bottom">
-					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}">Ver detalle</a>
+					<button class="btn btn-default" onclick="guardarStorage('${r.nombre}', 'receta/edit/${r.id}' )">
+						<a href="receta/edit/${r.id}"  >Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -29,6 +29,11 @@
 
 </div>
 
+<div id="widget">
+	<h3>Recetas visitadas</h3>
+	<ol id="list">
+	</ol>
+</div>
 
 
 

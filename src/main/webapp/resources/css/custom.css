@@ -195,3 +195,29 @@ tr:hover {
 .ui-autocomplete {
   z-index: 1051 !important;
 }
+
+.eliminar-imagen a{
+	margin-left: 85px;
+    margin-right: 85px;
+    color: white;
+}
+
+.panel-heading{
+	text-align: center;
+	font-size:large;
+}
+
+#widget{
+	position: fixed;
+    width: 20%;
+    height: 50%;
+    border: 1px solid black;
+    right: -18%;
+    top: 20%;
+    background-color: white;
+}
+
+#widget:hover{
+    right: 0%;
+}
+	
