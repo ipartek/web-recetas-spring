@@ -11,9 +11,12 @@ public interface ServiceReceta {
 	/**
 	 * Lista recetas sin ingredientes y sin usuario
 	 * 
+	 *
+	 * @param filter
+	 *            filtro por el nombre si viene rellenado, sino, lista todo.
 	 * @return
 	 */
-	List<Receta> listar();
+	List<Receta> listar(String filter);
 
 	/**
 	 * Lista Recetas con Usuario asociado

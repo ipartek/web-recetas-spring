@@ -46,6 +46,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `nombre` LIKE ? '%' ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen, r.descripcion as receta_descripcion, r.likes as receta_likes, u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `id` = ?";
@@ -57,13 +58,19 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_GET_BY_ID_WITH_IMAGES_AND_USER = "SELECT `r`.`id` AS `receta_id`, `r`.`nombre` AS `receta_nombre`, `r`.`imagen` AS `receta_imagen`, `r`.`descripcion` AS `receta_descripcion`, `r`.`likes` AS `receta_likes`, `u`.`id` AS `usuario_id`, `u`.`nombre` AS `usuario_nombre`, `u`.`email` AS `usuario_email`, `u`.`imagen` AS `usuario_imagen`, `i`.`id` AS `imagen_id`, `i`.`nombre` AS `imagen_nombre` FROM `receta` AS `r` LEFT JOIN `imagen` AS `i` ON `r`.`id` = `i`.`receta_id`, `usuario` AS `u` WHERE `u`.`id` = `r`.`usuario_id` AND `r`.`id` = ?;";
 
 	@Override
-	public List<Receta> getAll() {
+	public List<Receta> getAll(String filter) {
 
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
-			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+			if (filter == null) {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+			} else {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_FILTER, new Object[] { filter },
+						new RecetaMapper());
+
+			}
 
 		} catch (EmptyResultDataAccessException e) {
 

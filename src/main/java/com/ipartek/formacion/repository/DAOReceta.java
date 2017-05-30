@@ -16,7 +16,7 @@ public interface DAOReceta {
 	 * 
 	 * @return List<Recetas> si hay datos, si no List inicializada not null
 	 */
-	List<Receta> getAll();
+	List<Receta> getAll(String filter);
 
 	/**
 	 * Listado de todas las Recetas con Usuarios

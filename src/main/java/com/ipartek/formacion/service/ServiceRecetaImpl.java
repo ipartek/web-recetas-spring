@@ -30,9 +30,9 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	private DAOUsuario daoUsuario;
 
 	@Override
-	public List<Receta> listar() {
+	public List<Receta> listar(String filter) {
 		logger.trace("listar recetas");
-		return daoReceta.getAll();
+		return daoReceta.getAll(filter);
 	}
 
 	@Override

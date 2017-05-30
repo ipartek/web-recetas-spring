@@ -31,12 +31,8 @@
 <div id="widget_consultadas">
 	<div></div>
 	<h3>Ultimas Recetas Consultadas</h3>
-	<ol>
-		<li>receta 1</li>
-		<li>receta 2</li>
-		<li>receta 3</li>
-		<li>receta 4</li>
-		<li>receta 5</li>
+	<ol id="lista_consultadas">
+		
 	</ol>
 </div>
 

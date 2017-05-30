@@ -55,7 +55,16 @@
               </li>             
             </ul>
           
-          <!-- menu derecha -->  
+          <!-- search -->
+
+			<form class="navbar-form navbar-left">
+				<div class="form-group">
+					<input id="buscar_receta" type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+
+			<!-- menu derecha -->  
             <ul class="nav navbar-nav navbar-right">
               <li class="active">
               	 <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=es">ES</a>
