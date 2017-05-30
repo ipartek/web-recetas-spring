@@ -217,7 +217,21 @@ tr:hover {
     background-color: white;
 }
 
-#widget:hover{
-    right: 0%;
+#widget img{
+	position: relative;
+	width: 40px;
+	height: 40px;
+	left:0;
+	top:60px;
 }
-	
+
+#widget h3{
+	margin-left: 30px;
+}
+
+#list{
+	    position: relative;
+    top: -16px;
+    left: 42px;
+    font-size: x-large;
+}

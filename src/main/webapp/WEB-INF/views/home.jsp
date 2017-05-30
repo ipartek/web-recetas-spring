@@ -31,6 +31,7 @@
 
 <div id="widget">
 	<h3>Recetas visitadas</h3>
+	<img class="abrir" src="https://cdn3.iconfinder.com/data/icons/line/36/record-512.png" onclick="abrirWidget()">
 	<ol id="list">
 	</ol>
 </div>

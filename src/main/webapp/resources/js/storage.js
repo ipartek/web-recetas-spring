@@ -1,7 +1,6 @@
 window.onload = function(){
 	pintar();
 }
-
 function guardarStorage(nombre, url){
 	console.log('nombre ' + nombre + ' url ' + url);
 	flag=true;
