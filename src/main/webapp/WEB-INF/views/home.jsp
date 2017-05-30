@@ -1,6 +1,9 @@
 <%@ include file="includes/header.jsp" %> 
 
-
+<div class="row">
+	<div id="resultadoBusqueda" class="col-xs-12 col-md-4">
+	</div>
+</div>
 <div class="row">
 
 	<c:forEach items="${recetas}" var="r">
@@ -33,7 +36,7 @@
 	<div id="barra"><i class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></i></div>
 	<div id="contenido">
 		<h3>Listado ultimas recetas</h3>
-		<ul id="listaUltimasRecetas"></ul>
+		<ol id="listaUltimasRecetas"></ol>
 	</div>
 </div>
 

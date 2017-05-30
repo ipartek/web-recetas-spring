@@ -210,4 +210,3 @@ function verTodos() {
 		 alert('Valor obtenido ' + clave + '=' + valor);
 	 }
 }
-

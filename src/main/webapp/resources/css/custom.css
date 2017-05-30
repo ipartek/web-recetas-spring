@@ -33,7 +33,7 @@
 
 #widget {
 	position: fixed;
-    top: 250px;
+    top: 25%;
     right: -360px;
     height: 200;
     width: 400;
@@ -258,6 +258,13 @@ tr:hover {
     opacity: 0;
     transform: scale(3);
   }
+}
+
+.input-busqueda {
+	width: 60%;
+}
+#contenedorBusqueda {
+	text-align: center;
 }
 
 /* autocomplete modal 

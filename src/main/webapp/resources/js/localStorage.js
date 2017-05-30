@@ -16,6 +16,17 @@ function guardarListaUltimasRecetas(nombreReceta, urlReceta) {
 			console.info("Existe en lista el elemento -> " + oReceta['data-name'], oReceta['data-url']);
 			if (nombreReceta == oReceta['data-name'] ) {
 				console.info("la receta clicada ya esta guardada en localStorage");
+				oReceta2 = storage.getItem("claveReceta#"+i);
+				for (j=i; j <6; j++){
+					oReceta = storage.getItem("claveReceta#"+(j+1));
+					if (oReceta != null )
+						storage.setItem("claveReceta#"+j, oReceta);
+					else {
+						storage.setItem("claveReceta#"+j, oReceta2);
+						break;
+					}
+				}
+				
 				break;
 			}
 		} else {
@@ -40,10 +51,11 @@ function cargarListaUltimasRecetas() {
 		console.info(i);
 		oReceta = JSON.parse(storage.getItem("claveReceta#"+i));
 		if (oReceta != null) {
-			$('#listaUltimasRecetas').append('<li><a href="' + oReceta['data-url'] + '">' + oReceta['data-name']+ '</a></li>');
+			$('#listaUltimasRecetas').prepend('<li><a href="' + oReceta['data-url'] + '">' + oReceta['data-name']+ '</a></li>');
 			console.info(oReceta['data-name'], oReceta['data-url']);
 		} else {
 			break;
 		}	
 	}
 }
+
