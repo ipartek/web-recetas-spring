@@ -1,42 +1,37 @@
+/*
+ * Buscador en la barra de navegación, para buscar recetas mediante la API  
+ * Busca recetas que coincidan su nombre, minimo 3 letras 
+ * Ejemplo: http://localhost:8080/formacion/api/receta/?filter=pat
+ * 
+ * */	
 	
-	
-	$(function() {
-		console.info('ready search-receta.js');
-	});
+"use-strict"
+
+
+$(function() {
+
+	console.debug('search-receta.js ready');
 		
+	$( "#buscar_receta" ).autocomplete({		
+		source: function( request, response ) {
+	        $.ajax( {
+	          url: "/formacion/api/receta/?filter=" + $("#buscar_receta").val(),
+	          dataType: "json",	          
+	          success: function( data ) {
+	        	var aString = [];
+	        	$.each(data, function(i,v){
+	        		aString.push(v.nombre);	
+	        	}); 	        	  
+	            response( aString );
+	          }
+	        });
+	      },		
+	     minLength: 1,
+	     select: function( event, ui ) {
+	       console.debug( "Selected: " + ui.item.value + " aka " + ui.item.id );
+	     }
+	});
 	
 	
-	/*** Autocomplete ***/
 	
-	function autocomplete(){
-		console.log ('autocomplete recetas');
-		$("#buscar_receta").autocomplete({
-			source: function( request, response){
-				var url = "/formacion/api/receta/" + $idReceta + "/ingrediente?disponibles=true&filter=" + $("#form1_nombre").val().trim() + "";
-				//console.log("url para autocomplete: %s", url);
-				
-				$.ajax( {
-					"url" : url,
-					"type" : "GET",
-					"dataType": "json",					
-					"success" : function(data) {
-						
-						var ingredientes_disponibles = [];
-						
-						$.each(data, function(i, v){
-							ingredientes_disponibles.push(v.nombre)	;
-						});
-						
-						response (ingredientes_disponibles);
-						
-						console.log("Llego el contenido %o y no hubo error", ingredientes_disponibles);
-						
-					}
-					
-				});
-			},
-			
-			minLength: 2
-			
-		});
-	}
+})

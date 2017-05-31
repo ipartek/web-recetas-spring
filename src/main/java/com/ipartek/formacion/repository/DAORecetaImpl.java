@@ -46,7 +46,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
-	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `nombre` LIKE ? '%' ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `nombre` LIKE '%' ? '%' ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen, r.descripcion as receta_descripcion, r.likes as receta_likes, u.id          as usuario_id,u.nombre      as usuario_nombre, u.email  as usuario_email,u.imagen  as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `id` = ?";
