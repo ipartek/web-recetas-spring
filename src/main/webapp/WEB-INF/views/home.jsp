@@ -30,9 +30,13 @@
 </div>
 
 <div id="widget">
-	<h3>Recetas visitadas</h3>
-	<ol id="list">
-	</ol>
+	<div class="widLeft">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>
+	</div>
+	<div class="widRight">
+		<h3>Recetas visitadas</h3>
+		<ol id="list"></ol>
+	</div>
 </div>
 
 

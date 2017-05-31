@@ -207,11 +207,14 @@ tr:hover {
 	font-size:large;
 }
 
+/* widget 
+***************************************************************/
+
 #widget{
+	border-radius: 25px 0px 0px 25px;
 	position: fixed;
     width: 20%;
     height: 50%;
-    border: 1px solid black;
     right: -18%;
     top: 20%;
     background-color: white;
@@ -219,5 +222,27 @@ tr:hover {
 
 #widget:hover{
     right: 0%;
+}
+
+#widget .widLeft {
+	border-radius: 25px 0px 0px 25px;
+	display: block;
+	background: rgba(0,0,0,0.6);
+	width: 25px;
+	float: left;
+}
+
+#widget .widLeft i {
+	font-weight: bold;
+	color: #FFFFFF;
+	margin: 150px 5px;	
+}
+
+#widget .widRight h3 {
+	text-align: center;
+}
+
+#widget .widRight li {
+	margin-left: 15px;
 }
 	
