@@ -1,19 +1,22 @@
+	/*
+	 * Busscador en la barra de navegacion para buscar recetas mediante la API 
+	 * Busca recetas que coincidan su nombre, minimo 3 letras
+	 * Ejemplo:: http://localhost:8080/formacion/api/receta/?filter=anc
+	 * 
+	 */
 	
+	"use-strict"
 	
 	$(function() {
-		console.info('ready search-receta.js');
-	});
+		console.debug('search-receta.js ready');
 		
-	
-	
-	/*** Autocomplete ***/
-	
-	function autocomplete(){
-		console.log ('autocomplete recetas');
-		$("#buscar_receta").autocomplete({
+		var recetas;
+		
+		/*** Autocomplete ***/
+		$( "#buscar_receta" ).autocomplete({
 			source: function( request, response){
-				var url = "/formacion/api/receta/" + $idReceta + "/ingrediente?disponibles=true&filter=" + $("#form1_nombre").val().trim() + "";
-				//console.log("url para autocomplete: %s", url);
+								
+				var url = "/formacion/api/receta/?filter=" + $("#buscar_receta").val().trim() + "";
 				
 				$.ajax( {
 					"url" : url,
@@ -21,22 +24,33 @@
 					"dataType": "json",					
 					"success" : function(data) {
 						
-						var ingredientes_disponibles = [];
-						
+						recetas = data;
+						var aString = [];
+	
 						$.each(data, function(i, v){
-							ingredientes_disponibles.push(v.nombre)	;
+							aString.push(v.nombre)	;
 						});
 						
-						response (ingredientes_disponibles);
+						response (aString);
 						
-						console.log("Llego el contenido %o y no hubo error", ingredientes_disponibles);
+						console.log("Llego el contenido %o y no hubo error", aString);
 						
 					}
 					
 				});
+				
 			},
-			
-			minLength: 2
-			
-		});
-	}
+		      minLength: 1,
+		      select: function( event, ui ) {
+		        console.debug( "Selected: " + ui.item.value + " con id: " + recetas.id);
+		        
+		        $.each(data, function(i, v){
+					
+				});
+		        
+		        //window.location.href = 'href="receta/edit/' + recetas.id + '"';
+		      }
+		    });
+		
+	});
+		
