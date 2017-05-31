@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+ 
+<tiles-definitions>  
+  
+   <!-- Base Definition -->
+   <definition name="dafult-template" template="/WEB-INF/views/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/includes/defaultHeader.jsp" />
+       <put-attribute name="body" value="" />
+       <put-attribute name="scripts" value="/WEB-INF/views/includes/defaultScript.jsp"/>
+	   <put-attribute name="scripts_custom" value="" />              
+       <put-attribute name="footer" value="/WEB-INF/views/includes/defaultFooter.jsp" />
+       
+   </definition>  
+  
+    
+   <!-- Index Page -->
+   <definition name="home" extends="dafult-template">  
+       <put-attribute name="title" value="Inicio | Web Recetas" />  
+       <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+       <put-attribute name="scripts_custom" value="script1,script2" />       
+   </definition>  
+   
+</tiles-definitions>
