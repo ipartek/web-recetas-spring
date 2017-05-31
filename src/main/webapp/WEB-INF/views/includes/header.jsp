@@ -54,10 +54,13 @@
               </li>        
             </ul>
           <form class="navbar-form navbar-left">
-	        <div class="form-group">
-	          <input type="text" id="buscadorReceta" class="form-control" size= 55 placeholder="Buscar una receta">
+	        <div class="input-group">
+	        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+	          <input type="text" id="buscadorReceta" class="form-control" size= 65 placeholder="Buscar una receta">
+	          
 	        </div>
-	        <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+	        
+	
 	      </form>
           <!-- menu derecha -->  
             <ul class="nav navbar-nav navbar-right">

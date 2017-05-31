@@ -43,4 +43,6 @@ public interface DAOReceta {
 
 	List<Imagen> getAllImagenes(long idReceta);
 
+	List<Receta> getAll(String filter);
+
 }

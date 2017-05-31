@@ -1,5 +1,6 @@
 package com.ipartek.formacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ipartek.formacion.domain.Imagen;
@@ -60,5 +61,7 @@ public interface ServiceReceta {
 	boolean eliminarImagen(long id);
 
 	boolean insertarImagen(Imagen i);
+
+	ArrayList<Receta> listar(String filter);
 
 }

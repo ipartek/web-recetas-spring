@@ -42,10 +42,22 @@ public class ApiRecetaController {
 	ServiceIngrediente serviceIngrediente;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public @ResponseBody ArrayList<Receta> listar() {
+	public @ResponseBody ArrayList<Receta> listar(@RequestParam(value = "filter", required = false) String filter) {
 
-		// TODO Fallo seguridad mostrar informacion del usuario privada
-		return (ArrayList<Receta>) this.servideReceta.listarConUsuarios();
+		ArrayList<Receta> recetas = null;
+
+		if (filter != null) {
+
+			recetas = (ArrayList<Receta>) this.servideReceta.listar(filter);
+
+		} else {
+
+			// TODO Fallo seguridad mostrar informacion del usuario privada
+			recetas = (ArrayList<Receta>) this.servideReceta.listarConUsuarios();
+
+		}
+
+		return recetas;
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)

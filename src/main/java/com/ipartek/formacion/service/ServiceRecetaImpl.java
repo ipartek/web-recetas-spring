@@ -139,4 +139,9 @@ public class ServiceRecetaImpl implements ServiceReceta {
 	public boolean insertarImagen(Imagen i) {
 		return daoReceta.addImage(i);
 	}
+
+	@Override
+	public ArrayList<Receta> listar(String filter) {
+		return (ArrayList<Receta>) daoReceta.getAll(filter);
+	}
 }

@@ -45,6 +45,7 @@ public class DAORecetaImpl implements DAOReceta {
 	// Sentencias SQL
 
 	private static final String SQL_GET_ALL = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` ORDER BY `id` DESC LIMIT 1000;";
+	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `nombre` LIKE '%' ? '%' ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_ALL_WITH_USER = "SELECT r.nombre  as receta_nombre ,r.id as receta_id, r.imagen  as receta_imagen,r.descripcion as receta_descripcion, r.likes,u.id as usuario_id,u.nombre as usuario_nombre, u.email as usuario_email,u.imagen as usuario_imagen FROM usuario as u INNER JOIN receta as r ON u.id = r.usuario_id; ";
 	private static final String SQL_GET_ALL_BY_USER = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `usuario_id`=?  ORDER BY `id` DESC LIMIT 1000;";
 	private static final String SQL_GET_BY_ID = "SELECT `id`, `nombre`, `imagen`, `descripcion`,`likes` FROM `receta` WHERE `id` = ?";
@@ -57,6 +58,34 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_ADD_IMG = "INSERT INTO `imagenes` (`id_receta`, `url`) VALUES (?, ?);";
 	private static final String SQL_DELETE_IMG = "DELETE FROM `imagenes` WHERE `id` = ?;";
 	private static final String SQL_GET_ALL_IMG = "SELECT `id`, `id_receta`, `url` FROM `imagenes` WHERE `id_receta`= ? ORDER BY `id` DESC LIMIT 1000;";
+	
+	@Override
+	public List<Receta> getAll(String filter) {
+
+		ArrayList<Receta> lista = new ArrayList<Receta>();
+
+		try {
+
+			if (filter == null) {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+			} else {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_FILTER, new Object[] { filter },
+						new RecetaMapper());
+
+			}
+
+		} catch (EmptyResultDataAccessException e) {
+
+			this.LOG.warn("No existen recetas todavia");
+
+		} catch (Exception e) {
+
+			this.LOG.error(e.getMessage());
+
+		}
+
+		return lista;
+	}
 	
 	@Override
 	public List<Receta> getAll() {

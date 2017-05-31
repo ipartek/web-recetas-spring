@@ -193,20 +193,3 @@ function desplegar() {
 		}
 	  });
 }
-
-var storage = localStorage;
-
-function guardar(clave, valor) {
-	
-	 storage.setItem(clave, valor);
-}
-function eliminar(clave) {
-	 storage.removeItem(clave);
-}
-function verTodos() {
-	 for (var i=0; i < storage.length; i++) {
-		 var clave = storage.key(i);
-		 var valor = storage.getItem(clave);
-		 alert('Valor obtenido ' + clave + '=' + valor);
-	 }
-}
