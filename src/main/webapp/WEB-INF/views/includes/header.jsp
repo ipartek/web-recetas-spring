@@ -60,13 +60,12 @@
 									code="nav.ingrdientes" text="Ingredientes" /></a></li>
 					</ul>
 
-					<form class="navbar-form navbar-left" role="search">
-						
+					<form class="navbar-form navbar-left">
 						<div class="input-group">
- 							<span class="input-group-addon">
- 								<span class="glyphicon glyphicon-search"></span>	
- 							</span>
-  							<input type="text" class="form-control" placeholder="Buscar receta">
+							<span class="input-group-addon"> <span
+								class="glyphicon glyphicon-search"></span>
+							</span> <input id="buscar_receta" type="text" class="form-control"
+								placeholder="busca tu receta...">
 						</div>
 					</form>
 
