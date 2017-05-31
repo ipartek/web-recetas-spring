@@ -58,10 +58,15 @@
           <!-- search -->
 
 			<form class="navbar-form navbar-left">
-				<div class="form-group">
-					<input id="buscar_receta" type="text" class="form-control" placeholder="Search">
-				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-search"></span>
+					</span>					
+					<input id="buscar_receta" 
+						       type="text" 
+						       class="form-control" 
+						       placeholder="busca tu receta...">
+				</div>				
 			</form>
 
 			<!-- menu derecha -->  
