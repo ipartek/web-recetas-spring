@@ -29,15 +29,16 @@
 </div>
 
 <div id="widget_consultadas">
-	<div></div>
+	<div id="ocultar"><span class="glyphicon glyphicon-chevron-right"></span></div>
 	<h3>Ultimas Recetas Consultadas</h3>
 	<ol id="lista_consultadas">
 		
 	</ol>
 </div>
 
+<%@ include file="includes/scripts.jsp"%>
+
 <script src="resources/js/likes.js"></script>
 <script src="resources/js/local-storage.js"></script>
-<script src="resources/js/search-receta.js"></script>
 
 <%@ include file="includes/footer.jsp"%>

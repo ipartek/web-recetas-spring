@@ -253,113 +253,12 @@ ${msg}
 </div>
 
 <input type="button" value="toast" onclick="show_toast('lorem impsun...')">
-<div id="toast">TEXTO</div>
 
-<style>
-	@keyframes show{
-		
-		0%{
-			bottom: -100px;
-		}
-		
-		100%{
-			bottom: 100px;
-		}
-		
-	}
-	
-	@keyframes restart{
-		
-		0%{
-			bottom: 100px;
-		}
-		
-		100%{
-			bottom: -100px;
-			display
-		}
-		
-	}
-	
-	#toast{
-		width: 30%;
-		min-height: 35px;
-		padding: 5px 20px;
-		background-color: #000;
-		color: #FFF;
-		font-size: 1.3em;
-		text-align: center;
-		opacity: 0.8;
-		margin: 0 auto;
-		border-radius: 15px;
-		position: fixed;
-		left: 28%;
-		bottom: -100px;
-		/*animation: show 2s;
-		animation-fill-mode: forwards;*/
-	}
-	
-	
-	
-</style>
 
-<script>
+<%@ include file="../includes/scripts.jsp"%>
 
-	//declaracion
-	/*var toastWidget = {
-			
-		duration: 3000,
-		
-		show: function(text){
-			
-			console.debug('toastWidget:init(%s) %s ', this.duration, text);
-			
-		}
-	};*/
-	
-	//declaracion
-	var toastWidget = (function () {
-		 
-		//private
-        var duration = 3000;
- 
-       function show( text ) {
-        	console.debug('toastWidget:init(%s) %s ', duration, text);
-        }
- 
-       //public
-        return {
-        	show : show
-        };
- 
-    })();
-	
-	
-	//usarlo
-	toastWidget.show('pepe');
-	
-	//No se puede cambiar, es privado
-	toastWidget.duration = 1000;
-	toastWidget.show('pepe2');
-
-	
-	function show_toast(texto){
-		console.debug('show_toast: ' + texto);
-		
-		var toast = document.getElementById('toast');
-		toast.innerHTML = texto;
-		toast.style.animation = "show 2s";
-		toast.style.animationFillMode = "forwards";
-		
-		setTimeout(function(){
-			toast.style.animation = "none";
-		}, 3000);
-	}
-
-</script>
-
- <script src="resources/js/recetas.js"></script>
-
+<script src="resources/js/recetas.js"></script>
+<script src="resources/js/toast.js"></script>
 
 <%@ include file="../includes/footer.jsp" %> 
 

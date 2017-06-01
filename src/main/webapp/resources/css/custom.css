@@ -233,3 +233,80 @@ tr:hover {
     top: 0;
 }
 
+#ocultar span{ 
+    margin: 0 auto;
+    top: 115px;
+}
+
+@keyframes ocultarDiv{
+		
+	0%{
+		left: -100px;
+	}
+	
+	100%{
+		left: 100px;
+	}
+	
+}
+
+@keyframes mostrarDiv{
+	
+	0%{
+		right: 100px;
+	}
+	
+	100%{
+		right: -100px;
+		display
+	}
+	
+}
+
+/* toast
+****************************************************************/
+
+@keyframes show{
+		
+		0%{
+			bottom: -100px;
+		}
+		
+		100%{
+			bottom: 100px;
+		}
+		
+	}
+	
+	@keyframes restart{
+		
+		0%{
+			bottom: 100px;
+		}
+		
+		100%{
+			bottom: -100px;
+			display
+		}
+		
+	}
+	
+	#toast{
+		width: 30%;
+		min-height: 35px;
+		padding: 5px 20px;
+		background-color: #000;
+		color: #FFF;
+		font-size: 1.3em;
+		text-align: center;
+		opacity: 0.8;
+		margin: 0 auto;
+		border-radius: 15px;
+		position: fixed;
+		left: 28%;
+		bottom: -100px;
+		/*animation: show 2s;
+		animation-fill-mode: forwards;*/
+	}
+	
+	

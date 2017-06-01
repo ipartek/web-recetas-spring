@@ -46,7 +46,7 @@ ${msg}
 <div class="col-md-6">
 	<h2>Recetas</h2>	
 	<c:if test="${empty usuario.recetas}">
-		<p>Todavía no tiene recetas</p>
+		<p>Todavï¿½a no tiene recetas</p>
 	</c:if>
 	
 	<c:if test="${not empty usuario.recetas}">
@@ -68,6 +68,9 @@ ${msg}
 	<a style="color:red;" href="usuario/delete/${usuario.id}">Eliminar</a>
 </c:if>
 
+<%@ include file="../includes/scripts.jsp"%>
+
+<script src="resources/js/registro-usuario.js"></script>
 
 <%@ include file="../includes/footer.jsp" %> 
 
