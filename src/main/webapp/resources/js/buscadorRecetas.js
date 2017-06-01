@@ -6,11 +6,11 @@
 
 "use strict"
 
-var recetas;
+
 
 $(function() {
   console.debug('buscadorRecetas.js ready');
-
+  
   $( "#buscadorReceta" ).autocomplete({
       source: function( request, response ) {
         $.ajax( {
@@ -18,9 +18,8 @@ $(function() {
           dataType: "json",
           success: function( data ) {
         	var aString = [];
-        	recetas = data;
             $.each(data, function(index, rec){
-            	aString.push(rec.nombre);
+            	aString.push({"label":rec.nombre, "value":rec.id});
         	});
             response( aString );
           }
@@ -28,12 +27,9 @@ $(function() {
       },
       minLength: 3,
       select: function( event, ui ) {
-        console.debug( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        $.each(recetas, function(index, rec){
-        	if (ui.item.value==rec.nombre) {
-        		window.location.href = "receta/edit/" + rec.id;
-        	}
-    	});
+        console.debug( "Selected: " + ui.item.value + " id " + ui.item.label );
+        var url = "receta/edit/"+ ui.item.value;
+        window.location.href = url;
       }
     } );
   
