@@ -18,8 +18,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
 	<!-- Custom -->
-	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">
-	
+	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">	
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
 	
 </head>

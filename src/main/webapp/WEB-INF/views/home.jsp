@@ -36,6 +36,13 @@
 	</ol>
 </div>
 
+<%@ include file="includes/scripts.jsp"%>
+
+<script src="resources/js/likes.js"></script>
+<script src="resources/js/search-receta.js"></script>
+<script src="resources/js/local-storage.js"></script>
 
 
 <%@ include file="includes/footer.jsp"%>
+
+

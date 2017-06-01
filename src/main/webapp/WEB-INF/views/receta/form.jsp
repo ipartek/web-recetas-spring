@@ -157,7 +157,7 @@ ${msg}
   <div class="modal-dialog" role="document">
     <div class="modal-content">      
       <div class="modal-body">
-        <p>¿Desea eliminar el ingrediente <b id="modal_eliminar_ingrediente_nombre"></b> ?</p>
+        <p>ï¿½Desea eliminar el ingrediente <b id="modal_eliminar_ingrediente_nombre"></b> ?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -200,7 +200,7 @@ ${msg}
 <!-- End: Modal Eliminar Ingrediente -->
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_ingrediente">Añadir ingrediente</button>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_ingrediente">Aï¿½adir ingrediente</button>
 
 <!-- Modal -->
 <div class="modal fade" id="modal_ingrediente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -238,7 +238,7 @@ ${msg}
 					</div>
 					
 					
-					<label for="form1_gluten">¿Contiene gluten?</label>
+					<label for="form1_gluten">ï¿½Contiene gluten?</label>
 					<input id="form1_gluten" type="checkbox" checked>
 					
 				</form>
@@ -252,111 +252,13 @@ ${msg}
 	</div>
 </div>
 
-<input type="button" value="toast" onclick="show_toast('lorem impsun...')">
-<div id="toast">TEXTO</div>
 
-<style>
-	@keyframes show{
-		
-		0%{
-			bottom: -100px;
-		}
-		
-		100%{
-			bottom: 100px;
-		}
-		
-	}
-	
-	@keyframes restart{
-		
-		0%{
-			bottom: 100px;
-		}
-		
-		100%{
-			bottom: -100px;
-			display
-		}
-		
-	}
-	
-	#toast{
-		width: 30%;
-		min-height: 35px;
-		padding: 5px 20px;
-		background-color: #000;
-		color: #FFF;
-		font-size: 1.3em;
-		text-align: center;
-		opacity: 0.8;
-		margin: 0 auto;
-		border-radius: 15px;
-		position: fixed;
-		left: 28%;
-		bottom: -100px;
-		/*animation: show 2s;
-		animation-fill-mode: forwards;*/
-	}
-	
-	
-	
-</style>
+<%@ include file="../includes/scripts.jsp" %>
 
-<script>
+<script src="resources/js/recetas.js"></script>
 
-	//declaracion
-	/*var toastWidget = {
-			
-		duration: 3000,
-		
-		show: function(text){
-			
-			console.debug('toastWidget:init(%s) %s ', this.duration, text);
-			
-		}
-	};*/
-	
-	//declaracion
-	var toastWidget = (function () {
-		 
-		//private
-        var duration = 3000;
- 
-       function show( text ) {
-        	console.debug('toastWidget:init(%s) %s ', duration, text);
-        }
- 
-       //public
-        return {
-        	show : show
-        };
- 
-    })();
-	
-	
-	//usarlo
-	toastWidget.show('pepe');
-	
-	//No se puede cambiar, es privado
-	toastWidget.duration = 1000;
-	toastWidget.show('pepe2');
-
-	
-	function show_toast(texto){
-		console.debug('show_toast: ' + texto);
-		
-		var toast = document.getElementById('toast');
-		toast.innerHTML = texto;
-		toast.style.animation = "show 2s";
-		toast.style.animationFillMode = "forwards";
-		
-		setTimeout(function(){
-			toast.style.animation = "none";
-		}, 3000);
-	}
-
-</script>
+<div id="toast"></div>
+<script src="resources/js/toast.js"></script>
 
 <%@ include file="../includes/footer.jsp" %> 
 
