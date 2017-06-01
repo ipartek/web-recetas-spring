@@ -11,7 +11,7 @@
 $(function() {
 
 	console.debug('search-receta.js ready');
-		
+			
 	$( "#buscar_receta" ).autocomplete({		
 		source: function( request, response ) {
 	        $.ajax( {
@@ -19,8 +19,8 @@ $(function() {
 	          dataType: "json",	          
 	          success: function( data ) {
 	        	var aString = [];
-	        	$.each(data, function(i,v){
-	        		aString.push(v.nombre);	
+	        	$.each(data, function(i,v){	        		
+	        		aString.push( {'label': v.nombre, 'value' : v.id} );	
 	        	}); 	        	  
 	            response( aString );
 	          }
@@ -28,7 +28,9 @@ $(function() {
 	      },		
 	     minLength: 1,
 	     select: function( event, ui ) {
-	       console.debug( "Selected: " + ui.item.value + " aka " + ui.item.id );
+	       console.debug( "Selected: " + ui.item.value + " label= " + ui.item.label );
+	       var url = "receta/edit/" + ui.item.value;
+	       window.location.href = url;
 	     }
 	});
 	
