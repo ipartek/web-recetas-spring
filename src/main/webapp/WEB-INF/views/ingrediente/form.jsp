@@ -25,5 +25,5 @@
 	<a style="color:red;" href="ingrediente/delete/${ingrediente.id}">Eliminar</a>
 
 </c:if>
-
+<%@ include file="../includes/scripts.jsp" %> 
 <%@ include file="../includes/footer.jsp" %> 

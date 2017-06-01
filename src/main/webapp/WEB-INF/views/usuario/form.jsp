@@ -68,7 +68,7 @@ ${msg}
 	<a style="color:red;" href="usuario/delete/${usuario.id}">Eliminar</a>
 </c:if>
 
-
+<%@ include file="../includes/scripts.jsp" %> 
 <%@ include file="../includes/footer.jsp" %> 
 
 

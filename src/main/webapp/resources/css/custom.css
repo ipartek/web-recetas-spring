@@ -277,3 +277,33 @@ tr:hover {
 body {
 	overflow-x:hidden;
 }
+/* TOAST
+***************************************************************/
+#toast{
+		width: 50%;
+		min-height: 35px;
+		padding: 5px 20px;
+		background-color: #000;
+		color: #FFF;
+		font-size: 1.3em;
+		text-align:center;
+		opacity: 0.8;
+		margin: 0 auto;
+		border-radius: 15px;
+		position: fixed;
+		bottom: -35px;
+		left: 28%;
+		/*
+		animation: show 2s;
+		animation-fill-mode: forwards;
+		*/
+	}
+
+	@keyframes show {
+		0% {
+			bottom: -35px;
+		}
+		100% {
+			bottom: 100px;
+		}
+	}

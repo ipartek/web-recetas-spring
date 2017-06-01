@@ -241,66 +241,9 @@ ${msg}
 <!-- End Modal Eliminar Ingrediente -->
 
 <input type="button" value="toast" onClick="show_toast('lorem ipsum...')"/>
-<div id="toast">TEXTO</div>
-<style>
-	#toast{
-		width: 50%;
-		min-height: 35px;
-		padding: 5px 20px;
-		background-color: #000;
-		color: #FFF;
-		font-size: 1.3em;
-		text-align:center;
-		opacity: 0.8;
-		margin: 0 auto;
-		border-radius: 15px;
-		position: fixed;
-		bottom: -35px;
-		left: 28%;
-		/*
-		animation: show 2s;
-		animation-fill-mode: forwards;
-		*/
-	}
 
-	@keyframes show {
-		0% {
-			bottom: -35px;
-		}
-		100% {
-			bottom: 100px;
-		}
-	}
-	
-</style>
-<script>
-	var toastWidget = {
-		
-		duration: 3000,
-		
-		show: function(text){
-			console.debug('toastWidget:init(%s) %s',this.duration, text );
-		}
-		
-	};
 
-	//usarlo
-	
-	toastWidget.show('pepe');
-	
-	toastWidget.duration = 1000;
-	toastWidget.show('pepe2');
-	
-	function show_toast(texto){
-		console.debug('show_toast: ' + texto);
-		var toast = document.getElementById('toast');
-		toast.style.animation = "show 2s";
-		toast.style.animationFillMode = "forwards";
-		toast.innerHTML = texto;
-		setTimeout(function(){
-			toast.style.animation = "none";
-		}, 3000);
-	}
-
-</script>
+<%@ include file="../includes/scripts.jsp" %> 
+<script src="resources/js/recetas.js"></script>
+<script src="resources/js/toast.js"></script>
 <%@ include file="../includes/footer.jsp" %> 

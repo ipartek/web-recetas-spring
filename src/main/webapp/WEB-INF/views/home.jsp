@@ -39,6 +39,8 @@
 		<ol id="listaUltimasRecetas"></ol>
 	</div>
 </div>
+<%@ include file="includes/scripts.jsp"%>
 
+<script src="resources/js/likes.js"></script>
 <script src="resources/js/localStorage.js"></script>
 <%@ include file="includes/footer.jsp"%>

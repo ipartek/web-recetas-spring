@@ -183,13 +183,3 @@ $("#form1_nombre").autocomplete({
     minLength: 2
    
   });  
-function desplegar() {
-	$('#barra').click(function() {
-		$('#widget').toggleClass("show" , 1000);
-		if( $(this).find('.fa').hasClass("fa-caret-square-o-left")) {
-			$('.fa-caret-square-o-left').removeClass( "fa-caret-square-o-left" ).addClass( "fa-caret-square-o-right" );
-		} else {
-			$('.fa-caret-square-o-right').removeClass( "fa-caret-square-o-right" ).addClass( "fa-caret-square-o-left" );
-		}
-	  });
-}
