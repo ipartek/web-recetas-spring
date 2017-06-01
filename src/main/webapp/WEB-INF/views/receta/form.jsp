@@ -256,8 +256,6 @@ ${msg}
 <%@ include file="../includes/scripts.jsp" %>
 
 <script src="resources/js/recetas.js"></script>
-
-<div id="toast"></div>
 <script src="resources/js/toast.js"></script>
 
 <%@ include file="../includes/footer.jsp" %> 

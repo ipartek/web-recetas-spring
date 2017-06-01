@@ -29,3 +29,13 @@
 			toast.style.animation = "none";
 		}, 3000);
 	}
+	
+	
+	window.onload = function(){
+		//crear div#toast
+		var element = document.createElement('div');
+		element.id = 'toast';
+		document.body.appendChild(element);
+		console.debug('creado div#toast');
+		
+	}
