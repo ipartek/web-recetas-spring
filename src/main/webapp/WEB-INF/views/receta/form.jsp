@@ -358,6 +358,9 @@ ${msg}
 
 </script>
 
+ <script src="resources/js/recetas.js"></script>
+
+
 <%@ include file="../includes/footer.jsp" %> 
 
 

@@ -36,6 +36,8 @@
 	</ol>
 </div>
 
-
+<script src="resources/js/likes.js"></script>
+<script src="resources/js/local-storage.js"></script>
+<script src="resources/js/search-receta.js"></script>
 
 <%@ include file="includes/footer.jsp"%>

@@ -10,8 +10,6 @@
 	$(function() {
 		console.debug('search-receta.js ready');
 		
-		var recetas;
-		
 		/*** Autocomplete ***/
 		$( "#buscar_receta" ).autocomplete({
 			source: function( request, response){
@@ -24,31 +22,27 @@
 					"dataType": "json",					
 					"success" : function(data) {
 						
-						recetas = data;
+						//recetas = data;
 						var aString = [];
 	
 						$.each(data, function(i, v){
-							aString.push(v.nombre)	;
+							aString.push({'label': v.nombre, 'value': v.id})	;
 						});
 						
 						response (aString);
 						
 						console.log("Llego el contenido %o y no hubo error", aString);
-						
+			            
 					}
 					
 				});
 				
 			},
-		      minLength: 1,
+		      minLength: 3,
 		      select: function( event, ui ) {
-		        console.debug( "Selected: " + ui.item.value + " con id: " + recetas.id);
-		        
-		        $.each(data, function(i, v){
-					
-				});
-		        
-		        //window.location.href = 'href="receta/edit/' + recetas.id + '"';
+		        console.debug( "Selected: " + ui.item.label + " con id: " + ui.item.value);
+		        		        
+		        window.location.href = 'receta/edit/' + ui.item.value + '';
 		      }
 		    });
 		
