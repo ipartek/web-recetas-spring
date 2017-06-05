@@ -9,13 +9,6 @@ import com.ipartek.formacion.domain.Receta;
 public interface ServiceReceta {
 
 	/**
-	 * Lista recetas sin ingredientes y sin usuario
-	 * 
-	 * @return
-	 */
-	List<Receta> listar();
-
-	/**
 	 * Lista Recetas con Usuario asociado
 	 * 
 	 * @return
@@ -58,5 +51,7 @@ public interface ServiceReceta {
 	boolean deleteImagen(long id);
 	
 	List<Imagen> getAllImg( long idReceta);
+
+	List<Receta> listar(String filter);
 
 }

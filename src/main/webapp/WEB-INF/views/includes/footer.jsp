@@ -17,6 +17,8 @@
  <script src="resources/js/registro-usuarios.js"></script>
  <script src="resources/js/likes.js"></script>
  <script src="resources/js/recetas.js"></script>
+ <script src="resources/js/storage.js"></script>
+ <script src="resources/js/search-receta.js"></script>
 
 <script>
 $(document).ready(function() {

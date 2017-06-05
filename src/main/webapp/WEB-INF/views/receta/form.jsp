@@ -10,7 +10,7 @@ ${msg}
 	<form action="upload" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="id" value="${receta.id}">
 		<label for="imagen">Selecciona una imagen...</label>
-		<input type="file" name="imagen">
+		<input type="file" name="imagen" >
 		
 		<input type="submit" value="añadir nueva foto">
 	</form>
@@ -85,7 +85,7 @@ ${msg}
 	<c:forEach items="${imagenes}" var="img">
 		<div class="imagengaleria col-md-3">
 			<img src="http://localhost:8080/uploads/${img.url}" class="tamImg img-thumbnail">
-			<span class="spangaleria"><a class="margenbotoneliminar btn btn-default" href="receta/${receta.id}/eliminarImagen/${img.id}" role="button"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+			<span class="spangaleria"><a class="margenbotoneliminar btn btn-danger" href="receta/${receta.id}/eliminarImagen/${img.id}" role="button"><i class="fa fa-times" aria-hidden="true"></i></a></span>
 		</div>
 	</c:forEach>
 </c:if>

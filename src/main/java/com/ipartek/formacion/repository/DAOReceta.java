@@ -15,7 +15,7 @@ public interface DAOReceta {
 	 * Listado de todas las Recetas sin Usuarios
 	 * @return List<Recetas> si hay datos, si no List inicializada not null 
 	 */
-	List<Receta> getAll();
+
 	
 	/**
 	 * Listado de todas las Recetas con Usuarios
@@ -42,5 +42,7 @@ public interface DAOReceta {
 	boolean deleteImagen(long id);
 
 	List<Imagen> getAllImg(long idReceta);
+
+	List<Receta> getAll(String filter);
 
 }

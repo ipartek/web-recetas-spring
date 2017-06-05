@@ -53,6 +53,20 @@
               	<a href="ingrediente"><spring:message code="nav.ingrdientes" text="Ingredientes"/></a>
               </li>             
             </ul>
+            
+            <!-- search -->
+
+			<form class="navbar-form navbar-left">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-search"></span>
+					</span>					
+					<input id="buscar_receta" 
+						       type="text" 
+						       class="form-control" 
+						       placeholder="busca tu receta...">
+				</div>				
+			</form>
           
           <!-- menu derecha -->  
             <ul class="nav navbar-nav navbar-right">

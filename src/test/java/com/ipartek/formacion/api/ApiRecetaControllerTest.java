@@ -62,7 +62,7 @@ public class ApiRecetaControllerTest {
 	@Test
 	public void testListar() {
 
-		assertNotNull(apiReceta.listar());		
+		assertNotNull(apiReceta.listar(null));		
 
 	}
 

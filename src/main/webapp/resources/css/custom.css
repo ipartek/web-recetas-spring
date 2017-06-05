@@ -1,3 +1,6 @@
+body{
+	overflow-x:hidden;
+}
 .tamImg {
 	width: 300px;
 	height: 250px;
@@ -285,4 +288,68 @@ tr:hover {
 	top:0px;
 	right:0px;
 	display:none;
+}
+
+.cajaultimasrecetas{
+	width: 330px;
+    height: 225px;
+    position: absolute;
+    right: -309px;
+    background: #eee;
+    top: 130px;
+    border-radius: 10px 0 0 10px;
+    float: left;
+}
+
+.flechita{
+	width: 22px;
+    height: 100%;
+    float: left;
+    background: #d6d6d6;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+}
+
+.iconito{
+	position: absolute;
+    top: 49%;
+    left: 5px;
+}
+
+.show{
+	right:0px;
+}
+
+#list{
+	list-style:none;
+}
+
+#list li{
+	margin:10px;
+}
+
+.margenizda{
+	margin-left:35px;
+}
+
+#inputbuscarreceta{
+	float: left;
+    width: 80%;
+}
+
+#botonbuscarreceta{
+	float:left;	
+	margin-left: 25px;
+}
+
+#img_show{
+	margin:0 auto;
+}
+
+.imagencocineroshow{
+	position: absolute;
+    top: 450px;
+    right: 230px;
+    width: 210px !important;
+    height: 185px !important;
 }

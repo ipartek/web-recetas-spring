@@ -2,10 +2,36 @@ var ingredientes = [];
 var ingrediente_seleccionado;
 var receta_id = $("#id").val();
 var posicion;
+var storage = localStorage;
 
 $(function(){
 	console.info('ready recetas.js');
 	cargar_ingredientes();
+	desplegarultimas5();
+	
+	$("#inputbuscarreceta").autocomplete({
+	    source: function( request, response ){
+	  	  var nombre_receta = $("#inputbuscarreceta").val();
+
+	  	  var url  = "";
+	  	  $.ajax( {
+	  		  url: url,
+	  		  dataType: "json",
+	            success: function( data ) {
+
+	          	var array_solo_nombres = [];
+	          	$.each(data, function(index, ing){
+	          		array_solo_nombres.push(ing.nombre);
+	          	});
+	              response( array_solo_nombres );
+	            }
+	  	 });
+	  	 
+	    },
+	    
+	    minLength: 2
+	   
+	  });  
 });
 
 
@@ -159,3 +185,11 @@ function modificar_ingrediente(){
 		
 	}); 
 }
+
+function desplegarultimas5(){
+	$('#flechilla').on('click',function(){
+		$('#cajita').toggleClass( "show" , 500 );
+	});
+}
+
+

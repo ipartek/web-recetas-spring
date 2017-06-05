@@ -2,7 +2,6 @@
 
 
 <div class="row">
-
 	<c:forEach items="${recetas}" var="r">
 		<div class="col-xs-12 col-md-4">
 			<div class="card hovercard">
@@ -20,7 +19,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}">Ver detalle</a>
+						<a href="receta/edit/${r.id}" onclick="guardarStorage('${r.nombre}', 'receta/edit/${r.id}' )">Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -29,6 +28,15 @@
 
 </div>
 
+
+<div id="cajita" class="cajaultimasrecetas">
+	<div id="flechilla" class="flechita"><i class="iconito fa fa-caret-square-o-right" aria-hidden="true"></i></div>
+	<div class="">
+		<h3 class="margenizda">Ultimas 5 recetas visitadas</h3>
+		<ul id="list">
+		</ul>
+	</div>
+</div>
 
 
 

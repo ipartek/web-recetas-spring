@@ -23,7 +23,7 @@
 					</a>
 				</td>				
 				<td>
-					<a href="/usuario/edit/${u.id}">${u.nombre}</a>
+					<a href="usuario/edit/${u.id}">${u.nombre}</a>
 				</td>
 				<td>
 					<span class="label label-primary">${fn:length(u.recetas)}</span>

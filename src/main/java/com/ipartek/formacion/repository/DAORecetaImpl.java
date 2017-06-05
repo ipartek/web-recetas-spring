@@ -57,15 +57,22 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_INSERT_IMG = "INSERT INTO `imagenes` (`id_receta`,`url`) VALUES(?,?)";
 	private static final String SQL_DELETE_IMG = "DELETE FROM `imagenes` WHERE `id` = ?";
 	private static final String SQL_GET_ALL_IMG = "SELECT  `id`,`id_receta`,`url` FROM imagenes WHERE `id_receta` = ?";
+	private static final String SQL_GET_ALL_FILTER = "SELECT `id`, `nombre`, `imagen`, `descripcion`, `likes` FROM `receta` WHERE `nombre` LIKE '%' ? '%' ORDER BY `id` DESC LIMIT 1000;";
+	
 	
 	@Override
-	public List<Receta> getAll() {
+	public List<Receta> getAll(String filter) {
 
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
+			if (filter == null) {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+			} else {
+				lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_FILTER, new Object[] { filter },
+						new RecetaMapper());
 
-			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL, new RecetaMapper());
+			}
 
 		} catch (EmptyResultDataAccessException e) {
 
