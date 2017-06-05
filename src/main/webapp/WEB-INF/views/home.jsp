@@ -11,7 +11,9 @@
 
 				<div class="avatar pulse" onClick="like(${r.id})">
 					<div class="icono">
-						<i class="fa fa-heart" aria-hidden="true"></i><span id="like${r.id}" class="likes_number">${r.likes}</span>
+						<span class="fa fa-heart" aria-hidden="true"></span>
+						<span class="sr-only">Contador de cuanta gete a relaizado "Me gustan" en esta receta</span>
+						<span id="like${r.id}" class="likes_number">${r.likes}</span>
 					</div>
 				</div>
 				<div class="info">
@@ -19,7 +21,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a onclick="guardar('${r.nombre}')" href="receta/edit/${r.id}">Ver detalle</a>
+						<a onclick="guardar('${r.nombre}')" href="receta/show/${r.id}">Ver detalle</a>
 					</button>
 				</div>
 			</div>

@@ -99,12 +99,14 @@ tr:hover {
 	border: 1px solid #FFF;
 }
 
-.card.hovercard .avatar .icono i {
+
+.card.hovercard .avatar .icono span {
 	font-size: xx-large;
 	color: #CC0000;
 }
 
-.card.hovercard .avatar .icono i:hover {
+
+.card.hovercard .avatar .icono span:hover  {
 	font-size: xx-large;
 	color: #FF91AF;
 	cursor: pointer;

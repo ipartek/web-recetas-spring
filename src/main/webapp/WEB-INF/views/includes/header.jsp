@@ -7,9 +7,12 @@
 
 <%@ page session="false" %>
 
+<!doctype html>
+
+
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<title><spring:message code="nav.app.name" text="Web App"/></title>
 	<base href="/formacion/" />
 	
@@ -58,9 +61,10 @@
 
 			<form class="navbar-form navbar-left">
 				<div class="input-group">
-					<span class="input-group-addon">
+					<label class="input-group-addon" for="buscar_receta">
 						<span class="glyphicon glyphicon-search"></span>
-					</span>					
+						Buscador
+					</label>					
 					<input id="buscar_receta" 
 						       type="text" 
 						       class="form-control" 
