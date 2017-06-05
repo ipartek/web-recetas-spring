@@ -69,6 +69,14 @@ public class RecetaController {
 		return "receta/form";
 	}
 
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showDetalle(@PathVariable int id, Model model) {
+
+		model.addAttribute("receta", serviceReceta.listarConImagenes(id));
+		model.addAttribute("usuarios", serviceUsuario.listar());
+		return "receta/detalle-receta";
+	}
+
 	@RequestMapping(value = "/crear", method = RequestMethod.POST)
 	public String crear(@Valid Receta receta, BindingResult bindingResult, Model model) {
 

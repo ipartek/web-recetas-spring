@@ -7,9 +7,10 @@
 
 <%@ page session="false" %>
 
+<!doctype html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<title><spring:message code="nav.app.name" text="Web App"/></title>
 	<base href="/formacion/" />
 	
@@ -59,10 +60,11 @@
 
 			<form class="navbar-form navbar-left">
 				<div class="input-group">
-					<span class="input-group-addon">
+					<label for="buscar_receta" class="input-group-addon">
 						<span class="glyphicon glyphicon-search"></span>
-					</span>
-					<input id="buscar_receta" type="text" class="form-control" placeholder="Busca tu receta">
+						&nbsp;Buscador
+					</label>
+					<input id="buscar_receta" name="buscar_receta" type="text" class="form-control" placeholder="Busca tu receta">
 				</div>
 			</form>
 
@@ -84,8 +86,7 @@
         </div><!--/.container-fluid -->
       </nav>
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+      
         
       
 

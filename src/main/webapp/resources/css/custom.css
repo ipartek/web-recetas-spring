@@ -99,12 +99,12 @@ tr:hover {
 	border: 1px solid #FFF;
 }
 
-.card.hovercard .avatar .icono i {
+.card.hovercard .avatar .icono i, .card.hovercard .avatar .icono span {
 	font-size: xx-large;
 	color: #CC0000;
 }
 
-.card.hovercard .avatar .icono i:hover {
+.card.hovercard .avatar .icono i:hover, .card.hovercard .avatar .icono span:hover {
 	font-size: xx-large;
 	color: #FF91AF;
 	cursor: pointer;
@@ -310,3 +310,22 @@ tr:hover {
 	}
 	
 	
+/* detalle de la receta
+******************************************************************/
+#img-ppal{
+	width: 100%;
+    margin-bottom: 20px;
+    height: auto;
+    border-bottom: 5px solid black;
+}
+
+#img-ppal img{
+	width: 100%;
+    height: auto;
+}
+
+#img-ppal .avatar{
+	position: absolute;
+    top: 100px;
+    right: 255px;
+}
