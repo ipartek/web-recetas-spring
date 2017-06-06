@@ -8,7 +8,7 @@
    <div class="col-md-6">
       <c:if test="${not empty ingredientes}">
 		<h2>Listado de ingredientes</h2>
-		<ol>
+		<ol id="listaig">
 			<c:forEach items="${ingredientes}" var="i">
 					<li><strong>${i.nombre}</strong> - ${i.cantidad}</li>
 			</c:forEach>
@@ -21,7 +21,7 @@
 		<div class="row">
 		<c:forEach items="${imagenes}" var="i">
 			<div class="centrar col-md-6">
-						<img class="tamImg img-thumbnail"  alt="imagen" src="http://localhost:8080/uploads/${i.url}">
+						<img class="tamImg2 img-thumbnail"  alt="imagen" src="http://localhost:8080/uploads/${i.url}">
 			</div>	
 		</c:forEach>
 		</div>

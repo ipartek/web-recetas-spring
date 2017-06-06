@@ -12,7 +12,7 @@
 	<meta charset="UTF-8">
 	<title><spring:message code="nav.app.name" text="Web App"/></title>
 	<base href="/formacion/" />
-	
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
 	<!-- Custom -->

@@ -1,6 +1,39 @@
+* {
+	font-family: 'Indie Flower', cursive;
+}
+
+h1 {
+	font-size: 2.3em !important;
+}
+
+h2 {
+	font-size: 1.8em !important;
+}
+h3 {
+	font-size: 1.5em !important;
+}
+
+p {
+	font-size: 1.2em !important;
+	line-height: 1.6em !important;
+}
+
+a {
+	font-size: 1.2em;
+}
+#listaig{
+	font-size: 1.2em;
+}
+
 .tamImg {
 	width: 300px;
 	height: 250px;
+	margin: 0px 0px 25px 0px;
+}
+
+.tamImg2 {
+	width: 300px;
+	height: 200px;
 	margin: 0px 0px 25px 0px;
 }
 
@@ -15,6 +48,7 @@
 	width:100%;
 	max-height: 330px;
 	overflow-y: hidden;
+	border-bottom: 5px solid darkgrey;
 }
 .destacada {
 	width:100%;
@@ -40,10 +74,14 @@
 
 #corazoncito {
     position: absolute;
-    top: 460px;
+    top: 405px;
     left: 150px;
     color: red;
     font-size: 3em;
+    background-color: white;
+    border-radius: 50%;
+    border: 3px solid darkgray;
+    padding: 10px;
 }
 .centrar:hover .adiosimagen {
 	display:block;
@@ -114,6 +152,7 @@
 .row {
 	margin: 0 auto;
 }
+
 
 .tamImg75 {
 	width: 75px;
