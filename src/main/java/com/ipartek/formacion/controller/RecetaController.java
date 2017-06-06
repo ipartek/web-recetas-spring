@@ -73,6 +73,7 @@ public class RecetaController {
 		model.addAttribute("imagenes", serviceReceta.getAllImg(id));
 		model.addAttribute("receta", serviceReceta.buscarPorID(id));
 		model.addAttribute("usuarios", serviceUsuario.listar());
+		model.addAttribute("ingredientes", serviceReceta.listaringredientesdereceta(id));
 		return "receta/show";
 	}
 	

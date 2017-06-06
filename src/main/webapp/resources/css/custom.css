@@ -1,5 +1,38 @@
+
+@font-face {
+    font-family: 'open_sans_condensedbold';
+    src: url('../font/opensans-condbold.woff2') format('woff2'),
+         url('../font/opensans-condbold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sanscondensed_light';
+    src: url('../font/opensans-condlight.woff2') format('woff2'),
+         url('../font/opensans-condlight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sansCnLtIt';
+    src: url('../font/opensans-condlightitalic.woff2') format('woff2'),
+         url('../font/opensans-condlightitalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body{
 	overflow-x:hidden;
+	font-family: open_sanscondensed_light !important;
+}
+
+h1,h2{
+	font-weight: bold !important;
 }
 .tamImg {
 	width: 300px;
@@ -271,6 +304,14 @@ tr:hover {
 	margin-top:50px;
 }
 
+.margenarriba2{
+	margin-top:70px;
+}
+
+.margenarriba3{
+	margin-top:100px;
+}
+
 .margenbotoneliminar{
 	margin-top: -7px;
 }
@@ -344,12 +385,51 @@ tr:hover {
 
 #img_show{
 	margin:0 auto;
+	width:100%;
 }
 
 .imagencocineroshow{
 	position: absolute;
-    top: 450px;
-    right: 230px;
-    width: 210px !important;
-    height: 185px !important;
+    right: 110px;
+    width: 165px !important;
+    height: 155px !important;
+    bottom: -85px;
+}
+.filafoto{
+	position:relative;
+}
+
+.tituloreceta{
+	font-size:45px !important;
+}
+
+.cuadrolikes{
+	position: absolute;
+    top: -30px;
+    right: 0px;
+    background: white;
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.numlikes{
+	padding-left: 26px;
+    font-size: 20px;
+}
+
+.corazoncito{
+	color: red;
+    width: 100%;
+    padding-left: 15px;
+}
+
+#listashow{
+	font-size:16px;
+}
+
+.preparacionreceta{
+	font-size: 16px;
+    line-height: 1.6em;
 }

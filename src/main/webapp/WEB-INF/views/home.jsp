@@ -19,7 +19,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}" onclick="guardarStorage('${r.nombre}', 'receta/edit/${r.id}' )">Ver detalle</a>
+						<a href="receta/show/${r.id}" onclick="guardarStorage('${r.nombre}', 'receta/edit/${r.id}' )">Ver detalle</a>
 					</button>
 				</div>
 			</div>
