@@ -1,3 +1,12 @@
+p, li{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 1.4em; /* 1em o 16px */
+	line-height: 1.6em;
+	text-align: justify;
+}
+
+
+
 .tamImg {
 	width: 300px;
 	height: 250px;
@@ -79,13 +88,13 @@ tr:hover {
 	height: 200px;
 }
 
-.card.hovercard .avatar {
+.card.hovercard .avatar, #img-ppal .avatar {
 	position: relative;
 	top: -65px;
 	margin-bottom: -40px;
 }
 
-.card.hovercard .avatar .icono {
+.card.hovercard .avatar .icono, #img-ppal .avatar .icono {
 	margin: 0 auto;
 	width: 80px;
 	height: 80px;
@@ -99,18 +108,18 @@ tr:hover {
 	border: 1px solid #FFF;
 }
 
-.card.hovercard .avatar .icono i, .card.hovercard .avatar .icono span {
+.card.hovercard .avatar .icono i, .card.hovercard .avatar .icono span, #img-ppal .avatar .icono span {
 	font-size: xx-large;
 	color: #CC0000;
 }
 
-.card.hovercard .avatar .icono i:hover, .card.hovercard .avatar .icono span:hover {
+.card.hovercard .avatar .icono i:hover, .card.hovercard .avatar .icono span:hover, #img-ppal .avatar .icono span:hover {
 	font-size: xx-large;
 	color: #FF91AF;
 	cursor: pointer;
 }
 
-.card.hovercard .avatar .icono .likes_number {
+.card.hovercard .avatar .icono .likes_number, #img-ppal .avatar .icono .likes_number {
 	position: absolute;
 	margin: -18px 0px;
 	font-weight: bold;
@@ -313,8 +322,9 @@ tr:hover {
 /* detalle de la receta
 ******************************************************************/
 #img-ppal{
+	position: relative;
 	width: 100%;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     height: auto;
     border-bottom: 5px solid black;
 }
@@ -322,10 +332,68 @@ tr:hover {
 #img-ppal img{
 	width: 100%;
     height: auto;
+    max-height: 500px;
 }
 
 #img-ppal .avatar{
 	position: absolute;
-    top: 100px;
-    right: 255px;
+    top: 20px;
+    right: 40px;
+}
+
+.usuario{
+	width: 215px;
+    position: absolute;
+    bottom: -105px;
+    right: 100px;
+}
+
+.titulo-receta{
+	font-size: 70px;
+    font-family: 'Handlee', cursive;
+    margin: 35px 35px 10px 40px;
+    text-transform: capitalize;
+}
+
+.titulo{
+	font-family: 'Vibur', cursive;
+	font-size: 40px;
+    margin: 40px;
+}
+
+.tamImgGallery {
+    width: 300px;
+    height: 155px;
+    margin: 0px 0px 25px 0px;
+}
+
+#detalle-receta{
+	padding: 40px 20px 20px 20px;
+    background-color: rgba(160, 160, 180, 0.2);
+}
+
+#detalle-receta textarea{
+	padding: 20px;
+}
+
+.textarea-descripcion{
+	padding: 20px;
+    background-color: ghostwhite;
+    border: 1px solid gray;
+    width: 100%;
+    height: 400px;
+    overflow: scroll;
+}
+	
+.galeria{
+	margin-top: 40px;
+}
+
+#detalle-receta ol{
+	font-style:italic;
+	
+}
+
+#detalle-receta ol li{
+	
 }

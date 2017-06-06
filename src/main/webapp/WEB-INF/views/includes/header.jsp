@@ -23,6 +23,11 @@
 	
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
 	
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Vibur" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Handlee" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+	
 </head>
 <body>
 
