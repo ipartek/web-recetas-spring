@@ -4,6 +4,65 @@
 	margin: 0px 0px 25px 0px;
 }
 
+/* Detalle de receta (receta/view.jsp)
+********************************************/
+.elaboracion {
+ 	width: 100%;
+ 	min-height: 150px;
+	background-color: white;
+ 	border: 1px solid grey;
+ 	padding: 25px;
+ }
+ 
+ .container-img-destacada {
+ 	width:100%;
+ 	max-height: 350px;
+ 	overflow-y: hidden;
+ 	border-bottom: 1em solid pink;
+ }
+ 
+ .imagen-destacada {
+ 	width:100%;
+ 	opacity: 0.65;
+ }
+ 
+ .cocinero {
+ 	border-radius: 50%;
+ 	height: 200px;
+ 	width: 200px;
+ 	position: absolute;
+ 	right: 200px;
+ 	top: 360px;
+ 	border: 0.5em solid pink;
+ }
+ 
+ .container-titulo-rec{}
+ 
+ .titulo-receta { 
+ 	width:80%;
+ 	z-index:99;
+  	position: absolute;
+  	text-align: center;
+ 	font-family: 'Lobster', cursive;
+ 	font-size: 6em !important;
+ 	text-decoration: underline;
+ }
+
+#corazoncito {
+	position: absolute;
+    top: 415px;
+    left: 180px;
+    color: pink;
+    font-size: 2em;
+    background-color: darkgray;
+    padding: 20px;
+    border-radius: 50%;
+    border: 0.15em solid pink;
+ }
+
+/*
+***************************************/
+
 .centrar {
 	text-align: center;
 	position: relative;

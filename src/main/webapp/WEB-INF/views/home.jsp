@@ -23,7 +23,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}" onclick="guardarListaUltimasRecetas('${r.nombre}',' http://localhost:8080/formacion/receta/edit/${r.id}')">Ver detalle</a>
+						<a href="receta/show/${r.id}" onclick="guardarListaUltimasRecetas('${r.nombre}',' http://localhost:8080/formacion/receta/show/${r.id}')">Ver detalle</a>
 					</button>
 				</div>
 			</div>

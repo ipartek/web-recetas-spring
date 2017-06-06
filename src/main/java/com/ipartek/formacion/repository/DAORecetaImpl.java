@@ -54,11 +54,11 @@ public class DAORecetaImpl implements DAOReceta {
 	private static final String SQL_INSERT = "INSERT INTO `receta` (`nombre`, `imagen`, `descripcion`, `usuario_id`) VALUES (?, ?, ?, ?);";
 	private static final String SQL_GET_LIKES = "SELECT `likes` FROM receta WHERE id=?;";
 	private static final String SQL_ADD_LIKES = "UPDATE `receta` SET `likes` = `likes` +1 WHERE id = ?;";
-	
-	private static final String SQL_ADD_IMG = "INSERT INTO `imagenes` (`id_receta`, `url`) VALUES (?, ?);";
-	private static final String SQL_DELETE_IMG = "DELETE FROM `imagenes` WHERE `id` = ?;";
-	private static final String SQL_GET_ALL_IMG = "SELECT `id`, `id_receta`, `url` FROM `imagenes` WHERE `id_receta`= ? ORDER BY `id` DESC LIMIT 1000;";
-	
+
+	private static final String SQL_ADD_IMG = "INSERT INTO `imagen` (`id_receta`, `url`) VALUES (?, ?);";
+	private static final String SQL_DELETE_IMG = "DELETE FROM `imagen` WHERE `id` = ?;";
+	private static final String SQL_GET_ALL_IMG = "SELECT `id`, `id_receta`, `url` FROM `imagen` WHERE `id_receta`= ? ORDER BY `id` DESC LIMIT 1000;";
+
 	@Override
 	public List<Receta> getAll(String filter) {
 
@@ -86,7 +86,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
+
 	@Override
 	public List<Receta> getAll() {
 
@@ -108,40 +108,40 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
-	
+
 	@Override
 	public List<Receta> getAllWithUSer() {
-		
+
 		this.LOG.trace("Recuperando Recetas con Usuarios");
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
 			lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_WITH_USER, new RecetaUsuarioMapper());
-			this.LOG.debug("Recuperandas " + lista.size()  + " Recetas"  );
-			
+			this.LOG.debug("Recuperandas " + lista.size() + " Recetas");
+
 		} catch (EmptyResultDataAccessException e) {
 
 			this.LOG.warn("No existen recetas todavia", e);
 
 		} catch (Exception e) {
 
-			this.LOG.error("Excepion inseperada" , e);
+			this.LOG.error("Excepion inseperada", e);
 
 		}
 
 		return lista;
 	}
-	
-	
+
 	public List<Receta> getAllwithUsers() {
 
 		ArrayList<Receta> lista = new ArrayList<Receta>();
 
 		try {
 
-			//lista = (ArrayList<Receta>) this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new RecetaUsuarioMapper());
+			// lista = (ArrayList<Receta>)
+			// this.jdbcTemplate.query(SQL_GET_ALL_AND_USER, new
+			// RecetaUsuarioMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 
@@ -155,7 +155,6 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return lista;
 	}
-	
 
 	@Override
 	public List<Receta> getAllByUser(long idUsuario) {
@@ -246,7 +245,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		try {
 
-			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion() , r.getUsuario().getId(),
+			Object[] argumentos = { r.getNombre(), r.getImagen(), r.getDescripcion(), r.getUsuario().getId(),
 					r.getId() };
 			affectedRows = this.jdbcTemplate.update(SQL_UPDATE, argumentos);
 
@@ -309,7 +308,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return resul;
 	}
-	
+
 	@Override
 	public boolean addLikes(long id) {
 
@@ -335,7 +334,7 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return resul;
 	}
-	
+
 	@Override
 	public boolean addImage(final Imagen i) {
 
@@ -352,7 +351,7 @@ public class DAORecetaImpl implements DAOReceta {
 					PreparedStatement ps = conn.prepareStatement(SQL_ADD_IMG, Statement.RETURN_GENERATED_KEYS);
 					ps.setLong(1, i.getId_receta());
 					ps.setString(2, i.getUrl());
-		
+
 					return ps;
 				}
 			}, keyHolder);
@@ -396,15 +395,16 @@ public class DAORecetaImpl implements DAOReceta {
 
 		return resul;
 	}
-	
+
 	@Override
-	public List<Imagen> getAllImagenes(long idReceta ) {
+	public List<Imagen> getAllImagenes(long idReceta) {
 
 		ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
 		try {
 
-			lista = (ArrayList<Imagen>) this.jdbcTemplate.query(SQL_GET_ALL_IMG, new Object[] { idReceta }, new ImagenMapper());
+			lista = (ArrayList<Imagen>) this.jdbcTemplate.query(SQL_GET_ALL_IMG, new Object[] { idReceta },
+					new ImagenMapper());
 
 		} catch (EmptyResultDataAccessException e) {
 

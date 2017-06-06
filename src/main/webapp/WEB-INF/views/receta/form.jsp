@@ -245,6 +245,5 @@ ${msg}
 
 <div id="toast"></div>
  <script src="resources/js/toast.js"></script>
-  	
     
 <%@ include file="../includes/footer.jsp" %> 
