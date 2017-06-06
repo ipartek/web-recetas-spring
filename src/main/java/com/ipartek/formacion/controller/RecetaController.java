@@ -74,6 +74,7 @@ public class RecetaController {
 
 		model.addAttribute("receta", serviceReceta.listarConImagenes(id));
 		model.addAttribute("usuarios", serviceUsuario.listar());
+		model.addAttribute("ingredientes",serviceReceta.listarIngredientes(id));
 		return "receta/detalle-receta";
 	}
 
