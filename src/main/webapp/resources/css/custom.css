@@ -4,11 +4,47 @@
 	margin: 0px 0px 25px 0px;
 }
 
+.elaboracion {
+	width: 100%;
+	min-height: 150px;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 25px;
+}
+.imagen-destacada {
+	width:100%;
+	max-height: 330px;
+	overflow-y: hidden;
+}
+.destacada {
+	width:100%;
+}
+.cocinero {
+	border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    right: 150px;
+    top: 370px;
+    border: 3px solid darkgrey;
+}
+
+.titulo-receta {
+	margin: 75px 0;
+	text-align: center;
+}
 .centrar {
 	text-align: center;
 	position: relative;
 }
 
+#corazoncito {
+    position: absolute;
+    top: 460px;
+    left: 150px;
+    color: red;
+    font-size: 3em;
+}
 .centrar:hover .adiosimagen {
 	display:block;
 	animation-name: aparece;
@@ -35,8 +71,8 @@
 	position: fixed;
     top: 25%;
     right: -360px;
-    height: 200;
-    width: 400;
+    height: 200px;
+    width: 400px;
     
 }
 
@@ -131,6 +167,7 @@ tr:hover {
 .card.hovercard {
 	position: relative;
 	width: 300px;
+	height: 400px;
 	padding-top: 0;
 	overflow: hidden;
 	text-align: center;
@@ -163,12 +200,12 @@ tr:hover {
 	border: 1px solid #FFF;
 }
 
-.card.hovercard .avatar .icono i {
+.card.hovercard .avatar .icono i, .card.hovercard .avatar .icono span.fa{
 	font-size: xx-large;
 	color: #CC0000;
 }
 
-.card.hovercard .avatar .icono i:hover {
+.card.hovercard .avatar .icono i:hover , .card.hovercard .avatar .icono span.fa:hover  {
 	font-size: xx-large;
 	color: #FF91AF;
 	cursor: pointer;

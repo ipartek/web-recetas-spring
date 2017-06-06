@@ -14,7 +14,10 @@
 
 				<div class="avatar pulse" onClick="like(${r.id})">
 					<div class="icono">
-						<i class="fa fa-heart" aria-hidden="true"></i>
+						<span class="fa fa-heart" aria-hidden="true" role="button"
+						aria-label="pulsa para decir que te gusta la receta"
+						title="pulsa para decir que te gusta la receta"></span>
+						<span class="sr-only">Dar like</span>
 						<span id="like${r.id}" class="likes_number">${r.likes}</span>
 					</div>
 				</div>
@@ -23,7 +26,7 @@
 				</div>
 				<div class="bottom">
 					<button class="btn btn-default">
-						<a href="receta/edit/${r.id}" onclick="guardarListaUltimasRecetas('${r.nombre}',' http://localhost:8080/formacion/receta/edit/${r.id}')">Ver detalle</a>
+						<a href="receta/show/${r.id}" onclick="guardarListaUltimasRecetas('${r.nombre}',' http://localhost:8080/formacion/receta/edit/${r.id}')">Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -33,7 +36,7 @@
 </div>
 
 <div id="widget">
-	<div id="barra"><i class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></i></div>
+	<div id="barra"><span class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></span></div>
 	<div id="contenido">
 		<h3>Listado ultimas recetas</h3>
 		<ol id="listaUltimasRecetas"></ol>

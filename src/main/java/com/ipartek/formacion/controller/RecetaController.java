@@ -68,6 +68,15 @@ public class RecetaController {
 		return "receta/form";
 	}
 	
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String irFormularioDetalle(@PathVariable int id, Model model) {
+		model.addAttribute("imagenes" , serviceReceta.listarImagenes(id));
+		model.addAttribute("receta", serviceReceta.buscarPorID(id));
+		model.addAttribute("usuarios", serviceUsuario.listar());
+		model.addAttribute("ingredientes", serviceReceta.listarIngredientes(id));
+		return "receta/view";
+	}
+	
 	@RequestMapping(value = "/{idReceta}/eliminarImagen/{id}", method = RequestMethod.GET)
 	public String irFormularioEditar(@PathVariable int id,@PathVariable int idReceta, Model model) {
 		serviceReceta.eliminarImagen(id);
