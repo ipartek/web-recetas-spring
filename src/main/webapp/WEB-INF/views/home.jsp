@@ -19,8 +19,8 @@
 					<div class="title">${r.nombre}</div>
 				</div>
 				<div class="bottom">
-					<button class="btn btn-default" onclick="guardarStorage('${r.nombre}', 'receta/edit/${r.id}' )">
-						<a href="receta/edit/${r.id}"  >Ver detalle</a>
+					<button class="btn btn-default" onclick="guardarStorage('${r.nombre}', 'receta/show/${r.id}' )">
+						<a href="receta/show/${r.id}">Ver detalle</a>
 					</button>
 				</div>
 			</div>
@@ -39,6 +39,11 @@
 	</div>
 </div>
 
+<%@ include file="includes/scripts.jsp"%>
+
+<script src="resources/js/likes.js"></script>
+<script src="resources/js/search-receta.js"></script>
+<script src="resources/js/local-storage.js"></script>
 
 
 <%@ include file="includes/footer.jsp"%>
