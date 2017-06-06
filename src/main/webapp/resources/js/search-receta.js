@@ -9,7 +9,7 @@
 
 
 $(function() {
-  console.debug('buscadorRecetas.js ready');
+  console.debug('search-receta.js ready');
   
   $( "#buscadorReceta" ).autocomplete({
       source: function( request, response ) {

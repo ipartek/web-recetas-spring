@@ -14,7 +14,7 @@
 
 				<div class="avatar pulse" onClick="like(${r.id})">
 					<div class="icono">
-						<i class="fa fa-heart" aria-hidden="true"></i>
+						<span class="fa fa-heart" aria-hidden="true"></span>
 						<span id="like${r.id}" class="likes_number">${r.likes}</span>
 					</div>
 				</div>
@@ -33,12 +33,18 @@
 </div>
 
 <div id="widget">
-	<div id="barra"><i class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></i></div>
+	<div id="barra"><span class="fa fa-caret-square-o-left fa-2x" aria-hidden="true"></span></div>
 	<div id="contenido">
 		<h3>Listado ultimas recetas</h3>
 		<ol id="listaUltimasRecetas"></ol>
 	</div>
 </div>
 
-<script src="resources/js/localStorage.js"></script>
-<%@ include file="includes/footer.jsp"%>
+<%@ include file="includes/scripts.jsp"%>
+ 
+ <script src="resources/js/likes.js"></script>
+ <script src="resources/js/search-receta.js"></script>
+ <script src="resources/js/local-storage.js"></script>
+ 
+ 
+ <%@ include file="includes/footer.jsp"%>

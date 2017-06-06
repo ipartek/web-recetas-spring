@@ -72,55 +72,8 @@ ${msg}
 						</button>
 					</c:if>
 
-<form action="upload" method="post" enctype="multipart/form-data">
-	
-		<label for="imagen">Selecciona una imagen</label>
-		<input type="file" id="image_file" name="imagen">
-		<input type="hidden" name="idReceta" value="${receta.id}">
-		<input type="hidden" name="rutaId" value="receta/edit/${receta.id}">
-		<input type="submit" value="Subir nueva foto">
-		<div id="preview"></div>
-	</form>
-	
-<script>
 
-	document.getElementById("image_file").onchange = function(e){
-		console.debug('Imagen seleccionada');
-		var file = e.target.files[0];
-		var content = "";
-		var preview = document.getElementById("preview");
-		
-		
-		//validacion
-		isvalid = true;
-		 if (file.size > (1024 * 1024)) { // 1MB
-			 content += '<p style="color:red;">No puede ser de tamaño superior a 1Mb</p>';
-			 isvalid = false;
-		 }
-		
-		var mime_types = ['image/jpeg','image/jpg'];
-		if (mime_types.indexOf(file.type) == -1) {
-			content += '<p style="color:red;">Solo se pueden subir fotor con formato .jpeg</p>';
-			isvalid = false;
-		}
-		if (isvalid) {
-			var reader = new FileReader();
-			reader.onload = function (event) {
-				var image = new Image();
-				image.src = event.target.result;
-				image.width = 250;
-				preview.appendChild(image);
-			
-			};
-			reader.readAsDataURL(file);
-		}
-		content +="<span>" + file.name + " " + Math.round(file.size /1024) + "Kb</span><br>";
-		preview.innerHTML = content;
-	}
-
-
-</script>
-
+<!-- modificar para que saque un carrousel de imagenes guardadas -->
 <c:if test="${not empty imagenes}">
 		<br>
 		<h2>Listado de imagenes</h2>

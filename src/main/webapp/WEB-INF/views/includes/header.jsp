@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -15,12 +16,15 @@
 	
 	<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
+	
 	<!-- Custom -->
-	<link href="resources/css/custom.css?d=201702288v1" rel="stylesheet">
+	<link href="resources/css/custom.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	
 </head>
 <body>
 
@@ -55,8 +59,8 @@
             </ul>
           <form class="navbar-form navbar-left">
 	        <div class="input-group">
-	        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-	          <input type="text" id="buscadorReceta" class="form-control" size= 65 placeholder="Buscar una receta">
+	        <span class="input-group-addon"><label for="buscadorReceta"><span class="glyphicon glyphicon-search"></span>&nbsp; Buscador:</label></span>
+	          <input type="text" id="buscadorReceta" class="form-control" size= 55 placeholder="Buscar una receta">
 	          
 	        </div>
 	        

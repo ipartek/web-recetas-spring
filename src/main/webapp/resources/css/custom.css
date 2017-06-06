@@ -35,8 +35,8 @@
 	position: fixed;
     top: 25%;
     right: -360px;
-    height: 200;
-    width: 400;
+    height: 200px;
+    width: 400px;
     
 }
 
@@ -163,12 +163,12 @@ tr:hover {
 	border: 1px solid #FFF;
 }
 
-.card.hovercard .avatar .icono i {
+.card.hovercard .avatar .icono span {
 	font-size: xx-large;
 	color: #CC0000;
 }
 
-.card.hovercard .avatar .icono i:hover {
+.card.hovercard .avatar .icono span:hover {
 	font-size: xx-large;
 	color: #FF91AF;
 	cursor: pointer;
@@ -176,10 +176,10 @@ tr:hover {
 
 .card .likes_number {
 	position: absolute;
-	margin: -18px 0px;
-	font-weight: bold;
-	color: #FFFFFF;
-	font-size: 17px;
+	margin: -15px 0px;
+	font-weight: bold !important;
+	color: #FFFFFF !important;
+	font-size: 17px !important;
 }
 
 .card.hovercard .info {
@@ -277,3 +277,37 @@ tr:hover {
 body {
 	overflow-x:hidden;
 }
+
+/* Toast
+ ****************************************************/
+
+#toast{
+	width: 50%;
+	min-height: 35px;
+	padding: 5px 20px;
+	background-color: #000;
+	color: #FFF;
+	font-size: 1.3em;
+	text-align:center;
+	opacity: 0.8;
+	margin: 0 auto;
+	border-radius: 15px;
+	position: fixed;
+	bottom: -35px;
+	left: 28%;
+	/*
+	animation: show 2s;
+	animation-fill-mode: forwards;
+	*/
+}
+
+@keyframes show {
+	0% {
+		bottom: -35px;
+	}
+	100% {
+		bottom: 100px;
+	}
+}
+
+
